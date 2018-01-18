@@ -1,0 +1,1 @@
+Implémenter la logique vue au cours dans le reste du script (index.php).

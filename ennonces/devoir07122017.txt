@@ -1,0 +1,4 @@
+1) a partir du code donné:
+Classe task -> implémenter getters/setters
+
+2) convertir $week en objet

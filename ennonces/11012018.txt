@@ -1,0 +1,7 @@
+ - INscription a git
+ - watch projet https://github.com/julienBreem/IEPSA
+ - accept invitation
+ - cloner le repertoire
+ - creer une branche
+ - effetuer un commit
+ - push la branche

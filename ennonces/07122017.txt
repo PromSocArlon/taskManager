@@ -1,0 +1,6 @@
+A partir du script courant:
+
+Modifier de manière à associer vos "tasks" à un jour de la semaine, et lors de l'affichage, trier la liste par jour de la semaine.
+
+Les tasks seront à afficher dans le format suivant:
+	première lettre en majuscule, le reste en minuscule.
