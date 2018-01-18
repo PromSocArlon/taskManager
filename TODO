@@ -1,2 +1,32 @@
-TODO : Evolution de la classe Task.
-    TODO :
+TODO : Evolution de la classe Task
+    TODO : Attribut Task.description
+        TODO : Implémenter Setter
+        TODO : Implémenter Getter
+    TODO : Fonctionnalité SubTask
+        TODO : Attribut Task.subTaskArray
+            TODO : Implémenter méthode addSubTask(Task);
+            TODO : Implémenter méthode getSubTask(int);
+            TODO : Implémenter méthode removeSubTask(string);
+            TODO : Implémenter méthode removeSubTask(int);
+    TODO : Fonctionnalité Status
+        TODO : Classe Status
+            TODO : Définir les constantes
+                TODO : Définir le tableau des correspondances
+                    TODO : Implémenter méthode getStatusMeaning(int);
+            TODO : Attribut Status.statusName
+                    TODO : Implémenter Setter
+                    TODO : Implémenter Getter
+            TODO : Attribut Status.statusTime
+                    TODO : Implémenter Setter
+                    TODO : Implémenter Getter
+            TODO : Attribut Status.statusReason
+                    TODO : Implémenter Setter
+                    TODO : Implémenter Getter
+            TODO : Implémenter le constructeur
+    TODO : Fonctionnalité User
+        TODO : Classe CollaborativeTask
+            TODO : Attribut CollaborativeTask.collaborators
+                TODO : Implémenter méthode addCollaborator(string);
+                TODO : Implémenter méthode getCollaborator(int);
+                TODO : Implémenter méthode removeCollaborator(string);
+                TODO : Implémenter méthode addCollaborator(int);
