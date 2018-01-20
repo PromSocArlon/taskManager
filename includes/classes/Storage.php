@@ -34,7 +34,7 @@ class Storage
         $week = new Week();
 
         // Load the file data into an array
-        // One line =  one array element
+        // One line = one array element
         $data = file($this->filename,  FILE_IGNORE_NEW_LINES );
 
         $i = 0;
@@ -45,17 +45,15 @@ class Storage
                 $day = new Day($data[$i]);
                 $i++;
                 continue;
-            } else {
-                // If not, it'a a task
-                $task = new Task($data[$i]);
-                $task->setPriority($data[$i+1]);
-                $day->addTask($task);
-                $i++;
             }
+            // If not, it'a a task
+            $task = new Task($data[$i]);
+            $task->setPriority($data[$i+1]);
+            $day->addTask($task);
 
             $week->setDay($day);
 
-            $i++;
+            $i += 2;
         }
         return $week;
     }

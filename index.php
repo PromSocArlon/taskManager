@@ -32,7 +32,7 @@ do {
         }
     }
 
-    $action = in("\"C\" to create, \"R\" to read, \"U\" to update, \"D\" to delete, \"S\" to stop", $handle);
+    $action = in("\"C\" to create, \"R\" to read, \"U\" to update, \"D\" to delete, \"S\" to save", $handle);
 
     switch (strtolower($action)) {
         case "c":
@@ -58,7 +58,24 @@ do {
             echo "R";
             break;
         case "u":
-            echo "U";
+            do {
+                do {
+                    $day = in("Enter the day of the week:", $handle);
+                    $validDay = $week->getDayByName($day);
+                    if ($validDay == null) out("Incorrect name, please retry.");
+                } while ($validDay == null);
+                do {
+                    $taskNumber = in("Enter the number of the task:", $handle);
+                    $taskName = in("Enter the new name of the task:", $handle);
+                    $taskPriority = in("Enter the new priority of the task:", $handle);
+                    $task = new Task($taskName);
+                    $task->setPriority($taskPriority);
+                    $validDay->updateTask($taskNumber, $task);
+                    $continue = in("Update Other task (Y/N):", $handle);
+                } while (strtolower($continue) == 'y');
+                $week->setDay($validDay);
+                $continue = in("Update other day (Y/N):", $handle);
+            } while (strtolower($continue) == 'y');
             break;
         case "d":
             echo "D";
