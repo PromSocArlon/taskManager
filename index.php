@@ -34,10 +34,3 @@ do{
 	$week->setDay($day);
 	
 }while(!$end);
-
-$weekDao = new Storage();
-
-$test = $weekDao->load();
-
-
-print_r($test);

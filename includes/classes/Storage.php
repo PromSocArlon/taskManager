@@ -67,6 +67,7 @@ class Storage
         // Empty file
         file_put_contents($this->filename, "");
 
+        // Put the day name followed by all the tasks for the given day
         foreach($week->getDays() as $day) {
             file_put_contents($this->filename, $day->getName() . PHP_EOL, FILE_APPEND);
             foreach($day->getTasks() as $task) {
