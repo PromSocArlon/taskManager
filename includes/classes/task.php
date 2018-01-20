@@ -6,11 +6,11 @@ class Task {
 	private $description;
 	private $subtasks;
 	
-	public function __construct($name, $description, $priority)
+	public function __construct($name)
 	{
 		$this->setName($name);
-		$this->setPriority($priority);
-		$this->setDesciption($description);
+		$this->setPriority(0);
+		$this->setDesciption('');
 		$this->subtasks = [];
 	}
 	
