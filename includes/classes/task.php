@@ -6,7 +6,7 @@ class Task {
 	private $description;
 	private $subtasks;
 	
-	public function __construct($name, $priority, $description)
+	public function __construct($name, $description, $priority)
 	{
 		$this->setName($name);
 		$this->setPriority($priority);
