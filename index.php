@@ -1,36 +1,92 @@
 <?php
 require_once 'includes/functions.php';
+require_once 'includes/classes/Storage.php';
+require_once 'includes/classes/StorageMysql.php';
+require_once 'includes/configuration.php';
 require_once 'includes/classes/task.php';
 require_once 'includes/classes/week.php';
 require_once 'includes/classes/day.php';
-require_once 'includes/classes/Storage.php';
 
-$handle = fopen("php://stdin","r");
+
+$handle = fopen("php://stdin", "r");
 
 $week = new Week();
-$defaultTask = new Task('faire le menage');
+$week = $storage->load();
+
+echo PHP_EOL;
+out("Welcome in your taskManager:");
+out("----------------------------");
+echo PHP_EOL;
 
 
-$sunday = $week->getDayByName(Day::SUNDAY);
-$oldTasks = $sunday->addTask($defaultTask);
-$week->setDay($sunday);
+do {
+
+    // Display Week
+    foreach ($week->getDays() as $dayValue) {
+        if ($dayValue->getTasks() != null) {
+            displayDay($dayValue);
+            foreach ($dayValue->getTasks() as $taskNumber => $taskValue) {
+                displayTask($taskNumber, $taskValue);
+            }
+            echo PHP_EOL;
+        }
+    }
+
+    $action = in("\"C\" to create, \"R\" to read, \"U\" to update, \"D\" to delete, \"S\" to stop", $handle);
+
+    switch (strtolower($action)) {
+        case "c":
+            do {
+                do {
+                    $day = in("Enter the day of the week:", $handle);
+                    $validDay = $week->getDayByName($day);
+                    if ($validDay == null) out("Incorrect name, please retry.");
+                } while ($validDay == null);
+                do {
+                    $taskName = in("Enter the name of the task:", $handle);
+                    $task = new Task($taskName);
+                    $taskPriority = in("Enter the priority of the task:", $handle);
+                    $task->setPriority($taskPriority);
+                    $validDay->addTask($task);
+                    $continue = in("Other task (Y/N):", $handle);
+                } while (strtolower($continue) == 'y');
+                $week->setDay($validDay);
+                $continue = in("Other day (Y/N):", $handle);
+            } while (strtolower($continue) == 'y');
+            break;
+        case "r":
+            echo "R";
+            break;
+        case "u":
+            echo "U";
+            break;
+        case "d":
+            echo "D";
+            break;
+        case "s":
+            $storage->save($week);
+    }
+
+} while (strtolower($action) != 's');
+
+echo PHP_EOL;
+out("Goodbye");
 
 
-$end = 0;
-do{	
-	$dayName = in("\nWeekday:", $handle);
-	if($dayName == '0'){
-		echo "\nGood bye" . PHP_EOL;
-		$end = 1;
-		continue;
-	}
-	$day = $week->getDayByName($dayName);
-	if(empty($day)){
-		echo "\nWrong Weekday!!!!!!!!!!!!!" . PHP_EOL;
-		continue;
-	}
-	$newTask = new Task(in("Task: ", $handle));
-	$day->addTask($newTask);
-	$week->setDay($day);
-	
-}while(!$end);
+//$dbConnection->createTask('monday', 'test');
+//$test = $dbConnection->query("SELECT Id FROM tbl_day WHERE Name='monday'");
+
+//$dbConnection->showTables();
+
+
+/*
+// Save to file
+$weekData = serialize($week);
+$storageFile = fopen('storage.txt', 'r+');
+fwrite($storageFile, $weekDataFile);
+fclose($storageFile);
+
+// Load from file
+$weekDataFile = file_get_contents('storage.txt');
+$week = unserialize($weekDataFile);
+*/

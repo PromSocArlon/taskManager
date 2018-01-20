@@ -1,11 +1,19 @@
 monday
 Dormir
+1
 Gogo
+1
 tuesday
 wednesday
 thursday
 friday
 Manger
+1
 saturday
 sunday
 Faire le menage
+1
+Test
+1
+Test2
+9

@@ -45,10 +45,14 @@ class Storage
                 $day = new Day($data[$i]);
                 $i++;
                 continue;
+            } else {
+                // If not, it'a a task
+                $task = new Task($data[$i]);
+                $task->setPriority($data[$i+1]);
+                $day->addTask($task);
+                $i++;
             }
 
-            // If not, it'a a task
-            $day->addTask(new Task($data[$i]));
             $week->setDay($day);
 
             $i++;
@@ -72,6 +76,7 @@ class Storage
             file_put_contents($this->filename, $day->getName() . PHP_EOL, FILE_APPEND);
             foreach($day->getTasks() as $task) {
                 file_put_contents($this->filename, $task->getName() . PHP_EOL, FILE_APPEND);
+                file_put_contents($this->filename, $task->getPriority() . PHP_EOL, FILE_APPEND);
             }
         }
     }
