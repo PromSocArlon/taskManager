@@ -34,4 +34,5 @@ do{
 	$week->setDay($day);
 	
 }while(!$end);
+
 print_r($week->getDays());
