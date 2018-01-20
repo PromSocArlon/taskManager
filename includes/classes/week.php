@@ -2,6 +2,7 @@
 require_once('day.php');
 
 class Week {
+
 	private $days;
 	
 	public function __construct() {

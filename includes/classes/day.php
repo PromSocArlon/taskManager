@@ -8,11 +8,11 @@ class Day {
 	const THURSDAY = 'thursday';
 	const FRIDAY = 'friday';
 	const SATURDAY = 'saturday';
-	const SUNDAY = 'sunday';	
+	const SUNDAY = 'sunday';
 	
 	private $name;
-	private $tasks;	
-	
+	private $tasks;
+
 	public function __construct($name){
 		$this->setName($name);
 		$this->tasks = [];
@@ -50,7 +50,23 @@ class Day {
 	public function getTasks(){
 		return $this->tasks;
 	}
-	
+
+    /**
+     * Return an array of all days name.
+     *
+     * @return array
+     */
+	public static function getAllDaysName() {
+        return [
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+            'sunday'
+        ];
+    }
 	
 	
 }

@@ -3,7 +3,7 @@ require_once 'includes/functions.php';
 require_once 'includes/classes/task.php';
 require_once 'includes/classes/week.php';
 require_once 'includes/classes/day.php';
-
+require_once 'includes/classes/Storage.php';
 
 $handle = fopen("php://stdin","r");
 
@@ -35,4 +35,9 @@ do{
 	
 }while(!$end);
 
-print_r($week->getDays());
+$weekDao = new Storage();
+
+$test = $weekDao->load();
+
+
+print_r($test);
