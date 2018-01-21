@@ -3,7 +3,10 @@ $mysqlHost = "127.0.0.1";
 $mysqlDb = "taskManager";
 $mysqlUser = "taskManager";
 $mysqlPassword = "taskManager";
-if (in_array('disabled change for "mysql" to activate', PDO::getAvailableDrivers())) {
+
+$mysqlActive = false;
+
+if (in_array('mysql', PDO::getAvailableDrivers()) and $mysqlActive) {
     out("PDO does support MySQL. Switch to MySQL database");
     $storage = new StorageMysql($mysqlHost, $mysqlDb, $mysqlUser, $mysqlPassword);
 } else {

@@ -37,15 +37,11 @@ do {
     switch (strtolower($action)) {
         case "c":
             do {
-                do {
-                    $day = in("Enter the day of the week:", $handle);
-                    $validDay = $week->getDayByName($day);
-                    if ($validDay == null) out("Incorrect name, please retry.");
-                } while ($validDay == null);
+                $validDay = getValidDay($handle, $week);
                 do {
                     $taskName = in("Enter the name of the task:", $handle);
-                    $task = new Task($taskName);
                     $taskPriority = in("Enter the priority of the task:", $handle);
+                    $task = new Task($taskName);
                     $task->setPriority($taskPriority);
                     $validDay->addTask($task);
                     $continue = in("Other task (Y/N):", $handle);
@@ -59,11 +55,7 @@ do {
             break;
         case "u":
             do {
-                do {
-                    $day = in("Enter the day of the week:", $handle);
-                    $validDay = $week->getDayByName($day);
-                    if ($validDay == null) out("Incorrect name, please retry.");
-                } while ($validDay == null);
+                $validDay = getValidDay($handle, $week);
                 do {
                     $taskNumber = in("Enter the number of the task:", $handle);
                     $taskName = in("Enter the new name of the task:", $handle);
