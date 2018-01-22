@@ -13,8 +13,20 @@ function in($inString, $handle)
 function addTaskToDayOfWeek($week, $dayName, $task)
 {
     $day = $week->getDayByName($dayName);
-    $day->addTask($defaultTask);
+    $day->addTask($task);
     $week->setDay($day);
+}
+
+function checkConnectivity($type, $host, $port, $db, $user, $password)
+{
+    try {
+        $conn = new PDO($type . ":host=" . $host . ";port=" . $port . ";dbname=" . $db, $user, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $conn = null;
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
 }
 
 function displayDay($day)
@@ -38,8 +50,40 @@ function getValidDay($handle, $week)
     return $validDay;
 }
 
-function setTaskValue($task)
+function createTask($handle, $validDay, $week, $storage)
 {
+    do {
+        $taskName = in("Enter the name of the task:", $handle);
+        $taskPriority = in("Enter the priority of the task:", $handle);
+        $task = new Task($taskName);
+        $task->setPriority($taskPriority);
+        $validDay->addTask($task);
+        if ($storage->getType() == 'mysql') {
+            $storage->createTask($validDay, $task);
+        } else {
+            $storage->save($week);
+        }
+        $continue = in("Other task (Y/N):", $handle);
+    } while (strtolower($continue) == 'y');
+    $week->setDay($validDay);
+}
 
-    return $task;
+function updateTask($handle, $validDay, $week, $storage)
+{
+    do {
+        $taskNumber = in("Enter the number of the task:", $handle);
+        $taskOldName = $validDay->getTasks()[$taskNumber-1]->getName();
+        $taskNewName = in("Enter the new name of the task:", $handle);
+        $taskNewPriority = in("Enter the new priority of the task:", $handle);
+        $newTask = new Task($taskNewName);
+        $newTask->setPriority($taskNewPriority);
+        $validDay->updateTask($taskNumber, $newTask);
+        if ($storage->getType() == 'mysql') {
+            $storage->updateTask($validDay, $newTask, $taskOldName);
+        } else {
+            $storage->save($week);
+        }
+        $continue = in("Update Other task (Y/N):", $handle);
+    } while (strtolower($continue) == 'y');
+    $week->setDay($validDay);
 }

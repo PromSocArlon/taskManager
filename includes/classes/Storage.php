@@ -17,12 +17,23 @@ class Storage
      * @var string
      */
     private $filename;
+    private $type;
 
     /**
      * Storage constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->filename = 'data.txt';
+        $this->type = 'file';
+    }
+
+    /**
+     * Getter
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -30,25 +41,26 @@ class Storage
      *
      * @return Week
      */
-    public function load() {
+    public function load()
+    {
         $week = new Week();
 
         // Load the file data into an array
         // One line = one array element
-        $data = file($this->filename,  FILE_IGNORE_NEW_LINES );
+        $data = file($this->filename, FILE_IGNORE_NEW_LINES);
 
         $i = 0;
         while ($i < sizeof($data)) {
 
             // If the current value is equal to a day name
-            if(in_array($data[$i], Day::getAllDaysName())) {
+            if (in_array($data[$i], Day::getAllDaysName())) {
                 $day = new Day($data[$i]);
                 $i++;
                 continue;
             }
             // If not, it'a a task
             $task = new Task($data[$i]);
-            $task->setPriority($data[$i+1]);
+            $task->setPriority($data[$i + 1]);
             $day->addTask($task);
 
             $week->setDay($day);
@@ -64,15 +76,16 @@ class Storage
      * @param Week $week
      * @return void
      */
-    public function save($week) {
+    public function save($week)
+    {
 
         // Empty file
         file_put_contents($this->filename, "");
 
         // Put the day name followed by all the tasks for the given day
-        foreach($week->getDays() as $day) {
+        foreach ($week->getDays() as $day) {
             file_put_contents($this->filename, $day->getName() . PHP_EOL, FILE_APPEND);
-            foreach($day->getTasks() as $task) {
+            foreach ($day->getTasks() as $task) {
                 file_put_contents($this->filename, $task->getName() . PHP_EOL, FILE_APPEND);
                 file_put_contents($this->filename, $task->getPriority() . PHP_EOL, FILE_APPEND);
             }

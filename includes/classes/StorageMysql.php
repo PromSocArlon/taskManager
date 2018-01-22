@@ -3,26 +3,45 @@
 class StorageMysql
 {
     private $mysqlConnect;
+    private $type;
 
-    public function __construct($host, $database, $user, $password)
+    public function __construct($type, $host, $port, $db, $user, $password)
     {
         try {
-            $this->mysqlConnect = new PDO('mysql:host=' . $host . ';dbname=' . $database, $user, $password);
+            $this->mysqlConnect = new PDO($type . ":host=" . $host . ";port=" . $port . ";dbname=" . $db, $user, $password);
             $this->mysqlConnect->errorInfo();
+            $this->type = "mysql";
         } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
             die();
         }
     }
 
-    public function createTask($day, $name)
+    public function getType()
     {
-        //INSERT INTO `tbl_task` (`Id`, `Name`, `Priority`, `Day`) VALUES (NULL, 'Dormir', '1', '1');
+        return $this->type;
+    }
+
+    public function createTask($day, $task)
+    {
         try {
-            $dayId = $this->mysqlConnect->query("SELECT Id FROM tbl_day WHERE Name=" . strtolower($day));
-            print_r($dayId);
-            $this->mysqlConnect->errorInfo();
-            $this->mysqlConnect->query("INSERT INTO tbl_task(Id, Name, Priority, Day) VALUES('', " . $name . ", '', " . $dayId . ")");
+            $sql = "
+            INSERT INTO tbl_task 
+            (
+                Id,
+                Name,
+                Priority,
+                Day
+            )
+            VALUES
+            (
+                NULL, " .
+                "'" . $task->getName() . "'," .
+                "'" . $task->getPriority() . "',
+                (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
+            )";
+            echo $sql;
+            $this->mysqlConnect->query($sql);
             $this->mysqlConnect->errorInfo();
             return true;
         } catch (PDOException $e) {
@@ -36,9 +55,23 @@ class StorageMysql
 
     }
 
-    public function updateTask()
+    public function updateTask($day, $newTask, $taskName)
     {
-
+        try {
+            $sql = "
+            UPDATE tbl_task 
+            SET
+                Name = '" . $newTask->getName() . "',
+                Priority = '" . $newTask->getPriority(). "'
+            WHERE Name = '".$taskName."' AND Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
+            ";
+            $this->mysqlConnect->query($sql);
+            $this->mysqlConnect->errorInfo();
+            return true;
+        } catch (PDOException $e) {
+            echo "Error !: " . $e->getMessage() . PHP_EOL;
+            return false;
+        }
     }
 
     public function deleteTask()
@@ -61,7 +94,7 @@ class StorageMysql
         $data = $this->mysqlConnect->query($sql);
 
         foreach ($data as $value) {
-            $dataAssoc[$value['day']][] = array($value['task'],$value['priority']);
+            $dataAssoc[$value['day']][] = array($value['task'], $value['priority']);
         }
 
         foreach ($dataAssoc as $day => $value) {

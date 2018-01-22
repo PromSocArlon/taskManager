@@ -1,14 +1,29 @@
 <?php
 require_once 'includes/functions.php';
+require_once 'includes/configuration.php';
 require_once 'includes/classes/Storage.php';
 require_once 'includes/classes/StorageMysql.php';
-require_once 'includes/configuration.php';
 require_once 'includes/classes/task.php';
 require_once 'includes/classes/week.php';
 require_once 'includes/classes/day.php';
 
-
 $handle = fopen("php://stdin", "r");
+
+// Select Storage Type
+do {
+    $storageType = strtolower(in("Select type of storage, \"M\" for MySQL / \"F\" for file:", $handle));
+    if ($storageType == "m") {
+        if (checkConnectivity("mysql", $mysqlHost, $mysqlPort, $mysqlDb, $mysqlUser, $mysqlPassword)) {
+            out("Storage set to MySQL.");
+            $storage = new StorageMysql("mysql", $mysqlHost, $mysqlPort, $mysqlDb, $mysqlUser, $mysqlPassword);
+        } else {
+            out("Unable to connect to mysql.");
+        }
+    } else if ($storageType == "f") {
+        out("Storage set to File.");
+        $storage = new Storage();
+    }
+} while (!isset($storage));
 
 $week = new Week();
 $week = $storage->load();
@@ -18,54 +33,31 @@ out("Welcome in your taskManager:");
 out("----------------------------");
 echo PHP_EOL;
 
-
 do {
-
-    // Display Week
-    foreach ($week->getDays() as $dayValue) {
-        if ($dayValue->getTasks() != null) {
-            displayDay($dayValue);
-            foreach ($dayValue->getTasks() as $taskNumber => $taskValue) {
-                displayTask($taskNumber, $taskValue);
-            }
-            echo PHP_EOL;
-        }
-    }
-
-    $action = in("\"C\" to create, \"R\" to read, \"U\" to update, \"D\" to delete, \"S\" to save", $handle);
-
+    $action = in("\"C\" to create, \"R\" to read, \"U\" to update, \"D\" to delete, \"S\" to stop", $handle);
     switch (strtolower($action)) {
         case "c":
             do {
                 $validDay = getValidDay($handle, $week);
-                do {
-                    $taskName = in("Enter the name of the task:", $handle);
-                    $taskPriority = in("Enter the priority of the task:", $handle);
-                    $task = new Task($taskName);
-                    $task->setPriority($taskPriority);
-                    $validDay->addTask($task);
-                    $continue = in("Other task (Y/N):", $handle);
-                } while (strtolower($continue) == 'y');
-                $week->setDay($validDay);
+                createTask($handle, $validDay, $week, $storage);
                 $continue = in("Other day (Y/N):", $handle);
             } while (strtolower($continue) == 'y');
             break;
         case "r":
-            echo "R";
+            foreach ($week->getDays() as $dayValue) {
+                if ($dayValue->getTasks() != null) {
+                    displayDay($dayValue);
+                    foreach ($dayValue->getTasks() as $taskNumber => $taskValue) {
+                        displayTask($taskNumber, $taskValue);
+                    }
+                    echo PHP_EOL;
+                }
+            }
             break;
         case "u":
             do {
                 $validDay = getValidDay($handle, $week);
-                do {
-                    $taskNumber = in("Enter the number of the task:", $handle);
-                    $taskName = in("Enter the new name of the task:", $handle);
-                    $taskPriority = in("Enter the new priority of the task:", $handle);
-                    $task = new Task($taskName);
-                    $task->setPriority($taskPriority);
-                    $validDay->updateTask($taskNumber, $task);
-                    $continue = in("Update Other task (Y/N):", $handle);
-                } while (strtolower($continue) == 'y');
-                $week->setDay($validDay);
+                updateTask($handle, $validDay, $week, $storage);
                 $continue = in("Update other day (Y/N):", $handle);
             } while (strtolower($continue) == 'y');
             break;
@@ -73,29 +65,7 @@ do {
             echo "D";
             break;
         case "s":
-            $storage->save($week);
+            out("Goodbye");
     }
 
 } while (strtolower($action) != 's');
-
-echo PHP_EOL;
-out("Goodbye");
-
-
-//$dbConnection->createTask('monday', 'test');
-//$test = $dbConnection->query("SELECT Id FROM tbl_day WHERE Name='monday'");
-
-//$dbConnection->showTables();
-
-
-/*
-// Save to file
-$weekData = serialize($week);
-$storageFile = fopen('storage.txt', 'r+');
-fwrite($storageFile, $weekDataFile);
-fclose($storageFile);
-
-// Load from file
-$weekDataFile = file_get_contents('storage.txt');
-$week = unserialize($weekDataFile);
-*/
