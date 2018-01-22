@@ -30,6 +30,11 @@ class Day
         $this->tasks[$number-1] = $task;
     }
 
+    public function deleteTask($indice){
+        if(count($this->getTasks()) > 1) unset($this->tasks[$indice - 1]);
+        else array_splice($this->tasks,0,1);
+        $this->tasks = array_values($this->tasks);
+    }
     public function setName($name)
     {
         $name = strtolower($name);

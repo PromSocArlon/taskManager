@@ -62,8 +62,13 @@ do {
             } while (strtolower($continue) == 'y');
             break;
         case "d":
-            echo "D";
+            do {
+                $validDay = getValidDay($handle, $week);
+                deleteTask($handle, $validDay, $week, $storage);
+                $continue = in("Delete task in other day (Y/N):", $handle);
+            } while (strtolower($continue) == 'y');
             break;
+
         case "s":
             out("Goodbye");
     }

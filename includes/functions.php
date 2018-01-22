@@ -87,3 +87,19 @@ function updateTask($handle, $validDay, $week, $storage)
     } while (strtolower($continue) == 'y');
     $week->setDay($validDay);
 }
+
+function deleteTask($handle, $validDay, $week, $storage)
+{
+    do {
+        $taskNumber = in("\nDelete task number :", $handle);
+        $validDay->deleteTask($taskNumber);
+        if ($storage->getType() == 'mysql') {
+            $storage->deleteTask($validDay, $taskNumber);
+        } else {
+            $storage->save($week);
+        }
+        if(count($validDay->getTasks()) > 0)$continue = in("Delete Other task (Y/N):", $handle);
+        else $continue = 'n';
+    } while (strtolower($continue) == 'y');
+    $week->setDay($validDay);
+}
