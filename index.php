@@ -69,8 +69,7 @@ do {
                 out("Empty data, create task before.");
             }
             break;
-        case
-        "d":
+        case "d":
             if (checkEmpty($week)) {
                 do {
                     $validDay = getValidDay($handle, $week);

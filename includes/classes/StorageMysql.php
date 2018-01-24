@@ -73,9 +73,31 @@ class StorageMysql
         }
     }
 
-    public function deleteTask()
+    public function deleteTask($day, $taskName)
     {
+        try {
 
+            // get record ID
+            //if(!empty($_GET['Id'])){ $id=$_REQUEST['Id']; }
+            //if(!empty($_POST)){ $id= $_POST['Id'];}
+
+            // delete query
+            $sql = "DELETE FROM tbl_task WHERE Name = '".$taskName->getName()."' AND Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')";
+            $q = $pdo->prepare($sql);
+            $q->execute(array($id));
+
+            $this->mysqlConnect->query($sql);
+            $this->mysqlConnect->errorInfo();
+            return true;
+
+            }
+        }
+
+        // show error
+            catch (PDOException $e) {
+            echo "Error !: " . $e->getMessage() . PHP_EOL;
+            return false;
+        }
     }
 
     public function showTables()
