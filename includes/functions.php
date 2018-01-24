@@ -104,3 +104,12 @@ function deleteTask($handle, $validDay, $week, $storage)
     } while (strtolower($continue) == 'y');
     $week->setDay($validDay);
 }
+
+function checkEmpty($week) {
+    foreach ($week->getDays() as $dayValue) {
+        if ($dayValue->getTasks() != null) {
+            return true;
+        }
+    }
+    return false;
+}

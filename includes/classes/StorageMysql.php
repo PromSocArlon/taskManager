@@ -40,7 +40,6 @@ class StorageMysql
                 "'" . $task->getPriority() . "',
                 (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
             )";
-            echo $sql;
             $this->mysqlConnect->query($sql);
             $this->mysqlConnect->errorInfo();
             return true;

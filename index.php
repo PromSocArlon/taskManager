@@ -44,29 +44,42 @@ do {
             } while (strtolower($continue) == 'y');
             break;
         case "r":
-            foreach ($week->getDays() as $dayValue) {
-                if ($dayValue->getTasks() != null) {
-                    displayDay($dayValue);
-                    foreach ($dayValue->getTasks() as $taskNumber => $taskValue) {
-                        displayTask($taskNumber, $taskValue);
+            if (checkEmpty($week)) {
+                foreach ($week->getDays() as $dayValue) {
+                    if ($dayValue->getTasks() != null) {
+                        displayDay($dayValue);
+                        foreach ($dayValue->getTasks() as $taskNumber => $taskValue) {
+                            displayTask($taskNumber, $taskValue);
+                        }
+                        echo PHP_EOL;
                     }
-                    echo PHP_EOL;
                 }
+            } else {
+                out("Empty data, create task before.");
             }
             break;
         case "u":
-            do {
-                $validDay = getValidDay($handle, $week);
-                updateTask($handle, $validDay, $week, $storage);
-                $continue = in("Update other day (Y/N):", $handle);
-            } while (strtolower($continue) == 'y');
+            if (checkEmpty($week)) {
+                do {
+                    $validDay = getValidDay($handle, $week);
+                    updateTask($handle, $validDay, $week, $storage);
+                    $continue = in("Update other day (Y/N):", $handle);
+                } while (strtolower($continue) == 'y');
+            } else {
+                out("Empty data, create task before.");
+            }
             break;
-        case "d":
-            do {
-                $validDay = getValidDay($handle, $week);
-                deleteTask($handle, $validDay, $week, $storage);
-                $continue = in("Delete task in other day (Y/N):", $handle);
-            } while (strtolower($continue) == 'y');
+        case
+        "d":
+            if (checkEmpty($week)) {
+                do {
+                    $validDay = getValidDay($handle, $week);
+                    deleteTask($handle, $validDay, $week, $storage);
+                    $continue = in("Delete task in other day (Y/N):", $handle);
+                } while (strtolower($continue) == 'y');
+            } else {
+                out("Empty data, create task before.");
+            }
             break;
 
         case "s":
