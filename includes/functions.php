@@ -22,6 +22,7 @@ function checkConnectivity($type, $host, $port, $db, $user, $password)
     try {
         $conn = new PDO($type . ":host=" . $host . ";port=" . $port . ";dbname=" . $db, $user, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $conn->errorInfo();
         $conn = null;
         return true;
     } catch (Exception $e) {
