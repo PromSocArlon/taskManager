@@ -1,8 +1,8 @@
 <?php
-require_once 'includes/functions.php';
-require_once 'includes/classes/task.php';
-require_once 'includes/classes/week.php';
-require_once 'includes/classes/day.php';
+require_once 'application/core/functions.php';
+require_once 'application/models/task.php';
+require_once 'application/models/week.php';
+require_once 'application/models/day.php';
 
 
 $handle = fopen("php://stdin","r");
