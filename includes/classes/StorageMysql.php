@@ -1,8 +1,13 @@
 <?php
 
+
 class StorageMysql
 {
+    /**
+     * @var PDO
+     */
     private $mysqlConnect;
+
     private $type;
 
     public function __construct($type, $host, $port, $db, $user, $password)
@@ -13,6 +18,7 @@ class StorageMysql
             $this->type = "mysql";
         } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
+            echo 'not ok';
             die();
         }
     }
@@ -82,7 +88,7 @@ class StorageMysql
             //if(!empty($_POST)){ $id= $_POST['Id'];}
 
             // delete query
-            $sql = "DELETE FROM tbl_task WHERE Name = '".$taskName->getName()."' AND Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')";
+            $sql = "DELETE FROM tbl_task WHERE Name = '" . $taskName->getName() . "' AND Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')";
             $q = $pdo->prepare($sql);
             $q->execute(array($id));
 
@@ -90,7 +96,6 @@ class StorageMysql
             $this->mysqlConnect->errorInfo();
             return true;
 
-            }
         }
 
         // show error

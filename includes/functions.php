@@ -26,6 +26,7 @@ function checkConnectivity($type, $host, $port, $db, $user, $password)
         $conn = null;
         return true;
     } catch (Exception $e) {
+        echo $e->getMessage();
         return false;
     }
 }
