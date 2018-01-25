@@ -49,9 +49,29 @@ class StorageMysql
         }
     }
 
-    public function readTask()
+    public function readTask($day)
     {
+        try {
+            $sql = "
+                SELECT Name, Priority
+                FROM tbl_task
+                WHERE Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
+            ";
+            $data = $this->mysqlConnect->query($sql);
+            $this->mysqlConnect->errorInfo();
 
+            $day = new Day($day->getName());
+            foreach ($data as $value) {
+                $task = new Task($value['Name']);
+                $task->setPriority($value['Priority']);
+                $day->addTask($task);
+            }
+
+            return $day;
+        } catch (PDOException $e) {
+            echo "Error !: " . $e->getMessage() . PHP_EOL;
+            return false;
+        }
     }
 
     public function updateTask($day, $newTask, $oldTask)

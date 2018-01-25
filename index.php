@@ -33,6 +33,20 @@ out("Welcome in your taskManager:");
 out("----------------------------");
 echo PHP_EOL;
 
+if (checkEmpty($week)) {
+    foreach ($week->getDays() as $dayValue) {
+        if ($dayValue->getTasks() != null) {
+            displayDay($dayValue);
+            foreach ($dayValue->getTasks() as $taskNumber => $taskValue) {
+                displayTask($taskNumber, $taskValue);
+            }
+            echo PHP_EOL;
+        }
+    }
+} else {
+    out("Empty data, create task before.");
+}
+
 do {
     $action = in("\"C\" to create, \"R\" to read, \"U\" to update, \"D\" to delete, \"S\" to stop", $handle);
     switch (strtolower($action)) {
@@ -45,15 +59,13 @@ do {
             break;
         case "r":
             if (checkEmpty($week)) {
-                foreach ($week->getDays() as $dayValue) {
-                    if ($dayValue->getTasks() != null) {
-                        displayDay($dayValue);
-                        foreach ($dayValue->getTasks() as $taskNumber => $taskValue) {
-                            displayTask($taskNumber, $taskValue);
-                        }
-                        echo PHP_EOL;
-                    }
+                $validDay = getValidDay($handle, $week);
+                $dayValue = $storage->readTask($validDay);
+                displayDay($dayValue);
+                foreach ($dayValue->getTasks() as $taskNumber => $taskValue) {
+                    displayTask($taskNumber, $taskValue);
                 }
+                echo PHP_EOL;
             } else {
                 out("Empty data, create task before.");
             }
