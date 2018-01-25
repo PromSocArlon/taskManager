@@ -56,8 +56,6 @@ class CollaborativeTask extends Task implements CollaborativeInterface
 			unset($collaborators[$index]);
 			$this->collaborators = array_values($collaborators);
 		}
-		else
-			echo 'Pas de correspondance pour index/id donne : ' . $var . PHP_EOL;
 		return $collaborator;
 	}
 	
@@ -81,8 +79,6 @@ class CollaborativeTask extends Task implements CollaborativeInterface
 		{
 			$collaborator = $collaborators[$index];
 		}
-		else
-			echo 'Pas de correspondance pour index/id donne : ' . $var . PHP_EOL;
 		return $collaborator;
 	}
 	

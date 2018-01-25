@@ -52,8 +52,7 @@ class Task {
 			$subtask = $tasks[$index];
 			unset($tasks[$index]);
 			$this->subtasks = array_values($tasks);
-		} else
-			echo 'Pas de correspondance pour index/Nom donne : ' . $var . PHP_EOL;
+		}
 		return $subtask;
 	}
 
@@ -87,7 +86,6 @@ class Task {
 		if ($index != -1) {
 			return $this->subtasks [$index];
 		} else {
-			echo 'Pas de correspondance pour index/Nom donne : ' . $var . PHP_EOL;
 			return null;
 		}
 	}
@@ -95,5 +93,6 @@ class Task {
 	/** Renvoie une copie du tableau des subtasks **/
 	public function getAllSubtasks() {
 		$array = $this->subtasks;
+		return $array;
 	}
 }
