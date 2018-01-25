@@ -16,6 +16,27 @@ class UserController{
     public function showAction(){
 
     }
+
+    public function save($firstName, $lastName, $password) {
+
+        $storageFactory = new StorageFactory();
+        $user = new user($storageFactory->getStorage());
+        $user->setFirstName($firstName);
+        $user->setLastName($lastName);
+        $user->setPassword($password);
+        /*
+        $userService = new UserService();
+        $userService->save($user);
+        */
+        $vue = new UserView();
+        if($user->save()){
+            $vue->displayUser($user);
+        } else {
+            $vue->displayError($user->getErrors());
+        }
+
+
+    }
 /**
     public function listAction(){
 
