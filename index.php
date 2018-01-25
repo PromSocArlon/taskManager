@@ -4,6 +4,8 @@ require_once 'includes/classes/task.php';
 require_once 'includes/classes/week.php';
 require_once 'includes/classes/day.php';
 
+$dispatcher = new \TaskManager\services\Dispatcher();
+$dispatcher->dispatch();
 
 $handle = fopen("php://stdin","r");
 
