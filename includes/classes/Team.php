@@ -3,9 +3,27 @@ require_once('Member.php');
 
 class Team{
 	
+	var $teamName;
+	var $teamID;
 	var $teamMember;
 	var $teamLeader;
 	var $teamTask;
+	
+	
+	function set_tName($new_teamName) {
+		$this->teamName = $new_teamName;
+	}
+	function get_tName() {
+		return $this->teamName;
+	}	
+	
+	
+	function set_tID($new_teamID) {
+		$this->teamID = $new_teamID;
+	}
+	function get_tID() {
+		return $this->teamID;
+	}	
 	
 	
 	function set_tMember($new_teamMember) {
