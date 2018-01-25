@@ -4,6 +4,7 @@ class Task {
 	private $name;
 	private $priority;
 	private $description;
+	private $status;
 	private $subtasks;
 
 	public function __construct($name) {
@@ -11,6 +12,8 @@ class Task {
 		$this->setPriority(0);
 		$this->setDescription('');
 		$this->subtasks = [];
+		$this->status = [];
+		$this->addStatus(Status::NON_DEFINI, "Mise en place de la tache.");
 	}
 
 	public function setPriority($priority) {
@@ -94,5 +97,26 @@ class Task {
 	public function getAllSubtasks() {
 		$array = $this->subtasks;
 		return $array;
+	}
+
+	public function addStatus(int $statusName, string $description): void {
+		if($description != "") {
+			$status[] = new Status($statusName, $description);
+		}
+	}
+
+	public function removeStatus(int $index): void {
+		if($index>=0 && $index < count($this->status)) {
+			array_splice($this->status, $index,1);
+		}
+	}
+
+	public function getStatus(int $index): Status {
+		if($index>=0 && $index < count($this->status)) {
+			return $this->status[$index];
+		}
+		else {
+			return null;
+		}
 	}
 }
