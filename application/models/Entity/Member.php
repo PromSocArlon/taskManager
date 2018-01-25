@@ -1,6 +1,6 @@
 <?php
 
-class Membre {
+class Member {
 
     var $id;
     var $login;
