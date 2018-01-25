@@ -13,7 +13,7 @@ $handle = fopen("php://stdin", "r");
 do {
     $storageType = strtolower(in("Select type of storage, \"M\" for MySQL / \"F\" for file:", $handle));
     if ($storageType == "m") {
-        if (checkConnectivity("mysql", $mysqlHost, $mysqlPort, $mysqlDb, $mysqlUser, $mysqlPassword)) {
+        if (checkConnectivityDB("mysql", $mysqlHost, $mysqlPort, $mysqlDb, $mysqlUser, $mysqlPassword)) {
             out("Storage set to MySQL.");
             $storage = new StorageMysql("mysql", $mysqlHost, $mysqlPort, $mysqlDb, $mysqlUser, $mysqlPassword);
         } else {
@@ -25,8 +25,8 @@ do {
     }
 } while (!isset($storage));
 
-$week = new Week();
 $week = $storage->load();
+if ($storage->getType() == "mysql") syncDbAndFile($week, $storage);
 
 echo PHP_EOL;
 out("Welcome in your taskManager:");
@@ -80,8 +80,11 @@ do {
                 out("Empty data, create task before.");
             }
             break;
-
         case "s":
+            if ($storage->getType() == "mysql") {
+                syncDbAndFile($week, $storage);
+                $storage->closeConnection();
+            }
             out("Goodbye");
     }
 

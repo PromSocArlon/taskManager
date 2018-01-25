@@ -1,4 +1,8 @@
 monday
+Dormir
+1
+Gogo
+1
 tuesday
 wednesday
 thursday
@@ -6,6 +10,10 @@ friday
 Manger
 1
 saturday
-Faire des tasks
-4
 sunday
+Faire le menage
+1
+Test42
+42
+Testsync
+999

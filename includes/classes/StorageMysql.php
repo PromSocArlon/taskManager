@@ -54,15 +54,15 @@ class StorageMysql
 
     }
 
-    public function updateTask($day, $newTask, $taskName)
+    public function updateTask($day, $newTask, $oldTask)
     {
         try {
             $sql = "
-            UPDATE tbl_task 
-            SET
-                Name = '" . $newTask->getName() . "',
-                Priority = '" . $newTask->getPriority(). "'
-            WHERE Name = '".$taskName."' AND Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
+                UPDATE tbl_task 
+                SET
+                    Name = '" . $newTask->getName() . "',
+                    Priority = '" . $newTask->getPriority() . "'
+                WHERE Name = '" . $oldTask->getName() . "' AND Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
             ";
             $this->mysqlConnect->query($sql);
             $this->mysqlConnect->errorInfo();
@@ -73,28 +73,17 @@ class StorageMysql
         }
     }
 
-    public function deleteTask($day, $taskName)
+    public function deleteTask($day, $task)
     {
         try {
-
-            // get record ID
-            //if(!empty($_GET['Id'])){ $id=$_REQUEST['Id']; }
-            //if(!empty($_POST)){ $id= $_POST['Id'];}
-
-            // delete query
-            $sql = "DELETE FROM tbl_task WHERE Name = '".$taskName->getName()."' AND Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')";
-            $q = $pdo->prepare($sql);
-            $q->execute(array($id));
-
+            $sql = "DELETE 
+                FROM tbl_task 
+                WHERE Name = '" . $task->getName() . "' AND Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
+            ";
             $this->mysqlConnect->query($sql);
             $this->mysqlConnect->errorInfo();
             return true;
-
-            }
-        }
-
-        // show error
-            catch (PDOException $e) {
+        } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
             return false;
         }
@@ -111,7 +100,11 @@ class StorageMysql
     {
         $week = new Week();
 
-        $sql = "SELECT tbl_day.Name as day, tbl_task.Name as task, tbl_task.Priority as priority FROM tbl_task INNER JOIN tbl_day on tbl_task.Day = tbl_day.Id";
+        $sql = "
+          SELECT tbl_day.Name as day, tbl_task.Name as task, tbl_task.Priority as priority 
+          FROM tbl_task 
+          INNER JOIN tbl_day on tbl_task.Day = tbl_day.Id
+        ";
         $data = $this->mysqlConnect->query($sql);
 
         foreach ($data as $value) {
@@ -129,6 +122,26 @@ class StorageMysql
         }
 
         return $week;
+    }
+
+    public function save($week)
+    {
+        try {
+            $sql = "TRUNCATE TABLE tbl_task";
+            $this->mysqlConnect->query($sql);
+            $this->mysqlConnect->errorInfo();
+
+            foreach ($week->getDays() as $day) {
+                foreach ($day->getTasks() as $task) {
+                    $this->createTask($day, $task);
+                }
+            }
+
+            return true;
+        } catch (PDOException $e) {
+            echo "Error !: " . $e->getMessage() . PHP_EOL;
+            return false;
+        }
     }
 
     public function closeConnection()

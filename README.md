@@ -5,6 +5,6 @@
 - MySQL version 5.6 minimum required
 
 ### Installation:
-- active extensions php_pdo.dll, php_pdo_mysqli.dll, php_pdo_mysql.dll
-- For WAMP in settings menu go to PHP Settings --> PHP Extensions --> php_pdo
+- active extensions php_pdo.dll & php_pdo_mysql.dll
+    - For WAMP in settings menu go to PHP Settings --> PHP Extensions --> php_pdo & php_pdo_mysql.dll
 - Load install.sql
