@@ -15,33 +15,21 @@ class Status {
 	public const EN_COURS = 3;
 	public const INACTIF = 4;   // repoussee p.ex. au "siecle prochain" (comme dans avast, lol)
 	public const TERMINE = 5;
+	private static $statusMeaning = ["Non defini","A faire","Bloque","En cours","Inactif","Termine"];
 
 	protected $statusName;        // < int
 	protected $statusReason;      // < string
 	protected $statusTime;        // < date
 
-	private $statusMeaning;       // < string[]
-
 	/**
 	 * Status constructor.
 	 * @param int $statusName type of the status
 	 */
-	public function __construct(int $statusName) {
-		$this->defineTheCorrespondencesArray();
-		$this->setstatusReason(time());
+	public function __construct(int $statusName, string $statusReason) {
 		$this->setStatusName($statusName);
+		$this->setStatusTime(time());
+		$this->setStatusReason($statusReason);
 	}
-
-	private function defineTheCorrespondencesArray(): void {
-		$this->statusMeaning = [];
-		$this->statusMeaning[] = "Non défini";
-		$this->statusMeaning[] = "A faire";
-		$this->statusMeaning[] = "Bloque";
-		$this->statusMeaning[] = "En cours";
-		$this->statusMeaning[] = "Inactif";
-		$this->statusMeaning[] = "Termine";
-	}
-
 
 	/**
 	 * Get meaning of the current status
@@ -51,7 +39,6 @@ class Status {
 		return $this->statusMeaning[$this->statusName];
 	}
 
-
 	/**
 	 * Return the status of task in the array
 	 * @return int Number of task in the array
@@ -60,9 +47,8 @@ class Status {
 		return $this->statusName;
 	}
 
-
 	/**
-	 * Set the number of task in the array
+	 * Set the name of the status
 	 * @param int $statusName the type of status
 	 */
 	public function setStatusName(int $statusName): void {
@@ -79,7 +65,6 @@ class Status {
 		}
 	}
 
-
 	/**
 	 * Return the reason status of task
 	 * @return string The reason of this status
@@ -89,7 +74,7 @@ class Status {
 	}
 
 	/**
-	 * Set the number of task
+	 * Set the reason of the status change
 	 * @param string $statusReason : Can't be an empty string
 	 */
 	public function setStatusReason(string $statusReason): void {
@@ -107,7 +92,7 @@ class Status {
 	}
 
 	/**
-	 * Set the number of task in the array
+	 * Set the date of the status to the given date parameter
 	 * @param date $statusTime : date can't be null
 	 */
 	public function setStatusTime(date $statusTime): void {
@@ -115,7 +100,6 @@ class Status {
 			$this->statusTime = $statusTime;
 		}
 	}
-
 
 	/**
 	 * Return a summary, if asked or needed
