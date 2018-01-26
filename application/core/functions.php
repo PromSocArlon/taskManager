@@ -119,7 +119,8 @@ function checkEmpty($week)
 
 function syncDbAndFile($dbWeek, $dbStorage)
 {
-    $fileStorage = new Storage();
+    $storageFactory = new StorageFactory();
+    $fileStorage = $storageFactory->getStorage('file');
     $fileWeek = $fileStorage->load();
     $mergedWeek = array_merge((array)$fileWeek, (array)$dbWeek);
 
