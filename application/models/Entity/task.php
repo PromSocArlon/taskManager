@@ -11,6 +11,7 @@ class Task {
 
 	public function __construct($name, $storage) {
 		$this->setName($name);
+        $this->storage = new
 		$this->setPriority(0);
 		$this->setDescription('');
 		$this->subtasks = [];

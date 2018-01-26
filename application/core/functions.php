@@ -17,10 +17,11 @@ function addTaskToDayOfWeek($week, $dayName, $task)
     $week->setDay($day);
 }
 
-function checkConnectivityDB($type, $host, $port, $db, $user, $password)
+function checkConnectivityDB()
 {
     try {
-        $conn = new PDO($type . ":host=" . $host . ";port=" . $port . ";dbname=" . $db, $user, $password);
+        $storageFactory = new StorageFactory();
+        $conn = $storageFactory->getStorage('mysql');
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $conn->errorInfo();
         $conn = null;
