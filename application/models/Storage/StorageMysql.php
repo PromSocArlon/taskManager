@@ -1,15 +1,14 @@
 <?php
 
-class StorageMysql
+class StorageMysql extends Storage
 {
-    private $mysqlConnect;
-    private $type;
 
-    public function __construct($type, $host, $port, $db, $user, $password)
+    public function __construct()
     {
+        $config = parse_ini_file("config.ini");
         try {
-            $this->mysqlConnect = new PDO($type . ":host=" . $host . ";port=" . $port . ";dbname=" . $db, $user, $password);
-            $this->mysqlConnect->errorInfo();
+            $this->connection = new PDO($this->type . ":host=" . $config['mysqlHost'] . ";port=" . $config['mysqlPort'] . ";dbname=" . $config['mysqlDb'], $config['mysqlUser'], $config['mysqlPassword']);
+            $this->connection->errorInfo();
             $this->type = "mysql";
         } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
@@ -40,8 +39,8 @@ class StorageMysql
                 "'" . $task->getPriority() . "',
                 (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
             )";
-            $this->mysqlConnect->query($sql);
-            $this->mysqlConnect->errorInfo();
+            $this->connection->query($sql);
+            $this->connection->errorInfo();
             return true;
         } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
@@ -57,8 +56,8 @@ class StorageMysql
                 FROM tbl_task
                 WHERE Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
             ";
-            $data = $this->mysqlConnect->query($sql);
-            $this->mysqlConnect->errorInfo();
+            $data = $this->connection->query($sql);
+            $this->connection->errorInfo();
 
             $day = new Day($day->getName());
             foreach ($data as $value) {
@@ -84,8 +83,8 @@ class StorageMysql
                     Priority = '" . $newTask->getPriority() . "'
                 WHERE Name = '" . $oldTask->getName() . "' AND Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
             ";
-            $this->mysqlConnect->query($sql);
-            $this->mysqlConnect->errorInfo();
+            $this->connection->query($sql);
+            $this->connection->errorInfo();
             return true;
         } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
@@ -100,8 +99,8 @@ class StorageMysql
                 FROM tbl_task 
                 WHERE Name = '" . $task->getName() . "' AND Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
             ";
-            $this->mysqlConnect->query($sql);
-            $this->mysqlConnect->errorInfo();
+            $this->connection->query($sql);
+            $this->connection->errorInfo();
             return true;
         } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
@@ -111,7 +110,7 @@ class StorageMysql
 
     public function showTables()
     {
-        foreach ($this->mysqlConnect->query('SHOW TABLES') as $row) {
+        foreach ($this->connection->query('SHOW TABLES') as $row) {
             print_r($row);
         }
     }
@@ -125,7 +124,7 @@ class StorageMysql
           FROM tbl_task 
           INNER JOIN tbl_day on tbl_task.Day = tbl_day.Id
         ";
-        $data = $this->mysqlConnect->query($sql);
+        $data = $this->connection->query($sql);
 
         foreach ($data as $value) {
             $dataAssoc[$value['day']][] = array($value['task'], $value['priority']);
@@ -148,8 +147,8 @@ class StorageMysql
     {
         try {
             $sql = "TRUNCATE TABLE tbl_task";
-            $this->mysqlConnect->query($sql);
-            $this->mysqlConnect->errorInfo();
+            $this->connection->query($sql);
+            $this->connection->errorInfo();
 
             foreach ($week->getDays() as $day) {
                 foreach ($day->getTasks() as $task) {
@@ -164,8 +163,8 @@ class StorageMysql
         }
     }
 
-    public function closeConnection()
+    public function closeconnection()
     {
-        $mysqlConnect = null;
+        $connection = null;
     }
 }
