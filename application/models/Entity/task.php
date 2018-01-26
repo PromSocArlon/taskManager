@@ -10,7 +10,7 @@ class Task {
 
 	public function __construct($name, $storage) {
 		$this->setName($name);
-        $this->storage = new
+        $this->storage = $storage;
 		$this->setPriority(0);
 		$this->setDescription('');
 		$this->subtasks = [];
@@ -123,6 +123,7 @@ class Task {
 	}
 
 	public function save(){
-	    $this->storage->save('Task', )
+	    // TODO: A modif
+	    $this->storage->save('Day', 'Task');
     }
 }
