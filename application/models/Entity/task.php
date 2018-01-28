@@ -1,6 +1,7 @@
 <?php
 
 class Task {
+	
 	private $name;
 	private $priority;
 	private $description;
@@ -120,8 +121,8 @@ class Task {
 			return null;
 		}
 	}
-
+/*
 	public function save(){
 	    $this->storage->save('Task', )
-    }
+    }*/
 }

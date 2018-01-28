@@ -6,8 +6,8 @@
  * Time: 11:56
  */
 
-require_once 'week.php';
-require_once 'day.php';
+require_once 'application/models/Entity/week.php';
+require_once 'application/models/Entity/day.php';
 
 class Storage
 {
