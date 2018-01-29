@@ -20,7 +20,7 @@ class route {
         $controllerValue= "home";
         if ($request->existParameter('controller')){
             $controllerValue=$request->getParameter('controller');
-            $controllerValue=ucfirst(strtolower($controllerValue));
+            $controllerValue=strtolower($controllerValue);
         }
         $classController = $controllerValue . "Controller";
         $fileController= "application/controllers/" . $classController . ".php";
@@ -47,7 +47,7 @@ class route {
     }
 
     private function handleError(Exception $exception){
-        $view= new view('error');
+        $view= new view('template');
         $view->generate(array('msgError'=> $exception->getMessage()));
     }
 

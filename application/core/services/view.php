@@ -20,10 +20,10 @@ class view {
       
         $root = "taskManager";
         
-        $vue = $this->generateFile('application/views/template.php',
+        $view = $this->generateFile('application/views/template.php',
                 array('title' => $this->title, 'content' => $content,
                     'root' => $root));
-        echo $vue;
+        echo $view;
     }
 
     private function generateFile($file, $data) {
