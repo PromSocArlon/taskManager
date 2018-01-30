@@ -1,4 +1,7 @@
 <?php
+
+require_once 'application/models/Storage/StorageFactory.php';
+
 function out($outString)
 {
     echo $outString . PHP_EOL;
