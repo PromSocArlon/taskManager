@@ -6,6 +6,8 @@ require_once 'includes/classes/StorageMysql.php';
 require_once 'includes/classes/task.php';
 require_once 'includes/classes/week.php';
 require_once 'includes/classes/day.php';
+require_once 'application/models/Entity/Member.php';
+require_once 'application/models/Entity/Team.php';
 
 $handle = fopen("php://stdin", "r");
 

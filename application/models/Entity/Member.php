@@ -2,49 +2,49 @@
 
 class Member {
 
-    var $id;
-    var $login;
-    var $password;
-    var $mail;
-    var $teamLeader;
+    private $id;
+    private $login;
+    private $password;
+    private $mail;
+    private $teamLeader;
 
 
-    function set_id($new_id) {
+    public function set_id($new_id) {
         $this->id = $new_id;
     }
-    function get_id() {
+    public function get_id() {
         return $this->id;
     }
 
 
-    function set_login($new_login) {
+    public function set_login($new_login) {
         $this->login = $new_login;
     }
-    function get_login() {
+    public function get_login() {
         return $this->login;
     }
 
 
-    function set_password($new_password) {
+    public function set_password($new_password) {
         $this->password = $new_password;
     }
-    function get_password() {
+    public function get_password() {
         return $this->password;
     }
 
 
-    function set_mail($new_mail) {
+    public function set_mail($new_mail) {
         $this->mail= $new_mail;
     }
-    function get_mail() {
+    public function get_mail() {
         return $this->mail;
     }
 
 
-    function set_teamLeader($new_teamLeader) {
+    public function set_teamLeader($new_teamLeader) {
         $this->teamLeader= $new_teamLeader;
     }
-    function get_teamLeader() {
+    public function get_teamLeader() {
         return $this->teamLeader;
     }
 
