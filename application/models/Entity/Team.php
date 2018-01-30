@@ -1,6 +1,6 @@
 <?php
 require_once('Member.php');
-
+/* MAJ */
 class Team{
 	
 	private $teamName;

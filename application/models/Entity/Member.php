@@ -1,5 +1,5 @@
 <?php
-
+/* MAJ */
 class Member {
 
     private $id;
