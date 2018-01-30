@@ -8,15 +8,18 @@ class Task {
 	private $subtasks;
     private $storage;
 
-	public function __construct($name, $storage) {
-		$this->setName($name);
-        $this->storage = $storage;
-		$this->setPriority(0);
-		$this->setDescription('');
-		$this->subtasks = [];
-		$this->status = [];
-		$this->addStatus(Status::NON_DEFINI, "Mise en place de la tache.");
+
+	public function __construct() {
+
 	}
+
+	public function setStorage($storage) {
+        $this->storage = $storage;
+    }
+
+    public function getStorage() {
+        return $this->storage;
+    }
 
 	public function setPriority($priority) {
 		$this->priority = $priority;
@@ -122,8 +125,4 @@ class Task {
 		}
 	}
 
-	public function save(){
-	    // TODO: A modif
-	    $this->storage->save('Day', 'Task');
-    }
 }
