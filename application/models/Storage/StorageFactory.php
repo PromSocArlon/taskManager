@@ -2,7 +2,7 @@
 
 class StorageFactory
 {
-    public function getStorage($type)
+    public static function getStorage($type)
     {
         switch (strtolower($type)) {
             case 'file':

@@ -20,8 +20,7 @@ function addTaskToDayOfWeek($week, $dayName, $task)
 function checkConnectivityDB()
 {
     try {
-        $storageFactory = new StorageFactory();
-        $conn = $storageFactory->getStorage('mysql');
+        $conn = StorageFactory::getStorage('mysql');
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $conn->errorInfo();
         $conn = null;
@@ -119,8 +118,7 @@ function checkEmpty($week)
 
 function syncDbAndFile($dbWeek, $dbStorage)
 {
-    $storageFactory = new StorageFactory();
-    $fileStorage = $storageFactory->getStorage('file');
+    $fileStorage = StorageFactory::getStorage('file');
     $fileWeek = $fileStorage->load();
     $mergedWeek = array_merge((array)$fileWeek, (array)$dbWeek);
 
