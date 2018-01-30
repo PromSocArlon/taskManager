@@ -1,53 +1,30 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Albin
- * Date: 20/01/2018
- * Time: 11:56
- */
 
-require_once 'week.php';
-require_once 'day.php';
+require_once '../Entity/week.php';
+require_once '../Entity/day.php';
 
-class Storage
+class StorageFile extends Storage
 {
-    /**
-     * Represents the file in which to store/retrieve the data.
-     *
-     * @var string
-     */
-    private $filename;
-    private $type;
 
-    /**
-     * Storage constructor.
-     */
     public function __construct()
     {
-        $this->filename = 'data.txt';
+        $config = parse_ini_file("config.ini");
+        $this->connection = $config['$connection'];
         $this->type = 'file';
     }
 
-    /**
-     * Getter
-     */
     public function getType()
     {
         return $this->type;
     }
 
-    /**
-     * Load all the tasks from file to memory.
-     *
-     * @return Week
-     */
     public function load()
     {
         $week = new Week();
 
         // Load the file data into an array
         // One line = one array element
-        $data = file($this->filename, FILE_IGNORE_NEW_LINES);
+        $data = file($this->connection, FILE_IGNORE_NEW_LINES);
 
         $i = 0;
         while ($i < sizeof($data)) {
@@ -69,25 +46,19 @@ class Storage
         }
         return $week;
     }
-
-    /**
-     * Save all the tasks from memory to file.
-     *
-     * @param Week $week
-     * @return void
-     */
+    
     public function save($week)
     {
 
         // Empty file
-        file_put_contents($this->filename, "");
+        file_put_contents($this->connection, "");
 
         // Put the day name followed by all the tasks for the given day
         foreach ($week->getDays() as $day) {
-            file_put_contents($this->filename, $day->getName() . PHP_EOL, FILE_APPEND);
+            file_put_contents($this->connection, $day->getName() . PHP_EOL, FILE_APPEND);
             foreach ($day->getTasks() as $task) {
-                file_put_contents($this->filename, $task->getName() . PHP_EOL, FILE_APPEND);
-                file_put_contents($this->filename, $task->getPriority() . PHP_EOL, FILE_APPEND);
+                file_put_contents($this->connection, $task->getName() . PHP_EOL, FILE_APPEND);
+                file_put_contents($this->connection, $task->getPriority() . PHP_EOL, FILE_APPEND);
             }
         }
     }

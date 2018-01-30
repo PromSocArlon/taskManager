@@ -13,7 +13,7 @@ $handle = fopen("php://stdin", "r");
 do {
     $storageType = strtolower(in("Select type of storage, \"M\" for MySQL / \"F\" for file:", $handle));
     if ($storageType == "m") {
-        if (checkConnectivity("mysql", $mysqlHost, $mysqlPort, $mysqlDb, $mysqlUser, $mysqlPassword)) {
+        if (checkConnectivityDB("mysql", $mysqlHost, $mysqlPort, $mysqlDb, $mysqlUser, $mysqlPassword)) {
             out("Storage set to MySQL.");
             $storage = new StorageMysql("mysql", $mysqlHost, $mysqlPort, $mysqlDb, $mysqlUser, $mysqlPassword);
         } else {
@@ -25,13 +25,27 @@ do {
     }
 } while (!isset($storage));
 
-$week = new Week();
 $week = $storage->load();
+if ($storage->getType() == "mysql") syncDbAndFile($week, $storage);
 
 echo PHP_EOL;
 out("Welcome in your taskManager:");
 out("----------------------------");
 echo PHP_EOL;
+
+if (checkEmpty($week)) {
+    foreach ($week->getDays() as $dayValue) {
+        if ($dayValue->getTasks() != null) {
+            displayDay($dayValue);
+            foreach ($dayValue->getTasks() as $taskNumber => $taskValue) {
+                displayTask($taskNumber, $taskValue);
+            }
+            echo PHP_EOL;
+        }
+    }
+} else {
+    out("Empty data, create task before.");
+}
 
 do {
     $action = in("\"C\" to create, \"R\" to read, \"U\" to update, \"D\" to delete, \"S\" to stop", $handle);
@@ -45,15 +59,13 @@ do {
             break;
         case "r":
             if (checkEmpty($week)) {
-                foreach ($week->getDays() as $dayValue) {
-                    if ($dayValue->getTasks() != null) {
-                        displayDay($dayValue);
-                        foreach ($dayValue->getTasks() as $taskNumber => $taskValue) {
-                            displayTask($taskNumber, $taskValue);
-                        }
-                        echo PHP_EOL;
-                    }
+                $validDay = getValidDay($handle, $week);
+                $dayValue = $storage->readTask($validDay);
+                displayDay($dayValue);
+                foreach ($dayValue->getTasks() as $taskNumber => $taskValue) {
+                    displayTask($taskNumber, $taskValue);
                 }
+                echo PHP_EOL;
             } else {
                 out("Empty data, create task before.");
             }
@@ -80,8 +92,11 @@ do {
                 out("Empty data, create task before.");
             }
             break;
-
         case "s":
+            if ($storage->getType() == "mysql") {
+                syncDbAndFile($week, $storage);
+                $storage->closeConnection();
+            }
             out("Goodbye");
     }
 

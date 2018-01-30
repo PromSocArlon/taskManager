@@ -17,10 +17,11 @@ function addTaskToDayOfWeek($week, $dayName, $task)
     $week->setDay($day);
 }
 
-function checkConnectivity($type, $host, $port, $db, $user, $password)
+function checkConnectivityDB()
 {
     try {
-        $conn = new PDO($type . ":host=" . $host . ";port=" . $port . ";dbname=" . $db, $user, $password);
+        $storageFactory = new StorageFactory();
+        $conn = $storageFactory->getStorage('mysql');
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $conn->errorInfo();
         $conn = null;
@@ -74,14 +75,14 @@ function updateTask($handle, $validDay, $week, $storage)
 {
     do {
         $taskNumber = in("Enter the number of the task:", $handle);
-        $taskOldName = $validDay->getTasks()[$taskNumber-1]->getName();
+        $oldTask = $validDay->getTasks()[$taskNumber - 1];
         $taskNewName = in("Enter the new name of the task:", $handle);
         $taskNewPriority = in("Enter the new priority of the task:", $handle);
         $newTask = new Task($taskNewName);
         $newTask->setPriority($taskNewPriority);
         $validDay->updateTask($taskNumber, $newTask);
         if ($storage->getType() == 'mysql') {
-            $storage->updateTask($validDay, $newTask, $taskOldName);
+            $storage->updateTask($validDay, $newTask, $oldTask);
         } else {
             $storage->save($week);
         }
@@ -93,24 +94,44 @@ function updateTask($handle, $validDay, $week, $storage)
 function deleteTask($handle, $validDay, $week, $storage)
 {
     do {
-        $taskNumber = in("\nDelete task number :", $handle);
+        $taskNumber = in("Delete task number :", $handle);
+        $task = $validDay->getTasks()[$taskNumber - 1];
         $validDay->deleteTask($taskNumber);
         if ($storage->getType() == 'mysql') {
-            $storage->deleteTask($validDay, $taskNumber);
+            $storage->deleteTask($validDay, $task);
         } else {
             $storage->save($week);
         }
-        if(count($validDay->getTasks()) > 0)$continue = in("Delete Other task (Y/N):", $handle);
+        if (count($validDay->getTasks()) > 0) $continue = in("Delete Other task (Y/N):", $handle);
         else $continue = 'n';
     } while (strtolower($continue) == 'y');
     $week->setDay($validDay);
 }
 
-function checkEmpty($week) {
+function checkEmpty($week)
+{
     foreach ($week->getDays() as $dayValue) {
         if ($dayValue->getTasks() != null) {
             return true;
         }
     }
     return false;
+}
+
+function syncDbAndFile($dbWeek, $dbStorage)
+{
+    $storageFactory = new StorageFactory();
+    $fileStorage = $storageFactory->getStorage('file');
+    $fileWeek = $fileStorage->load();
+    $mergedWeek = array_merge((array)$fileWeek, (array)$dbWeek);
+
+    $week = new Week();
+    foreach ($mergedWeek as $arrayValue) {
+        //Initial Array
+        foreach ($arrayValue as $day) {
+            $week->setDay($day);
+        }
+    }
+    $fileStorage->save($week);
+    $dbStorage->save($week);
 }
