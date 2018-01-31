@@ -78,7 +78,7 @@ require_once '../controllers/taskEditorController.php';
 							</div>
 						</div>
 						<div id="collaboratorsInfo" class="container">
-							<h1>Collaborators - To Complete</h1>
+							<h1>Collaborators - TO-DO</h1>
 						</div>
 					</div>
 					<!--Ligne vide-->
