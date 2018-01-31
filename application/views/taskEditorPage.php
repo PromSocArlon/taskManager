@@ -8,6 +8,7 @@
 
 require_once '../controllers/taskEditorController.php';
 require_once '../models/Entity/status.php';
+require_once '../core/bootstrapTheme.php'
 
 ?>
 
@@ -26,24 +27,12 @@ require_once '../models/Entity/status.php';
 					<div id="mainTaskInfo" class="col form-group container card bg-light mb-3">
 						<div class="card-header text-center"><h4>Task</h4></div>
 						<div class="card-body">
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<span class="input-group-text" id="inputGroup-sizing-default">Task Name: </span>
-								</div>
-								<input type="text" class="form-control" aria-label="Task Name: " aria-describedby="inputGroup-sizing-default" name="taskName" title="Task Name" placeholder="Enter text here !">
-							</div>
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<span class="input-group-text" id="inputGroup-sizing-default">Priority: </span>
-								</div>
-								<input type="text" class="form-control" aria-label="Priority: " aria-describedby="inputGroup-sizing-default" name="taskPriority" title="Task Priority" placeholder="Enter text here !">
-							</div>
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<span class="input-group-text">Description: </span>
-								</div>
-								<textarea rows="10" class="form-control" aria-label="Description" name="taskDescription" title="Description" placeholder="Enter text here !"></textarea>
-							</div>
+							<?php
+								echo getTextField("Task Name", "taskName");
+								echo getTextField("Priority", "taskPriority");
+								echo getTextarea("Description", "taskDescription", 10);
+							?>
+
 							<div class="form-check form-check-inline">
 								<input type="checkbox" name="repetitive" title="Repetitive" class="form-check-input">
 								<label for="repetitive" class="for-check-label">Repetitive ?</label>
