@@ -75,7 +75,7 @@ require_once '../core/bootstrapTheme.php'
 									<tbody>
 									<tr>
 										<th scope="row">1</th>
-										<td>Julien Breem</td>
+										<td>Ronny Damme</td>
 									</tr>
 									</tbody>
 								</table>
