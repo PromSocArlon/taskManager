@@ -7,6 +7,7 @@
  */
 
 require_once '../controllers/taskEditorController.php';
+require_once '../models/Entity/status.php';
 
 ?>
 
@@ -37,7 +38,7 @@ require_once '../controllers/taskEditorController.php';
 								</div>
 								<input type="text" class="form-control" aria-label="Priority: " aria-describedby="inputGroup-sizing-default" name="taskPriority" title="Task Priority" placeholder="Enter text here !">
 							</div>
-							<div class="input-group">
+							<div class="input-group mb-3">
 								<div class="input-group-prepend">
 									<span class="input-group-text">Description: </span>
 								</div>
@@ -64,11 +65,11 @@ require_once '../controllers/taskEditorController.php';
 							</div>
 							<div class="card-body">
 								<select title="statusType" name="statusType" class="form-control mb-3">
-									<option name="0">Non defini</option>
-									<option name="1">A faire</option>
-									<option name="2">Bloque</option>
-									<option name="3">Inactif</option>
-									<option name="4">Termine</option>
+									<?php
+										for ($i=0;$i<6;++$i) {
+											echo "<option name='".$i."'>".Status::getStatusMeaningByIndex($i)."</option>";
+										}
+									?>
 								</select>
 								<div class="input-group">
 									<div class="input-group-prepend">

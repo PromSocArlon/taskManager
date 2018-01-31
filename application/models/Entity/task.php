@@ -6,7 +6,7 @@ class Task {
 	private $description;
 	private $status;
 	private $subtasks;
-    private $storage;
+        private $storage;
 
 	public function __construct($name, $storage) {
 		$this->setName($name);
@@ -120,8 +120,4 @@ class Task {
 			return null;
 		}
 	}
-
-	public function save(){
-	    $this->storage->save('Task', )
-    }
 }
