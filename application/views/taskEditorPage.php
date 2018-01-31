@@ -60,12 +60,7 @@ require_once '../core/bootstrapTheme.php'
 										}
 									?>
 								</select>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text">Reason: </span>
-									</div>
-									<textarea rows="3" class="form-control" aria-label="Reason" name="statusReason" title="Description" placeholder="Enter text here !"></textarea>
-								</div>
+								<?php echo getTextarea("Reason", "statusReason", 3);?>
 							</div>
 						</div>
 						<div id="collaboratorsInfo" class="container">
