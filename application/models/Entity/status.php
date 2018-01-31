@@ -24,6 +24,7 @@ class Status {
 	/**
 	 * Status constructor.
 	 * @param int $statusName type of the status
+	 * @param string $statusReason reason of the status
 	 */
 	public function __construct(int $statusName, string $statusReason) {
 		$this->setStatusName($statusName);
@@ -31,12 +32,25 @@ class Status {
 		$this->setStatusReason($statusReason);
 	}
 
+	public static function getStatusMeaningByIndex(int $index): string {
+		switch ($index) {
+			case Status::NON_DEFINI:
+			case Status::A_FAIRE:
+			case Status::BLOQUE:
+			case Status::EN_COURS:
+			case Status::INACTIF:
+			case Status::TERMINE:
+				return self::$statusMeaning[$index];
+			default: return null;
+		}
+	}
+
 	/**
 	 * Get meaning of the current status
 	 * @return String Reason
 	 */
 	public function getStatusMeaning(): string {
-		return $this->statusMeaning[$this->statusName];
+		return self::$statusMeaning[$this->statusName];
 	}
 
 	/**
