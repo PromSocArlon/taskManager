@@ -59,9 +59,10 @@ class taskController extends Controller
         $this->task->setStatus($update);
     }
 
-    public function delete()
+    public function delete($day)
     {
-        $this->task = 0;
+        $storage = StorageFactory::getStorage($this->task->getStorage());
+        $storage->deleteTask($day, $this->task);
     }
 
     public function save()
