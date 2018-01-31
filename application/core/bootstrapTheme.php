@@ -27,13 +27,25 @@ function getTextField(string $label, string $name) {
 }
 
 function getTextarea(string $label, string $name, int $rows) {
-	if ($label!="" && $name!="") {
+	if ($label!="" && $name!="" && $rows>0) {
 		return "<div class=\"input-group mb-3\">
 				<div class=\"input-group-prepend\">
 					<span class=\"input-group-text\" id=\"inputGroup-sizing-default\">".$label.": </span>
 				</div>
 				<textarea rows=\"".$rows."\" class=\"form-control\" aria-label=\"".$label."\" name=\"".$name."\" title=\"".$label."\" placeholder=\"Enter text here !\"></textarea>
 
+			</div>";
+	}
+	else {
+		return "";
+	}
+}
+
+function getCheckBox(string $label, string $name) {
+	if ($label!="" && $name!="") {
+		return "<div class=\"form-check form-check-inline\">
+				<input type=\"checkbox\" name=\"".$name."\" title=\"".$label."\" class=\"form-check-input\">
+				<label for=\"".$name."\" class=\"for-check-label\">".$label." ?</label>
 			</div>";
 	}
 	else {
