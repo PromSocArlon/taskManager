@@ -24,7 +24,7 @@ require_once '../controllers/taskEditorController.php';
 			<div id="task" class="container w-100">
 				<div class="row">
 					<div id="mainTaskInfo" class="col form-group container card bg-light mb-3">
-						<div class="card-header text-center">Task</div>
+						<div class="card-header text-center"><h4>Task</h4></div>
 						<div class="card-body">
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
@@ -55,13 +55,33 @@ require_once '../controllers/taskEditorController.php';
 						</div>
 					</div>
 					<div class="col w-100">
-						<div id="statusInfo" class="container">
-							<h1>Status - To Complete</h1>
+						<div id="statusInfo" class="form-group container card bg-light mb-3">
+							<div class="card-header text-center">
+								Status:
+								<input type="button" value="+" name="addStatus" class="btn btn-sm btn-secondary"/>
+								<input type="button" value="History" name="statusHystory" class="btn btn-sm btn-secondary"/>
+							</div>
+							<div class="card-body">
+								<select title="statusType" name="statusType" class="form-control mb-3">
+									<option name="0">Non defini</option>
+									<option name="1">A faire</option>
+									<option name="2">Bloque</option>
+									<option name="3">Inactif</option>
+									<option name="4">Termine</option>
+								</select>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">Reason: </span>
+									</div>
+									<textarea rows="3" class="form-control" aria-label="Reason" name="statusReason" title="Description" placeholder="Enter text here !"></textarea>
+								</div>
+							</div>
 						</div>
 						<div id="collaboratorsInfo" class="container">
 							<h1>Collaborators - To Complete</h1>
 						</div>
 					</div>
+					<!--Ligne vide-->
 					<div class="w-100"></div>
 					<div class="row mx-auto">
 						<div class="btn-group w-100">
