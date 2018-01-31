@@ -21,7 +21,7 @@ require_once '../core/bootstrapTheme.php'
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	</head>
 	<body>
-		<div class="border border-secondary rounded w-50 mx-auto mt-5 p-4">
+		<div class="border border-secondary rounded w-50 h-85 mx-auto mt-5 p-4">
 			<div id="task" class="container w-100">
 				<div class="row">
 					<div id="mainTaskInfo" class="col form-group container card bg-light mb-3">
@@ -31,20 +31,13 @@ require_once '../core/bootstrapTheme.php'
 								echo getTextField("Task Name", "taskName");
 								echo getTextField("Priority", "taskPriority");
 								echo getTextarea("Description", "taskDescription", 10);
+								echo getCheckBox("Repetitive","repetitive");
+								echo getCheckBox("Collaborative", "collaborative");
 							?>
-
-							<div class="form-check form-check-inline">
-								<input type="checkbox" name="repetitive" title="Repetitive" class="form-check-input">
-								<label for="repetitive" class="for-check-label">Repetitive ?</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input type="checkbox" name="collaborative" title="Collaborative" class="form-check-input">
-								<label for="collaborative" class="for-check-label">Collaborative ?</label>
-							</div>
 						</div>
 					</div>
-					<div class="col w-100">
-						<div id="statusInfo" class="form-group container card bg-light mb-3">
+					<div class="col w-100 h-100">
+						<div id="statusInfo" class="form-group container h-50 card bg-light mb-3">
 							<div class="card-header text-center">
 								Status:
 								<div class="float-right">
@@ -63,8 +56,30 @@ require_once '../core/bootstrapTheme.php'
 								<?php echo getTextarea("Reason", "statusReason", 3);?>
 							</div>
 						</div>
-						<div id="collaboratorsInfo" class="container">
-							<h1 class="text-danger">Collaborators - TO-DO</h1>
+						<div id="collaboratorsInfo" class="form-group container h-50 card bg-light mb-3">
+							<div class="card-header text-center">
+								Collaborators:
+								<div class="float-right">
+									<input type="button" value="+" name="addCollaborators" class="btn btn-sm btn-secondary"/>
+									<input type="button" value="-" name="removeCollaborators" class="btn btn-sm btn-secondary"/>
+								</div>
+							</div>
+							<div class="card-body">
+								<table class="table table-sm table-hover">
+									<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Name</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr>
+										<th scope="row">1</th>
+										<td>Julien Breem</td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 					<!--Ligne vide-->
