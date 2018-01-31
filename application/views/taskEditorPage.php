@@ -15,7 +15,6 @@ require_once '../controllers/taskEditorController.php';
 <html>
 	<head>
 		<title>TaskManager - TaskEditor</title>
-		<link type="text/css" rel="stylesheet" href="CSS/taskEditor.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	</head>
@@ -58,8 +57,10 @@ require_once '../controllers/taskEditorController.php';
 						<div id="statusInfo" class="form-group container card bg-light mb-3">
 							<div class="card-header text-center">
 								Status:
-								<input type="button" value="+" name="addStatus" class="btn btn-sm btn-secondary"/>
-								<input type="button" value="History" name="statusHystory" class="btn btn-sm btn-secondary"/>
+								<div class="float-right">
+									<input type="button" value="+" name="addStatus" class="btn btn-sm btn-secondary"/>
+									<input type="button" value="History" name="statusHystory" class="btn btn-sm btn-secondary"/>
+								</div>
 							</div>
 							<div class="card-body">
 								<select title="statusType" name="statusType" class="form-control mb-3">
