@@ -50,7 +50,6 @@ class StorageFile extends Storage
     
     public function save($week)
     {
-
         // Empty file
         file_put_contents($this->connection, "");
 
