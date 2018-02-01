@@ -18,34 +18,38 @@ class StorageMysql extends Storage
         }
     }
 
-    public function create($day, $task)
+    public function create(array $data)
     {
-        //$table =
-        //$field =
-        //$value =
+        $sql = "";
+        foreach ($data as $table => $array) {
+
+            foreach ($array as $arrayValue) {
+                $field = "";
+                $value = "";
+
+                foreach ($arrayValue as $listKey => $listValue) {
+                    $field .= "`" . trim(strtolower($listKey)) . "`, ";
+                    if (!empty(trim($listValue))) {
+                        $value .= "'" . trim(strtolower($listValue)) . "', ";
+                    } else {
+                        $value .= "'NULL', ";
+                    }
+                }
+                $field = trim($field, ", ");
+                $value = trim($value, ", ");
+
+                $sql .= "INSERT INTO tbl_" . $table . " (" . $field . ") VALUES (" . $value . ");";
+
+            }
+
+        }
 
         try {
-            $sql = "
-            INSERT INTO tbl_task 
-            (
-                Id,
-                Name,
-                Priority,
-                Day
-            )
-            VALUES
-            (
-                NULL, " .
-                "'" . $task->getName() . "'," .
-                "'" . $task->getPriority() . "',
-                (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
-            )";
-            $this->connection->query($sql);
-            $this->connection->errorInfo();
-            return true;
+            $request = $this->connection->prepare($sql);
+            $request->execute();
+            return $request->errorInfo();
         } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
-            return false;
         }
     }
 
