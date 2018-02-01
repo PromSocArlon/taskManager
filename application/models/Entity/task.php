@@ -7,22 +7,11 @@ class Task
     private $description;
     private $status;
     private $subtasks;
-    private $storage;
 
 
     public function __construct()
     {
 
-    }
-
-    public function setStorage($storage)
-    {
-        $this->storage = $storage;
-    }
-
-    public function getStorage()
-    {
-        return $this->storage;
     }
 
     public function setPriority($priority)

@@ -11,12 +11,13 @@ require_once 'controller.php';
 class taskController extends Controller
 {
     private $task;
+    private $storage;
 
     //$storage doit etre = 'file' ou 'mysql'
-    public function __construct($storage)
+    public function __construct($storageType)
     {
         $this->task = $this->model('task');
-        $this->task->setStorage($storage);
+        $this->storage = StorageFactory::getStorage($storageType);
     }
 
     public function create($taskName, $taskPriority, $taskDescription, $taskStatus)
@@ -61,14 +62,12 @@ class taskController extends Controller
 
     public function delete($day)
     {
-        $storage = StorageFactory::getStorage($this->task->getStorage());
-        $storage->deleteTask($day, $this->task);
+        $this->storage->deleteTask($day, $this->task);
     }
 
     public function save()
     {
-        $storage = StorageFactory::getStorage($this->task->getStorage());
-        $storage->saveTask($this->task);
+        $this->storage->saveTask($this->task);
     }
 
 }

@@ -5,7 +5,10 @@ abstract class Storage
     protected $connection;
     protected $type;
 
-    abstract public function getType();
+    public function getType()
+    {
+        return $this->type;
+    }
 
     abstract public function createTask($day, $task);
 

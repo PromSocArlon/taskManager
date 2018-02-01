@@ -6,17 +6,12 @@ require_once 'application/models/Storage/Storage.php';
 
 class StorageFile extends Storage
 {
+    protected $type = 'file';
 
     public function __construct()
     {
         $config = parse_ini_file("config.ini");
-        $this->connection = $config['$connection'];
-        $this->type = 'file';
-    }
-
-    public function getType()
-    {
-        return $this->type;
+        $this->connection = $config['fileName'];
     }
 
     public function load()

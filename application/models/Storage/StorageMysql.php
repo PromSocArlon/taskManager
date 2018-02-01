@@ -4,10 +4,10 @@ require_once realpath('application/models/Storage/Storage.php');
 
 class StorageMysql extends Storage
 {
+    protected $type = 'mysql';
 
     public function __construct()
     {
-        $this->type = "mysql";
         $config = parse_ini_file(realpath('application/core/config.ini'));
         try {
             $this->connection = new PDO($this->type . ":host=" . $config['mysqlHost'] . ";port=" . $config['mysqlPort'] . ";dbname=" . $config['mysqlDb'], $config['mysqlUser'], $config['mysqlPassword']);
@@ -18,9 +18,35 @@ class StorageMysql extends Storage
         }
     }
 
-    public function getType()
+    public function create($day, $task)
     {
-        return $this->type;
+        //$table =
+        //$field =
+        //$value =
+
+        try {
+            $sql = "
+            INSERT INTO tbl_task 
+            (
+                Id,
+                Name,
+                Priority,
+                Day
+            )
+            VALUES
+            (
+                NULL, " .
+                "'" . $task->getName() . "'," .
+                "'" . $task->getPriority() . "',
+                (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
+            )";
+            $this->connection->query($sql);
+            $this->connection->errorInfo();
+            return true;
+        } catch (PDOException $e) {
+            echo "Error !: " . $e->getMessage() . PHP_EOL;
+            return false;
+        }
     }
 
     public function createTask($day, $task)
