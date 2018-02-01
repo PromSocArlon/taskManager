@@ -83,11 +83,6 @@ class StorageFile extends Storage
         // TODO: Implement deleteTask() method.
     }
 
-    public function showTables()
-    {
-        // TODO: Implement showTables() method.
-    }
-
     public function closeConnection()
     {
         // TODO: Implement closeConnection() method.
