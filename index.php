@@ -1,11 +1,11 @@
 <?php
-require_once 'includes/functions.php';
-require_once 'includes/configuration.php';
-require_once 'includes/classes/Storage.php';
-require_once 'includes/classes/StorageMysql.php';
-require_once 'includes/classes/task.php';
-require_once 'includes/classes/week.php';
-require_once 'includes/classes/day.php';
+require_once 'application/core/functions.php';
+require_once 'application/core/configuration.php';
+require_once 'application/models/Storage/StorageFile.php';
+require_once 'application/models/Storage/StorageMysql.php';
+require_once 'application/models/Entity/task.php';
+require_once 'application/models/Entity/week.php';
+require_once 'application/models/Entity/day.php';
 
 $handle = fopen("php://stdin", "r");
 
@@ -21,7 +21,7 @@ do {
         }
     } else if ($storageType == "f") {
         out("Storage set to File.");
-        $storage = new Storage();
+        $storage = new StorageFile();
     }
 } while (!isset($storage));
 

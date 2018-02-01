@@ -5,7 +5,7 @@ class StorageMysql extends Storage
 
     public function __construct()
     {
-        $config = parse_ini_file("config.ini");
+        $config = parse_ini_file("application/core/config.ini");
         try {
             $this->connection = new PDO($this->type . ":host=" . $config['mysqlHost'] . ";port=" . $config['mysqlPort'] . ";dbname=" . $config['mysqlDb'], $config['mysqlUser'], $config['mysqlPassword']);
             $this->connection->errorInfo();

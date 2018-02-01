@@ -1,7 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Albin
- * Date: 30/01/2018
- * Time: 10:18
- */
+
+$mysqlHost = "127.0.0.1";
+$mysqlPort = "3306";
+$mysqlDb = "taskManager";
+$mysqlUser = "taskManager";
+$mysqlPassword = "taskManager";

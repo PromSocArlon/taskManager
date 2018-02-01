@@ -1,7 +1,8 @@
 <?php
 
-require_once '../Entity/week.php';
-require_once '../Entity/day.php';
+require_once 'application/models/Entity/week.php';
+require_once 'application/models/Entity/day.php';
+require_once 'application/models/Storage/Storage.php';
 
 class StorageFile extends Storage
 {
@@ -61,5 +62,35 @@ class StorageFile extends Storage
                 file_put_contents($this->connection, $task->getPriority() . PHP_EOL, FILE_APPEND);
             }
         }
+    }
+
+    public function createTask($day, $task)
+    {
+        // TODO: Implement createTask() method.
+    }
+
+    public function readTask($day)
+    {
+        // TODO: Implement readTask() method.
+    }
+
+    public function updateTask($day, $newTask, $oldTask)
+    {
+        // TODO: Implement updateTask() method.
+    }
+
+    public function deleteTask($day, $task)
+    {
+        // TODO: Implement deleteTask() method.
+    }
+
+    public function showTables()
+    {
+        // TODO: Implement showTables() method.
+    }
+
+    public function closeConnection()
+    {
+        // TODO: Implement closeConnection() method.
     }
 }
