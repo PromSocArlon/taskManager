@@ -120,8 +120,4 @@ class Task {
 			return null;
 		}
 	}
-
-	public function save(){
-	    $this->storage->save('Task', )
-    }
 }
