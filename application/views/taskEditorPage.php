@@ -17,7 +17,7 @@ require_once '../core/bootstrapTheme.php'
 <html>
 	<head>
 		<title>TaskManager - TaskEditor</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<?php echo getBootstrapTag(); ?>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	</head>
 	<body>
@@ -40,9 +40,11 @@ require_once '../core/bootstrapTheme.php'
 						<div id="statusInfo" class="form-group container h-50 card bg-light mb-3">
 							<div class="card-header text-center">
 								Status:
-								<div class="float-right">
-									<input type="button" value="+" name="addStatus" class="btn btn-sm btn-secondary"/>
-									<input type="button" value="History" name="statusHystory" class="btn btn-sm btn-secondary"/>
+								<div class="float-right btn-group">
+									<?php
+										echo getButton("+","addStatus");
+										echo getButton("History","statusHistory");
+									?>
 								</div>
 							</div>
 							<div class="card-body">
@@ -59,9 +61,11 @@ require_once '../core/bootstrapTheme.php'
 						<div id="collaboratorsInfo" class="form-group container h-50 card bg-light mb-3">
 							<div class="card-header text-center">
 								Collaborators:
-								<div class="float-right">
-									<input type="button" value="+" name="addCollaborators" class="btn btn-sm btn-secondary"/>
-									<input type="button" value="-" name="removeCollaborators" class="btn btn-sm btn-secondary"/>
+								<div class="float-right btn-group">
+									<?php
+										echo getButton("+","addCollaborators");
+										echo getButton("-","removeCollaborators");
+									?>
 								</div>
 							</div>
 							<div class="card-body">
@@ -86,8 +90,10 @@ require_once '../core/bootstrapTheme.php'
 					<div class="w-100"></div>
 					<div class="row mx-auto">
 						<div class="btn-group w-100">
-							<input type="button" title="OK" name="OK" value="Ok !" class="btn btn-secondary">
-							<input type="button" title="Cancel" name="Cancel" value="Cancel !" class="btn btn-secondary">
+							<?php
+								echo getButton("OK !","Ok");
+								echo getButton("Cancel !","Cancel");
+							?>
 						</div>
 					</div>
 				</div>
