@@ -2,7 +2,7 @@
 
 abstract class Storage
 {
-    protected $connect;
+    protected $connection;
     protected $type;
 
     abstract public function getType();
@@ -14,8 +14,6 @@ abstract class Storage
     abstract public function updateTask($day, $newTask, $oldTask);
 
     abstract public function deleteTask($day, $task);
-
-    abstract public function showTables();
 
     abstract public function load();
 

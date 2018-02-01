@@ -1,15 +1,17 @@
 <?php
 
+require_once realpath('application/models/Storage/Storage.php');
+
 class StorageMysql extends Storage
 {
 
     public function __construct()
     {
-        $config = parse_ini_file("application/core/config.ini");
+        $this->type = "mysql";
+        $config = parse_ini_file(realpath('application/core/config.ini'));
         try {
             $this->connection = new PDO($this->type . ":host=" . $config['mysqlHost'] . ";port=" . $config['mysqlPort'] . ";dbname=" . $config['mysqlDb'], $config['mysqlUser'], $config['mysqlPassword']);
             $this->connection->errorInfo();
-            $this->type = "mysql";
         } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
             die();
