@@ -55,7 +55,6 @@ class StorageMysql extends Storage
         foreach ($data as $table => $array) {
 
             foreach ($array as $arrayValue) {
-                $field = "";
                 $value = "";
 
                 foreach ($arrayValue as $listKey => $listValue) {
@@ -77,37 +76,64 @@ class StorageMysql extends Storage
 
     public function update(array $data)
     {
-        try {
-            $sql = "
-                UPDATE tbl_task 
+        $sql = "";
+        foreach ($data as $table => $array) {
+
+            foreach ($array as $arrayValue) {
+                $field = "";
+                $value = "";
+
+                foreach ($arrayValue as $listKey => $listValue) {
+                    $field .= "`" . trim(strtolower($listKey)) . "`, ";
+                    if (!empty(trim($listValue))) {
+                        $value .= "'" . trim(strtolower($listValue)) . "', ";
+                    } else {
+                        $value .= "'NULL', ";
+                    }
+                }
+                $field = trim($field, ", ");
+                $value = trim($value, ", ");
+
+                $sql .= "INSERT INTO tbl_" . $table . " (" . $field . ") VALUES (" . $value . ");";
+
+                $sql .= "
+                UPDATE tbl_" . $table . " 
                 SET
                     Name = '" . $newTask->getName() . "',
                     Priority = '" . $newTask->getPriority() . "'
                 WHERE Name = '" . $oldTask->getName() . "' AND Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
-            ";
-            $this->connection->query($sql);
-            $this->connection->errorInfo();
-            return true;
-        } catch (PDOException $e) {
-            echo "Error !: " . $e->getMessage() . PHP_EOL;
-            return false;
+                ";
+
+            }
+
         }
+
+        $request = $this->query($sql);
+        return $request->errorInfo();
     }
 
     public function delete(array $data)
     {
-        try {
-            $sql = "DELETE 
-                FROM tbl_task 
-                WHERE Name = '" . $task->getName() . "' AND Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
-            ";
-            $this->connection->query($sql);
-            $this->connection->errorInfo();
-            return true;
-        } catch (PDOException $e) {
-            echo "Error !: " . $e->getMessage() . PHP_EOL;
-            return false;
+        $sql = "";
+        foreach ($data as $table => $array) {
+
+            foreach ($array as $arrayValue) {
+                $field = "";
+                $value = "";
+
+                foreach ($arrayValue as $listKey => $listValue) {
+                    $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) ."' AND ";
+                }
+                $value = trim($value, "AND ");
+
+                $sql .= "DELETE FROM tbl_" . $table . " WHERE " . $value;
+
+            }
+
         }
+
+        $request = $this->query($sql);
+        return $request->errorInfo();
     }
 
     public function load()

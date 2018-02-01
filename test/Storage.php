@@ -47,8 +47,11 @@ foreach ($daysArray as $dayKey => $dayObject) {
 
 // Read test
 $validTableRead['tasks'][0]['day'] = '1';
-print_r($storage->read($validTableRead));
+//print_r($storage->read($validTableRead));
 
+// Delete test
+$validTableDelete['tasks'][0]['day'] = '1';
+print_r($storage->delete($validTableDelete));
 
 //print_r($validTableToSave);
 
