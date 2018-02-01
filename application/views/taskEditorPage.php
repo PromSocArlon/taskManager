@@ -69,16 +69,16 @@ require_once '../core/bootstrapTheme.php'
 							<div class="card-body">
 								<table class="table table-sm table-hover">
 									<thead class="thead-dark">
-									<tr>
-										<th scope="col">#</th>
-										<th scope="col">Name</th>
-									</tr>
+										<tr>
+											<th scope="col">#</th>
+											<th scope="col">Name</th>
+										</tr>
 									</thead>
 									<tbody>
-									<tr>
-										<th scope="row">1</th>
-										<td>Ronny Damme</td>
-									</tr>
+										<tr>
+											<th scope="row">1</th>
+											<td>Ronny Damme</td>
+										</tr>
 									</tbody>
 								</table>
 							</div>
