@@ -6,6 +6,12 @@
  * Time: 17:54
  */
 
+
+function getBootstrapTag():string {
+	return "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">";
+}
+
+
 /**
  * @param string $label
  * @param string $name
@@ -52,3 +58,13 @@ function getCheckBox(string $label, string $name) {
 		return "";
 	}
 }
+
+function getButton(string $value, string $name): string {
+	if ($value!="" && $name!="") {
+		return "<input type=\"button\" value=\"".$value."\" name=\"".$name."\" class=\"btn btn-sm btn-secondary\"/>";
+	}
+	else {
+		return null;
+	}
+}
+
