@@ -5,6 +5,8 @@ require_once realpath('application/models/Entity/day.php');
 require_once realpath('application/models/Entity/task.php');
 require_once realpath('application/models/Storage/StorageMysql.php');
 
+
+// Phil, test sauvegarde generique.
 $storage = new StorageMysql();
 
 $task0 = new Task();
@@ -38,13 +40,15 @@ foreach ($daysArray as $dayKey => $dayObject) {
         foreach ($taskArray as $key => $value) {
             $validTableToSave['tasks'][$taskKey][str_replace('Task', '', $key)] = $value;
         }
-        $validTableToSave['tasks'][$taskKey]['day'] = $dayKey;
+        $validTableToSave['tasks'][$taskKey]['day'] = $dayKey + 1;
 
     }
 
 }
 
-print_r($validTableToSave);
+print_r($storage->create($validTableToSave));
+
+//print_r($validTableToSave);
 
 /*Result of object week to array
 
