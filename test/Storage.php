@@ -51,7 +51,9 @@ $validTableRead['tasks'][0]['day'] = '1';
 
 // Delete test
 $validTableDelete['tasks'][0]['day'] = '1';
-print_r($storage->delete($validTableDelete));
+//print_r($storage->delete($validTableDelete));
+
+echo realpath('application/models/Storage/Storage.php');
 
 //print_r($validTableToSave);
 

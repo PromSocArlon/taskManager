@@ -6,15 +6,21 @@
  * Time: 10:56 AM
  */
 
-namespace TaskManager\controller;
+//namespace TaskManager\controller;
 
-class UserController{
+class userController extends controller{
 
     /**
      * Show information for one user
      */
     public function showAction(){
 
+    }
+
+    public function index(){
+        require_once 'application/views/_shared/header.php';
+        $this->generateView();
+        require_once 'application/views/_shared/footer.php';
     }
 
     public function save($firstName, $lastName, $password) {
