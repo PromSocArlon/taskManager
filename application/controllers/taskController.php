@@ -1,43 +1,73 @@
 <?php
 
-namespace TaskManager\controller;
+/**
+ * Created by PhpStorm.
+ * User: Chris
+ * Date: 30-01-18
+ * Time: 01:58
+ */
+require_once 'controller.php';
 
-
-class taskController
+class taskController extends Controller
 {
-    private $model;
+    private $task;
+    private $storage;
 
-    //$model needs to be a Task class type
-    public function __construct($model){
-        $this->model = $model;
+    //$storage doit etre = 'file' ou 'mysql'
+    public function __construct($storageType)
+    {
+        $this->task = $this->model('task');
+        $this->storage = StorageFactory::getStorage($storageType);
     }
 
-    public function create($taskName, $taskPriority, $taskDescription, $taskStatus){
-
-        $this->model->setName($taskName);
-        $this->model->setPriority($taskPriority);
-        $this->model->setDescription($taskDescription);
-        $this->model->addStatus($taskStatus, $taskDescription);
+    public function create($taskName, $taskPriority, $taskDescription, $taskStatus)
+    {
+        $this->task->setName($taskName);
+        $this->task->setPriority($taskPriority);
+        $this->task->setDescription($taskDescription);
+        $this->task->addStatus($taskStatus, $taskDescription); //ne fonctionne pas encore
     }
 
-    public function update(){
-        // TODO: A completer
+    //addSubTask est en dehors du create car il est optionnel
+    public function addSubTask($subTask)
+    {
+        $this->task->addSubTask($subTask);
     }
 
-    public function delete(){
-
-        $this->model = 0;
+    //on passe l'objet task a la view pour l'afficher
+    public function read()
+    {
+        return $this->task;
     }
 
-    public function save() {
-
-        $storageFactory = new StorageFactory();
-        $task = new task($storageFactory->getStorage($this->model->getStorage()));
-        $task->setName($this->model->getName());
-        $task->setPriority($this->model->getPriority());
-        $task->setDescription($this->model->getDescription());
-        $task->addStatus($this->model->getStatus());
+    public function updateName($update)
+    {
+        $this->task->setName($update);
     }
 
+    public function updatePriority($update)
+    {
+        $this->task->setPriority($update);
+    }
+
+    public function updateDescription($update)
+    {
+        $this->task->setDescription($update);
+    }
+
+    public function updateStatus($update)
+    {
+        $this->task->setStatus($update);
+    }
+
+    public function delete($day)
+    {
+        $this->storage->deleteTask($day, $this->task);
+    }
+
+    public function save()
+    {
+        $this->storage->saveTask($this->task);
+    }
 
 }

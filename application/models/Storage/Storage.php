@@ -2,24 +2,21 @@
 
 abstract class Storage
 {
-    protected $connect;
+    protected $connection;
     protected $type;
 
-    abstract public function getType();
+    public function getType()
+    {
+        return $this->type;
+    }
 
-    abstract public function createTask($day, $task);
+    abstract public function create(array $array);
 
-    abstract public function readTask($day);
+    abstract public function read(array $array);
 
-    abstract public function updateTask($day, $newTask, $oldTask);
+    abstract public function update(array $array);
 
-    abstract public function deleteTask($day, $task);
+    abstract public function delete(array $array);
 
-    abstract public function showTables();
-
-    abstract public function load();
-
-    abstract public function save($week);
-
-    abstract public function closeConnection();
+    abstract public function close();
 }

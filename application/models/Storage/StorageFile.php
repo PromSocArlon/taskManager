@@ -6,17 +6,12 @@ require_once 'application/models/Storage/Storage.php';
 
 class StorageFile extends Storage
 {
+    protected $type = 'file';
 
     public function __construct()
     {
         $config = parse_ini_file("config.ini");
-        $this->connection = $config['$connection'];
-        $this->type = 'file';
-    }
-
-    public function getType()
-    {
-        return $this->type;
+        $this->connection = $config['fileName'];
     }
 
     public function load()
@@ -50,7 +45,6 @@ class StorageFile extends Storage
     
     public function save($week)
     {
-
         // Empty file
         file_put_contents($this->connection, "");
 
@@ -82,11 +76,6 @@ class StorageFile extends Storage
     public function deleteTask($day, $task)
     {
         // TODO: Implement deleteTask() method.
-    }
-
-    public function showTables()
-    {
-        // TODO: Implement showTables() method.
     }
 
     public function closeConnection()
