@@ -24,12 +24,8 @@ $day1->addTask($task1);
 $week = new Week();
 $week->setDay($day0);
 
-
-$tableau['task']['sunday'][0]['name'] = 'test';
-$tableau['task']['sunday'][0]['priority'] = 5;
-
-
-$validTableToSave = [];
+// Create test
+$validTableCreate = [];
 $daysArray = $week->getDays();
 foreach ($daysArray as $dayKey => $dayObject) {
     $tasksObject = $dayObject->getTasks();
@@ -38,15 +34,21 @@ foreach ($daysArray as $dayKey => $dayObject) {
         $taskArray = (array)$taskValue;
 
         foreach ($taskArray as $key => $value) {
-            $validTableToSave['tasks'][$taskKey][str_replace('Task', '', $key)] = $value;
+            $validTableCreate['tasks'][$taskKey][str_replace('Task', '', $key)] = $value;
         }
-        $validTableToSave['tasks'][$taskKey]['day'] = $dayKey + 1;
+        $validTableCreate['tasks'][$taskKey]['day'] = $dayKey + 1;
 
     }
 
 }
 
-print_r($storage->create($validTableToSave));
+
+//print_r($storage->create($validTableCreate));
+
+// Read test
+$validTableRead['tasks'][0]['day'] = '1';
+print_r($storage->read($validTableRead));
+
 
 //print_r($validTableToSave);
 

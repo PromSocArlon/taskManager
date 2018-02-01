@@ -18,6 +18,7 @@ class StorageMysql extends Storage
         }
     }
 
+
     public function create(array $data)
     {
         $sql = "";
@@ -44,68 +45,37 @@ class StorageMysql extends Storage
 
         }
 
-        try {
-            $request = $this->connection->prepare($sql);
-            $request->execute();
-            return $request->errorInfo();
-        } catch (PDOException $e) {
-            echo "Error !: " . $e->getMessage() . PHP_EOL;
-        }
+        $request = $this->query($sql);
+        return $request->errorInfo();
     }
 
-    public function createTask($day, $task)
+    public function read(array $data)
     {
-        try {
-            $sql = "
-            INSERT INTO tbl_task 
-            (
-                Id,
-                Name,
-                Priority,
-                Day
-            )
-            VALUES
-            (
-                NULL, " .
-                "'" . $task->getName() . "'," .
-                "'" . $task->getPriority() . "',
-                (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
-            )";
-            $this->connection->query($sql);
-            $this->connection->errorInfo();
-            return true;
-        } catch (PDOException $e) {
-            echo "Error !: " . $e->getMessage() . PHP_EOL;
-            return false;
-        }
-    }
+        $sql = "";
+        foreach ($data as $table => $array) {
 
-    public function readTask($day)
-    {
-        try {
-            $sql = "
-                SELECT Name, Priority
-                FROM tbl_task
-                WHERE Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
-            ";
-            $data = $this->connection->query($sql);
-            $this->connection->errorInfo();
+            foreach ($array as $arrayValue) {
+                $field = "";
+                $value = "";
 
-            $day = new Day($day->getName());
-            foreach ($data as $value) {
-                $task = new Task($value['Name']);
-                $task->setPriority($value['Priority']);
-                $day->addTask($task);
+                foreach ($arrayValue as $listKey => $listValue) {
+                    if (!empty(trim($listValue))) {
+                        $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) ."' AND ";
+                    }
+                }
+                $value = trim($value, "AND ");
+
+                $sql .= "SELECT * FROM tbl_" . $table . " WHERE " . $value . ";";
+
             }
 
-            return $day;
-        } catch (PDOException $e) {
-            echo "Error !: " . $e->getMessage() . PHP_EOL;
-            return false;
         }
+
+        $request = $this->query($sql);
+        return $request->fetchAll();
     }
 
-    public function updateTask($day, $newTask, $oldTask)
+    public function update(array $data)
     {
         try {
             $sql = "
@@ -124,7 +94,7 @@ class StorageMysql extends Storage
         }
     }
 
-    public function deleteTask($day, $task)
+    public function delete(array $data)
     {
         try {
             $sql = "DELETE 
@@ -137,13 +107,6 @@ class StorageMysql extends Storage
         } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
             return false;
-        }
-    }
-
-    public function showTables()
-    {
-        foreach ($this->connection->query('SHOW TABLES') as $row) {
-            print_r($row);
         }
     }
 
@@ -195,7 +158,18 @@ class StorageMysql extends Storage
         }
     }
 
-    public function closeconnection()
+    private function query($sql)
+    {
+        try {
+            $request = $this->connection->prepare($sql);
+            $request->execute();
+            return $request;
+        } catch (PDOException $e) {
+            echo "Error !: " . $e->getMessage() . PHP_EOL;
+        }
+    }
+
+    public function close()
     {
         $connection = null;
     }
