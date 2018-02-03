@@ -1,6 +1,5 @@
 <?php
 require_once 'application/core/functions.php';
-require_once 'application/models/Storage/configuration.php';
 require_once 'application/models/Storage/Storage.php';
 require_once 'application/models/Storage/StorageMysql.php';
 require_once 'application/models/Entity/task.php';

@@ -53,101 +53,19 @@ $validTableRead['tasks'][0]['day'] = '1';
 $validTableDelete['tasks'][0]['day'] = '1';
 //print_r($storage->delete($validTableDelete));
 
-echo realpath('application/models/Storage/Storage.php');
+// Update test
 
-//print_r($validTableToSave);
+$validTableUpdate['tasks'][0]['get']['name'] = "Test999";
+$validTableUpdate['tasks'][0]['set']['day'] = "2";
+//print_r($storage->update($validTableUpdate));
 
-/*Result of object week to array
 
-    Array
-    (
-        [Weekdays] => Array
-        (
-            [0] => Day Object
-(
-    [name:Day:private] => monday
-[tasks:Day:private] => Array
-(
-    [0] => Task Object
-(
-    [name:Task:private] => Test0
-[priority:Task:private] => 0
-                    [description:Task:private] =>
-                    [status:Task:private] =>
-                    [subtasks:Task:private] =>
-                    [storage:Task:private] =>
-                )
+$route = new route();
+$route->routeQuery();
 
-                [1] => Task Object
-(
-    [name:Task:private] => Test1
-[priority:Task:private] => 1
-                    [description:Task:private] =>
-                    [status:Task:private] =>
-                    [subtasks:Task:private] =>
-                    [storage:Task:private] =>
-                )
 
-            )
 
-        )
+if (!empty($_GET['page']) AND is_file(''))
 
-        [1] => Day Object
-(
-    [name:Day:private] => tuesday
-[tasks:Day:private] => Array
-(
-)
-
-        )
-
-        [2] => Day Object
-(
-    [name:Day:private] => wednesday
-[tasks:Day:private] => Array
-(
-)
-
-        )
-
-        [3] => Day Object
-(
-    [name:Day:private] => thursday
-[tasks:Day:private] => Array
-(
-)
-
-        )
-
-        [4] => Day Object
-(
-    [name:Day:private] => friday
-[tasks:Day:private] => Array
-(
-)
-
-        )
-
-        [5] => Day Object
-(
-    [name:Day:private] => saturday
-[tasks:Day:private] => Array
-(
-)
-
-        )
-
-        [6] => Day Object
-(
-    [name:Day:private] => sunday
-[tasks:Day:private] => Array
-(
-)
-
-        )
-
-    )
-
-)*/
 
 ?>

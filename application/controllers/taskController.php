@@ -17,6 +17,8 @@ class taskController extends Controller
     public function __construct($storageType)
     {
         $this->task = $this->model('task');
+
+        // TODO: nouvelle instance de l'objet StorageMYsql pour chaque task... pas super opti !
         $this->storage = StorageFactory::getStorage($storageType);
     }
 
@@ -60,6 +62,7 @@ class taskController extends Controller
         $this->task->setStatus($update);
     }
 
+    // Storage
     public function delete($day)
     {
         $this->storage->deleteTask($day, $this->task);

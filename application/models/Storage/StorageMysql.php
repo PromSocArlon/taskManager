@@ -6,7 +6,7 @@ class StorageMysql extends Storage
 {
     protected $type = 'mysql';
 
-    public function __construct()
+    function __construct()
     {
         $config = parse_ini_file(realpath('application/core/config.ini'));
         try {
@@ -18,6 +18,10 @@ class StorageMysql extends Storage
         }
     }
 
+    function __destruct()
+    {
+        $connection = null;
+    }
 
     public function create(array $data)
     {
@@ -59,7 +63,7 @@ class StorageMysql extends Storage
 
                 foreach ($arrayValue as $listKey => $listValue) {
                     if (!empty(trim($listValue))) {
-                        $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) ."' AND ";
+                        $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) . "' AND ";
                     }
                 }
                 $value = trim($value, "AND ");
@@ -80,29 +84,20 @@ class StorageMysql extends Storage
         foreach ($data as $table => $array) {
 
             foreach ($array as $arrayValue) {
-                $field = "";
-                $value = "";
 
-                foreach ($arrayValue as $listKey => $listValue) {
-                    $field .= "`" . trim(strtolower($listKey)) . "`, ";
-                    if (!empty(trim($listValue))) {
-                        $value .= "'" . trim(strtolower($listValue)) . "', ";
-                    } else {
-                        $value .= "'NULL', ";
+                foreach ($arrayValue as $typeKey => $typeValue) {
+                    $value[trim($typeKey)] = "";
+
+                    foreach ($typeValue as $listKey => $listValue) {
+                        $value[trim($typeKey)] .= "`" . trim(strtolower($listKey)) . "` = '" . trim(strtolower($listValue)) . "', ";
                     }
-                }
-                $field = trim($field, ", ");
-                $value = trim($value, ", ");
 
-                $sql .= "INSERT INTO tbl_" . $table . " (" . $field . ") VALUES (" . $value . ");";
+                    $value[trim($typeKey)] = trim($value[trim($typeKey)], ", ");
+
+                }
 
                 $sql .= "
-                UPDATE tbl_" . $table . " 
-                SET
-                    Name = '" . $newTask->getName() . "',
-                    Priority = '" . $newTask->getPriority() . "'
-                WHERE Name = '" . $oldTask->getName() . "' AND Day = (SELECT Id FROM tbl_day WHERE Name='" . $day->getName() . "')
-                ";
+                UPDATE tbl_" . $table . " SET " . $value['set'] . " WHERE " . $value['get'] . ";";
 
             }
 
@@ -122,7 +117,7 @@ class StorageMysql extends Storage
                 $value = "";
 
                 foreach ($arrayValue as $listKey => $listValue) {
-                    $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) ."' AND ";
+                    $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) . "' AND ";
                 }
                 $value = trim($value, "AND ");
 
@@ -136,54 +131,6 @@ class StorageMysql extends Storage
         return $request->errorInfo();
     }
 
-    public function load()
-    {
-        $week = new Week();
-
-        $sql = "
-          SELECT tbl_day.Name as day, tbl_task.Name as task, tbl_task.Priority as priority 
-          FROM tbl_task 
-          INNER JOIN tbl_day on tbl_task.Day = tbl_day.Id
-        ";
-        $data = $this->connection->query($sql);
-
-        foreach ($data as $value) {
-            $dataAssoc[$value['day']][] = array($value['task'], $value['priority']);
-        }
-
-        foreach ($dataAssoc as $day => $value) {
-            $day = new Day($day);
-            foreach ($value as $taskValue) {
-                $task = new Task($taskValue[0]);
-                $task->setPriority($taskValue[1]);
-                $day->addTask($task);
-            }
-            $week->setDay($day);
-        }
-
-        return $week;
-    }
-
-    public function save($week)
-    {
-        try {
-            $sql = "TRUNCATE TABLE tbl_task";
-            $this->connection->query($sql);
-            $this->connection->errorInfo();
-
-            foreach ($week->getDays() as $day) {
-                foreach ($day->getTasks() as $task) {
-                    $this->createTask($day, $task);
-                }
-            }
-
-            return true;
-        } catch (PDOException $e) {
-            echo "Error !: " . $e->getMessage() . PHP_EOL;
-            return false;
-        }
-    }
-
     private function query($sql)
     {
         try {
@@ -195,8 +142,4 @@ class StorageMysql extends Storage
         }
     }
 
-    public function close()
-    {
-        $connection = null;
-    }
 }
