@@ -36,4 +36,12 @@ abstract class controller {
         $view= new view($this->action, $controller);
         $view->generate($data);
     }
+
+    public function model($model)
+    {
+        if ($model == 'StorageFactory') require_once 'application/models/Storage/' . $model . '.php';
+        else require_once 'application/models/Entity/' . $model . '.php';
+        return new $model();
+    }
+
 }

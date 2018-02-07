@@ -6,7 +6,7 @@
  * Date: 30-01-18
  * Time: 01:58
  */
-require_once 'controller.php';
+require_once 'application/core/services/controller.php';
 
 class taskController extends Controller
 {
@@ -14,12 +14,12 @@ class taskController extends Controller
     private $storage;
 
     //$storage doit etre = 'file' ou 'mysql'
-    public function __construct($storageType)
+    public function __construct(/*$storageType*/)
     {
         $this->task = $this->model('task');
 
         // TODO: nouvelle instance de l'objet StorageMYsql pour chaque task... pas super opti !
-        $this->storage = StorageFactory::getStorage($storageType);
+        //$this->storage = StorageFactory::getStorage($storageType);
     }
 
     public function create($taskName, $taskPriority, $taskDescription, $taskStatus)
@@ -73,4 +73,9 @@ class taskController extends Controller
         $this->storage->saveTask($this->task);
     }
 
+    public function index(){
+        require_once 'application/views/_shared/header.php';
+        $this->generateView();
+        require_once 'application/views/_shared/footer.php';
+    }
 }
