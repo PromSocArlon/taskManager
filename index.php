@@ -4,12 +4,22 @@ $file = fopen(realpath('application/models/Storage/Storage.php'), "w");
 print_r($file);
 
 require_once 'application/core/functions.php';
-require_once 'application/models/Storage/StorageFile.php';
+require_once 'application/models/Storage/Storage.php';
 require_once 'application/models/Storage/StorageMysql.php';
 require_once 'application/models/Entity/task.php';
 require_once 'application/models/Entity/week.php';
 require_once 'application/models/Entity/day.php';
 
+require_once 'application/core/services/controller.php';
+require_once 'application/core/services/dispatcher.php';
+require_once 'application/core/services/request.php';
+require_once 'application/core/services/route.php';
+require_once 'application/core/services/view.php';
+
+$route = new route();
+$route->routeQuery();
+
+/*
 $handle = fopen("php://stdin", "r");
 
 // Select Storage Type
@@ -24,7 +34,7 @@ do {
         }
     } else if ($storageType == "f") {
         out("Storage set to File.");
-        $storage = new StorageFile();
+        $storage = new Storage();
     }
 } while (!isset($storage));
 
@@ -104,3 +114,4 @@ do {
     }
 
 } while (strtolower($action) != 's');
+*/

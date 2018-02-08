@@ -47,102 +47,25 @@ foreach ($daysArray as $dayKey => $dayObject) {
 
 // Read test
 $validTableRead['tasks'][0]['day'] = '1';
-print_r($storage->read($validTableRead));
+//print_r($storage->read($validTableRead));
+
+// Delete test
+$validTableDelete['tasks'][0]['day'] = '1';
+//print_r($storage->delete($validTableDelete));
+
+// Update test
+
+$validTableUpdate['tasks'][0]['get']['name'] = "Test999";
+$validTableUpdate['tasks'][0]['set']['day'] = "2";
+//print_r($storage->update($validTableUpdate));
 
 
-//print_r($validTableToSave);
+$route = new route();
+$route->routeQuery();
 
-/*Result of object week to array
 
-    Array
-    (
-        [Weekdays] => Array
-        (
-            [0] => Day Object
-(
-    [name:Day:private] => monday
-[tasks:Day:private] => Array
-(
-    [0] => Task Object
-(
-    [name:Task:private] => Test0
-[priority:Task:private] => 0
-                    [description:Task:private] =>
-                    [status:Task:private] =>
-                    [subtasks:Task:private] =>
-                    [storage:Task:private] =>
-                )
 
-                [1] => Task Object
-(
-    [name:Task:private] => Test1
-[priority:Task:private] => 1
-                    [description:Task:private] =>
-                    [status:Task:private] =>
-                    [subtasks:Task:private] =>
-                    [storage:Task:private] =>
-                )
+if (!empty($_GET['page']) AND is_file(''))
 
-            )
-
-        )
-
-        [1] => Day Object
-(
-    [name:Day:private] => tuesday
-[tasks:Day:private] => Array
-(
-)
-
-        )
-
-        [2] => Day Object
-(
-    [name:Day:private] => wednesday
-[tasks:Day:private] => Array
-(
-)
-
-        )
-
-        [3] => Day Object
-(
-    [name:Day:private] => thursday
-[tasks:Day:private] => Array
-(
-)
-
-        )
-
-        [4] => Day Object
-(
-    [name:Day:private] => friday
-[tasks:Day:private] => Array
-(
-)
-
-        )
-
-        [5] => Day Object
-(
-    [name:Day:private] => saturday
-[tasks:Day:private] => Array
-(
-)
-
-        )
-
-        [6] => Day Object
-(
-    [name:Day:private] => sunday
-[tasks:Day:private] => Array
-(
-)
-
-        )
-
-    )
-
-)*/
 
 ?>

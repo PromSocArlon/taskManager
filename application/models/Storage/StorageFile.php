@@ -14,6 +14,11 @@ class StorageFile extends Storage
         $this->connection = $config['fileName'];
     }
 
+    public function __destruct()
+    {
+        // TODO: Fermeture du fichier.
+    }
+
     public function load()
     {
         $week = new Week();
@@ -58,28 +63,24 @@ class StorageFile extends Storage
         }
     }
 
-    public function createTask($day, $task)
+    public function create(array $data)
     {
-        // TODO: Implement createTask() method.
+        // TODO: Implement create() method.
     }
 
-    public function readTask($day)
+    public function read(array $data)
     {
-        // TODO: Implement readTask() method.
+        // TODO: Implement read() method.
     }
 
-    public function updateTask($day, $newTask, $oldTask)
+    public function update(array $data)
     {
-        // TODO: Implement updateTask() method.
+        // TODO: Implement update() method.
     }
 
-    public function deleteTask($day, $task)
+    public function delete(array $data)
     {
-        // TODO: Implement deleteTask() method.
+        // TODO: Implement delete() method.
     }
 
-    public function closeConnection()
-    {
-        // TODO: Implement closeConnection() method.
-    }
 }
