@@ -20,3 +20,6 @@
 
 #Visual Studio Code
 .vscode
+
+#Visual Paradigm
+*.vpp.bak*
