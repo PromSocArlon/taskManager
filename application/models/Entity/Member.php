@@ -6,8 +6,8 @@ class Member {
     private $login;
     private $password;
     private $mail;
-    private $teamLeader;
-
+    private $teamLeader ;
+    private $teamID;
 
     public function set_id($new_id) {
         $this->id = $new_id;
