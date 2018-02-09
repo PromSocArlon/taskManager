@@ -12,8 +12,8 @@ class TeamController{
         $team = new team($storageFactory->getStorage());
         $team->setFirstName($teamName);
         $team->setLastName($teamID);
-        $team->setPassword($teamMember);
-        $team->setPassword($password);
+        $team->setTeamMember($teamMember);
+        $team->setTeamLeader($teamLeader);
         $team->setPassword($teamTask);
         /*
         $teamService = new TeamService();
