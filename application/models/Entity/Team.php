@@ -1,7 +1,6 @@
 <?php
 require_once('Member.php');
 /* MAJ */
-include "Member.php";
 class Team{
     private $teamID;
     private $teamName;
