@@ -23,7 +23,11 @@ class userController extends controller{
         require_once 'application/views/_shared/footer.php';
     }
 
-    public function save($firstName, $lastName, $password) {
+    public function save() {
+
+        $password = $this->request->params['password'];
+        $firstName = $this->request->params['firstName'];
+        $lastName = $this->request->params['lastName'];
 
         $storageFactory = new StorageFactory();
         $user = new user($storageFactory->getStorage());
@@ -43,7 +47,13 @@ class userController extends controller{
 
 
     }
-/**
+
+    public function register(){
+        require_once 'application/views/_shared/header.php';
+        $this->generateView();
+        require_once 'application/views/_shared/footer.php';
+    }
+    /**
     public function listAction(){
 
     }
