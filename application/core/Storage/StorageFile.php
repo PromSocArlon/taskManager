@@ -22,7 +22,7 @@ class StorageFile extends Storage
     /**
      * Load data from file to create a Week object.
      *
-     * @return array
+     * @return Week
      */
     public function load()
     {
@@ -56,7 +56,7 @@ class StorageFile extends Storage
     /**
      * Save a week array to a file.
      *
-     * @param array
+     * @param Week
      */
     public function save($week)
     {
