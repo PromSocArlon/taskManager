@@ -19,6 +19,11 @@ class StorageFile extends Storage
         // TODO: Fermeture du fichier.
     }
 
+    /**
+     * Load data from file to create a Week object.
+     *
+     * @return array
+     */
     public function load()
     {
         $week = new Week();
@@ -47,7 +52,12 @@ class StorageFile extends Storage
         }
         return $week;
     }
-    
+
+    /**
+     * Save a week array to a file.
+     *
+     * @param array
+     */
     public function save($week)
     {
         // Empty file

@@ -3,33 +3,27 @@
   <ID>PHP</ID>
   <OriginalElement>\Storage</OriginalElement>
   <nodes>
-    <node x="0.0" y="290.0">\StorageMysql</node>
-    <node x="86.0" y="0.0">\Storage</node>
-    <node x="174.0" y="279.0">\StorageFile</node>
-    <node x="373.0" y="0.0">\StorageFactory</node>
+    <node x="221.0" y="0.0">\StorageMysql</node>
+    <node x="7.0" y="0.0">\Storage</node>
+    <node x="0.0" y="332.0">\StorageFile</node>
+    <node x="0.0" y="686.0">\StorageFactory</node>
   </nodes>
   <notes />
   <edges>
     <edge source="\StorageFile" target="\Storage">
-      <point x="0.0" y="-125.5" />
-      <point x="251.0" y="254.0" />
-      <point x="203.0" y="254.0" />
-      <point x="39.0" y="114.5" />
-    </edge>
-    <edge source="\StorageMysql" target="\Storage">
-      <point x="0.0" y="-114.5" />
-      <point x="77.0" y="254.0" />
-      <point x="125.0" y="254.0" />
-      <point x="-39.0" y="114.5" />
+      <point x="0.0" y="-154.5" />
+      <point x="0.0" y="141.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="275.0" y="265.0" />
-  <SelectedNodes />
+  <settings layout="Hierarchic Group" zoom="1.0" x="275.0" y="508.5" />
+  <SelectedNodes>
+    <node>\Storage</node>
+  </SelectedNodes>
   <Categories>
     <Category>Fields</Category>
     <Category>Constants</Category>
-    <Category>Constructors</Category>
     <Category>Methods</Category>
+    <Category>Constructors</Category>
   </Categories>
   <VISIBILITY>private</VISIBILITY>
 </Diagram>
