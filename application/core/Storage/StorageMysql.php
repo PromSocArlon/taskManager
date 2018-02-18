@@ -131,7 +131,7 @@ class StorageMysql extends Storage
         return $request->errorInfo();
     }
 
-    private function query($sql)
+    public function query($sql)
     {
         try {
             $request = $this->connection->prepare($sql);
