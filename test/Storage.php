@@ -1,9 +1,9 @@
 <?php
 
 require_once realpath('application/models/Entity/week.php');
-require_once realpath('application/models/Entity/day.php');
-require_once realpath('application/models/Entity/task.php');
-require_once realpath('application/models/Storage/StorageMysql.php');
+require_once '../application/models/Entity/day.php';
+require_once '../application/models/Entity/task.php';
+require_once '../application/models/Storage/StorageMysql.php';
 
 
 // Phil, test sauvegarde generique.

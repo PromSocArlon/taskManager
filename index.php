@@ -1,4 +1,8 @@
 <?php
+
+$file = fopen(realpath('application/models/Storage/Storage.php'), "w");
+print_r($file);
+
 require_once 'application/core/functions.php';
 require_once 'application/models/Storage/Storage.php';
 require_once 'application/models/Storage/StorageMysql.php';
