@@ -8,20 +8,53 @@
 
 class UserDOA extends DAO
 {
-
-    public function getAllUsers(): array
+    /**
+     * Get all the users.
+     *
+     * @return array
+     */
+    public function getAll()
     {
+        return null;
     }
 
-    public function updateUser(): void
+    /**
+     * Get a specific User.
+     *
+     * @return User
+     */
+    public function get()
     {
+        return null;
     }
 
-    public function deleteUser(): void
+    /**
+     * Update the specific User.
+     *
+     * @return boolean
+     */
+    public function update()
     {
+        return false;
     }
 
-    public function addUser(): void
+    /**
+     * Delete the specific User.
+     *
+     * @return boolean
+     */
+    public function delete()
     {
+        return false;
+    }
+
+    /**
+     * Create a new User.
+     *
+     * @return boolean
+     */
+    public function create()
+    {
+        return false;
     }
 }

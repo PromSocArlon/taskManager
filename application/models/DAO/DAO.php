@@ -6,7 +6,7 @@
  * Time: 22:01
  */
 
-class DAO
+abstract class DAO
 {
 
 }
