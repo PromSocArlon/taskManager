@@ -9,4 +9,19 @@
 class TaskDAO extends DAO
 {
 
+    public function getAllTasks(): array
+    {
+    }
+
+    public function updateTask(): void
+    {
+    }
+
+    public function deleteTask(): void
+    {
+    }
+
+    public function addTask(): void
+    {
+    }
 }

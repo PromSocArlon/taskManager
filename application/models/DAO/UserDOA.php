@@ -9,4 +9,19 @@
 class UserDOA extends DAO
 {
 
+    public function getAllUsers(): array
+    {
+    }
+
+    public function updateUser(): void
+    {
+    }
+
+    public function deleteUser(): void
+    {
+    }
+
+    public function addUser(): void
+    {
+    }
 }
