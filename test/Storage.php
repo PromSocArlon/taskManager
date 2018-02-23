@@ -60,7 +60,7 @@ $validTableUpdate['tasks'][0]['set']['day'] = "2";
 //print_r($storage->update($validTableUpdate));
 
 
-$route = new route();
+$route = new Route();
 $route->routeQuery();
 
 

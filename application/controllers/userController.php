@@ -8,7 +8,7 @@
 
 //namespace TaskManager\controller;
 
-class userController extends controller{
+class userController extends Controller{
 
     /**
      * Show information for one user

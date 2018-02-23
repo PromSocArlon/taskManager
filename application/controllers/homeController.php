@@ -1,6 +1,6 @@
 <?php
 
-class homeController extends controller {
+class homeController extends Controller {
     
     public function index(){
         require_once 'application/views/_shared/header.php';
