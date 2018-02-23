@@ -3,7 +3,7 @@
 require_once 'view.php';
 require_once 'request.php';
 
-class route {
+class Route {
 
     /**
      *  Analyse the URL and perform the action given by a specific controller
