@@ -1,7 +1,9 @@
 <?php
 
 require_once 'view.php';
+require_once 'controller.php';
 require_once 'request.php';
+
 
 class Route {
 
@@ -27,9 +29,9 @@ class Route {
      * @throws Exception if controller doesn't exist
      */
     private function getNewController(request $request) : Controller {
-        $controllerValue= "home";
-        if ($request->existParameter('Controller')) {
-            $controllerValue = $request->getParameter('Controller');
+        $controllerValue = "home";
+        if ($request->existParameter('controller')) {
+            $controllerValue = $request->getParameter('controller');
             $controllerValue = strtolower($controllerValue);
         }
         $classController = $controllerValue . "Controller";

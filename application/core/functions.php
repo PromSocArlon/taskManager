@@ -1,6 +1,6 @@
 <?php
 
-require_once 'application/models/Storage/StorageFactory.php';
+require_once 'Storage/StorageFactory.php';
 
 function out($outString)
 {
