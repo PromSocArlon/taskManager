@@ -73,7 +73,7 @@ class route {
      * @param Exception $exception the error that must be handled
      */
     private function handleError(Exception $exception) : void {
-        $view = new view('template');
+        $view = new View('template');
         $view->generate(array('msgError'=> $exception->getMessage()));
     }
 

@@ -1,9 +1,7 @@
 <?php
 
-class view {
-
+class View {
     private $file;
-
     private $title;
 
     public function __construct($action, $controller = "") {
@@ -13,28 +11,38 @@ class view {
         }
         $this->file = $file . $action . ".php";
     }
-  
-    public function generate($data) {
-      
-        $content = $this->generateFile($this->file, $data);
-      
-        $root = "taskManager";
-        
-        $view = $this->generateFile('application/views/template.php',
-                array('title' => $this->title, 'content' => $content,
-                    'root' => $root));
-        echo $view;
+
+
+    /**
+     * Generate the wanted view
+     * @param array $data the data to add to the generation
+     */
+    public function generate(array $data) : void {
+        try {
+            $content = $this->generateFile($this->file, $data);
+            $root = "taskManager";
+            $view = $this->generateFile('application/views/template.php', array('title' => $this->title, 'content' => $content, 'root' => $root));
+            echo $view;
+        } catch (Exception $ex) {
+            //TODO: EXCEPTION MANAGEMENT
+        }
     }
 
-    private function generateFile($file, $data) {
-        if (file_exists($file)) {
+    /**
+     * @param string $filePath the path of the file to base the generation on.
+     * @param array $data the data to add to the generation
+     * @return string the generated file
+     * @throws Exception if the file is not found.
+     */
+    private function generateFile(string $filePath, array $data) : string {
+        if (file_exists($filePath)) {
             extract($data);
             ob_start();
-            require $file;
+            require($filePath);
             return ob_get_clean();
         }
         else {
-            throw new Exception("File '$file' not found");
+            throw new Exception("File '$filePath' not found");
         }
     }
 }
