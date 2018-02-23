@@ -46,7 +46,7 @@ class Route {
              return $controller;
         }
         else {
-            throw new Exception("File '$fileController' nor found.");
+            throw new Exception("File '$fileController' not found.");
         }
     }
 
