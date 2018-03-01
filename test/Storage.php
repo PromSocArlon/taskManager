@@ -1,12 +1,24 @@
 <?php
 
 require_once realpath('application/models/Entity/week.php');
-require_once '../application/models/Entity/day.php';
-require_once '../application/models/Entity/task.php';
-require_once '../application/models/Storage/StorageMysql.php';
+require_once realpath('application/models/Entity/day.php');
+require_once realpath('application/models/Entity/task.php');
+require_once realpath('application/models/DAO/TaskDAO.php');
 
 
 // Phil, test sauvegarde generique.
+
+$taskDAO = new TaskDAO('mysql');
+
+$task0 = new Task('');
+$task0->setName('testDAO');
+$task0->setPriority(99);
+
+$result = $taskDAO->create($task0, monday);
+
+echo $result . PHP_EOL;
+
+/*
 $storage = new StorageMysql();
 
 $task0 = new Task();
@@ -66,6 +78,6 @@ $route->routeQuery();
 
 
 if (!empty($_GET['page']) AND is_file(''))
-
+*/
 
 ?>

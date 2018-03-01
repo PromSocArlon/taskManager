@@ -1,4 +1,5 @@
 <?php
+require_once realpath('application/models/Entity/status.php');
 
 class Task {
 	private $name;
@@ -6,9 +7,8 @@ class Task {
 	private $description;
 	private $status;
 	private $subtasks;
-	private $storage;
 
-	public function __construct($name, $storage) {
+	public function __construct($name) {
 		$this->setName($name);
 		$this->setPriority(0);
 		$this->setDescription('');

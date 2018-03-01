@@ -1,5 +1,7 @@
 <?php
 
+require_once realpath('application/core/Storage/StorageMysql.php');
+
 class StorageFactory
 {
     public static function getStorage($type)

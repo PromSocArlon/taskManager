@@ -1,6 +1,6 @@
 <?php
 
-require_once realpath('application/models/Storage/Storage.php');
+require_once realpath('application/core/Storage/Storage.php');
 
 class StorageMysql extends Storage
 {
@@ -33,12 +33,17 @@ class StorageMysql extends Storage
                 $value = "";
 
                 foreach ($arrayValue as $listKey => $listValue) {
-                    $field .= "`" . trim(strtolower($listKey)) . "`, ";
-                    if (!empty(trim($listValue))) {
-                        $value .= "'" . trim(strtolower($listValue)) . "', ";
+                    if (!is_array($listValue)) {
+                        $field .= "`" . trim(strtolower($listKey)) . "`, ";
+                        if (!empty(trim($listValue))) {
+                            $value .= "'" . trim(strtolower($listValue)) . "', ";
+                        } else {
+                            $value .= "'NULL', ";
+                        }
                     } else {
-                        $value .= "'NULL', ";
+                        //TODO: ajout gestion tableau status & subtask
                     }
+
                 }
                 $field = trim($field, ", ");
                 $value = trim($value, ", ");
@@ -50,7 +55,13 @@ class StorageMysql extends Storage
         }
 
         $request = $this->query($sql);
-        return $request->errorInfo();
+
+        if ($request->errorInfo()[0] != "00000") {
+            var_dump($request->errorInfo());
+            return false;
+        }
+
+        return true;
     }
 
     public function read(array $data)
@@ -75,6 +86,12 @@ class StorageMysql extends Storage
         }
 
         $request = $this->query($sql);
+
+        if ($request->errorInfo()[0] != "00000") {
+            var_dump($request->errorInfo());
+            return false;
+        }
+
         return $request->fetchAll();
     }
 
@@ -104,7 +121,13 @@ class StorageMysql extends Storage
         }
 
         $request = $this->query($sql);
-        return $request->errorInfo();
+
+        if ($request->errorInfo()[0] != "00000") {
+            var_dump($request->errorInfo());
+            return false;
+        }
+
+        return true;
     }
 
     public function delete(array $data)
@@ -128,7 +151,13 @@ class StorageMysql extends Storage
         }
 
         $request = $this->query($sql);
-        return $request->errorInfo();
+
+        if ($request->errorInfo()[0] != "00000") {
+            var_dump($request->errorInfo());
+            return false;
+        }
+
+        return true;
     }
 
     public function query($sql)
