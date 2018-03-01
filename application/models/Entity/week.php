@@ -25,6 +25,16 @@ class Week {
 		}
 		return null;
 	}
+
+    public function getDayIndex($name){
+        $tempDay = new Day($name);
+        foreach($this->days as $key => $day){
+            if($day->getName() == $tempDay->getName()){
+                return $key;
+            }
+        }
+        return null;
+    }
 	
 	public function setDay(Day $day){
 		for($i = 0; $i < count($this->days); ++$i){

@@ -28,7 +28,8 @@ class Status {
 	 */
 	public function __construct(int $statusName, string $statusReason) {
 		$this->setStatusName($statusName);
-		$this->setStatusTime(time());
+		// TODO: error => Status::setStatusTime() must be an instance of date, integer given, ...
+		//$this->setStatusTime(time());
 		$this->setStatusReason($statusReason);
 	}
 

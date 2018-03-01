@@ -1,20 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: philippedaniel
- * Date: 16/02/2018
- * Time: 22:01
- */
 
-require_once '../Entity/task.php';
+require_once realpath('application/models/Entity/week.php');
+require_once realpath('application/models/Entity/task.php');
+require_once realpath('application/models/DAO/DAO.php');
+require_once realpath('application/core/Storage/StorageFactory.php');
 
 class TaskDAO extends DAO
 {
-    /**
-     * Get all the users.
-     *
-     * @return array
-     */
+    private $connection;
+
+    public function __construct($type)
+    {
+        $this->connection = StorageFactory::getStorage($type);
+    }
+
     public function getAll()
     {
         $result = StorageFactory::getStorage()->query("SELECT * FROM tbl_task");
@@ -26,12 +25,6 @@ class TaskDAO extends DAO
         return null;
     }
 
-    /**
-     * Get a specific Task.
-     *
-     * @param Task
-     * @return Task
-     */
     public function get(Task $task)
     {
         $result = StorageFactory::getStorage()->read($task);
@@ -43,14 +36,43 @@ class TaskDAO extends DAO
         return null;
     }
 
-    /**
-     * Update the specific Task.
-     *
-     * @param Task
-     * @return boolean
-     */
+    private function objectToArray(Task $task, $dayName)
+    {
+        $array = [];
+        $dayKey = (new Week)->getDayIndex($dayName);
+
+        $taskArray = (array)$task;
+
+        foreach ($taskArray as $key => $value) {
+            $array['tasks'][0][str_replace('Task', '', $key)] = $value;
+        }
+        $array['tasks'][0]['day'] = $dayKey + 1;
+
+        return $array;
+    }
+
+    public function create(Task $task, $dayName)
+    {
+        $array = $this->objectToArray($task, $dayName);
+
+        if ($this->connection->create($array))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function read()
+    {
+
+    }
+
     public function update(Task $task)
     {
+        //$validTableUpdate['tasks'][0]['get']['name'] = "Test999";
+        //$validTableUpdate['tasks'][0]['set']['day'] = "2";
+
         if (StorageFactory::getStorage()->update($task))
         {
             return true;
@@ -58,31 +80,9 @@ class TaskDAO extends DAO
         return false;
     }
 
-    /**
-     * Delete the specific Task
-     *
-     * @param Task
-     * @return boolean
-     */
     public function delete(Task $task)
     {
         if (StorageFactory::getStorage()->delete($task))
-        {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Create a new Task
-     *
-     * @param Task
-     * @return boolean
-     */
-    public function create(Task $task)
-    {
-
-        if (StorageFactory::getStorage()->create($task))
         {
             return true;
         }
