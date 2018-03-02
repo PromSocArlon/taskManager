@@ -7,4 +7,20 @@ class homeController extends Controller {
         $this->generateView();
         require_once(__DIR__."/../views/_shared/footer.php");
     }
+
+    public function register(){
+    require_once(__DIR__."/../views/_shared/header.php");
+    $this->generateView();
+    require_once(__DIR__."/../views/_shared/footer.php");
+
+}
+    public function session(){
+
+
+        require_once(__DIR__."/../views/_shared/header.php");
+        $this->generateView();
+        require_once(__DIR__."/../views/_shared/footer.php");
+
+    }
+
 }

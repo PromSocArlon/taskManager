@@ -35,6 +35,7 @@ class Route {
             $controllerValue = strtolower($controllerValue);
         }
         $classController = $controllerValue . "Controller";
+
         $fileController= "application/controllers/" . $classController . ".php";
 
         if (file_exists($fileController)) {

@@ -13,7 +13,7 @@ class userController extends Controller{
     /**
      * Show information for one user
      */
-    public function showAction(){
+    public function edit(){
 
     }
 
@@ -47,6 +47,7 @@ class userController extends Controller{
 
 
     }
+
 
     public function register(){
         require_once 'application/views/_shared/header.php';
