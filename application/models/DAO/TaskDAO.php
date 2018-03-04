@@ -1,9 +1,9 @@
 <?php
 
-require_once realpath('application/models/Entity/week.php');
-require_once realpath('application/models/Entity/task.php');
-require_once realpath('application/models/DAO/DAO.php');
-require_once realpath('application/core/Storage/StorageFactory.php');
+require_once '../application/models/Entity/week.php';
+require_once '../application/models/Entity/task.php';
+require_once '../application/models/DAO/DAO.php';
+require_once '../application/core/Storage/StorageFactory.php';
 
 class TaskDAO extends DAO
 {
@@ -80,9 +80,15 @@ class TaskDAO extends DAO
         return false;
     }
 
-    public function delete(Task $task)
+    /**
+     * @param Task $task
+     * @param string $dayName
+     * @return bool
+     */
+    public function delete(Task $task, string $dayName)
     {
-        if (StorageFactory::getStorage()->delete($task))
+        $array = $this->objectToArray($task, $dayName);
+        if (StorageFactory::getStorage("mysql")->delete($array))
         {
             return true;
         }

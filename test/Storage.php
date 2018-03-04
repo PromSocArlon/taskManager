@@ -1,22 +1,39 @@
 <?php
 
-require_once realpath('application/models/Entity/week.php');
-require_once realpath('application/models/Entity/day.php');
-require_once realpath('application/models/Entity/task.php');
-require_once realpath('application/models/DAO/TaskDAO.php');
+//require_once realpath('application/models/Entity/week.php');
+//require_once realpath('application/models/Entity/day.php');
+//require_once realpath('application/models/Entity/task.php');
+//require_once realpath('application/models/DAO/TaskDAO.php');
+
+require_once '../application/models/Entity/week.php';
+require_once '../application/models/Entity/day.php';
+require_once '../application/models/Entity/task.php';
+require_once '../application/models/DAO/TaskDAO.php';
 
 
 // Phil, test sauvegarde generique.
 
 $taskDAO = new TaskDAO('mysql');
 
-$task0 = new Task('');
-$task0->setName('testDAO');
-$task0->setPriority(99);
+//$task0 = new Task('');
+//$task0->setName('testAlbin');
+//$task0->setPriority(1);
+//
+//$result = $taskDAO->create($task0, "monday");
 
-$result = $taskDAO->create($task0, monday);
+// Albin - delete
 
-echo $result . PHP_EOL;
+$task = new Task('testAlbin');
+$task->setPriority(1);
+
+$result = $taskDAO->create($task, "monday");
+
+$task = new Task('testAlbin');
+$task->setPriority(1);
+
+$result = $taskDAO->delete($task, "monday");
+
+echo PHP_EOL . $result . PHP_EOL;
 
 /*
 $storage = new StorageMysql();

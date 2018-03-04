@@ -1,6 +1,6 @@
 <?php
 
-require_once realpath('application/core/Storage/Storage.php');
+require_once '../application/core/Storage/Storage.php';
 
 class StorageMysql extends Storage
 {
@@ -8,9 +8,9 @@ class StorageMysql extends Storage
 
     function __construct()
     {
-        $config = parse_ini_file(realpath('application/core/config.ini'));
+        //$config = parse_ini_file('../config.ini');
         try {
-            $this->connection = new PDO($this->type . ":host=" . $config['mysqlHost'] . ";port=" . $config['mysqlPort'] . ";dbname=" . $config['mysqlDb'], $config['mysqlUser'], $config['mysqlPassword']);
+            $this->connection = new PDO($this->type . ":host=" . "localhost" . ";port=" . "3306" . ";dbname=" . "taskmanager", "root", "");
             $this->connection->errorInfo();
         } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
@@ -133,18 +133,26 @@ class StorageMysql extends Storage
     public function delete(array $data)
     {
         $sql = "";
+
         foreach ($data as $table => $array) {
 
             foreach ($array as $arrayValue) {
-                $field = "";
                 $value = "";
 
                 foreach ($arrayValue as $listKey => $listValue) {
-                    $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) . "' AND ";
+
+                    // si la valeur n'est pas un tableau
+                    if (!is_array($listValue)) {
+
+                        // si la valeur n'est pas vide , on l'ajoute à $value
+                        if(!empty($listValue)) {
+                            $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) . "' AND ";
+                        }
+                    }
                 }
                 $value = trim($value, "AND ");
 
-                $sql .= "DELETE FROM tbl_" . $table . " WHERE " . $value;
+                $sql .= "DELETE FROM tbl_" . $table . " WHERE " . $value . ";";
 
             }
 
