@@ -9,19 +9,20 @@ class homeController extends Controller {
     }
 
     public function login() {
-        if ($this->request->existParameter('loginID') && $this->request->existParameter('loginPassword')) {
-            if (true) { //TODO: Gestion de l'identifiant.
+        echo 'login';
+        if (isset($_POST['loginID']) && isset($_POST['loginPassword'])) {
+            if (false) { //TODO: Gestion de l'identifiant.
                 session_start();
 
                 try { //TODO: Changer l'initialisation par un appel DAO.
                     $member = new Member();
                     $member->setId(0001);
                     $member->setLogin($this->request->getParameter('loginID'));
-                    $member->setMail("cornichon@windaube.usa");
+                    $member->setMail("Trump@windaube.usa");
                     $member->setPassword($this->request->getParameter('loginPassword'));
 
                     $_SESSION['user'] = $member;
-                    header('Location: localhost/index.php?controller=user');
+                    header('Location: index.php?controller=user&action=index');
                 }
                 catch (Exception $exception) {
                     echo 'Parameter Problem';
