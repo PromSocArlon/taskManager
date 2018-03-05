@@ -6,6 +6,9 @@ require_once 'view.php';
 abstract class Controller {
 
     private $action;
+    /**
+     * @var request $request
+     */
     protected $request;
 
     public abstract function index();
