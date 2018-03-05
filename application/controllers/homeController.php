@@ -1,5 +1,5 @@
 <?php
-
+require_once(__DIR__."/../models/Entity/Member.php");
 class homeController extends Controller {
     
     public function index(){
@@ -11,7 +11,7 @@ class homeController extends Controller {
     public function login() {
         echo 'login';
         if (isset($_POST['loginID']) && isset($_POST['loginPassword'])) {
-            if (false) { //TODO: Gestion de l'identifiant.
+            if (true) { //TODO: Gestion de l'identifiant.
                 session_start();
 
                 try { //TODO: Changer l'initialisation par un appel DAO.
