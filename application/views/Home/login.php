@@ -26,7 +26,7 @@ require_once __DIR__.'/../../core/bootstrapTheme.php';
         <div class="col-md-4">
             <div class="form-border">
                 <h2>Login Form</h2>
-                <form role="form" action="index.php?controller=home&action=login" method="post">
+                <form role="form" action="index.php?action=login" method="post">
                     <div class="form-group">
                         <label for="loginID"> Username:</label>
                         <input type="text" class="form-control" name="loginID" placeholder="Enter username"/>
