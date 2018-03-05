@@ -6,7 +6,7 @@
  * Time: 10:56 AM
  */
 
-//namespace TaskManager\controller;
+require_once __DIR__.'/../models/Entity/Member.php';
 
 class userController extends Controller{
 
@@ -18,40 +18,26 @@ class userController extends Controller{
     }
 
     public function index() {
-        require_once(__DIR__."/../views/_shared/header.php");
-        $this->generateView();
+    	require_once(__DIR__."/../views/_shared/header.php");
+	session_start();
+        if(isset($_SESSION['user'])) {
+        	$test = $_SESSION['user'];
+        	if ($test instanceof Member) {
+			echo $test->getLogin().': '.$test->getPassword();
+	        }
+        }
+        //$this->generateView();
         require_once(__DIR__."/../views/_shared/footer.php");
     }
 
     public function save() {
-
-        $password = $this->request->params['password'];
-        $firstName = $this->request->params['firstName'];
-        $lastName = $this->request->params['lastName'];
-
-        $storageFactory = new StorageFactory();
-        $user = new user($storageFactory->getStorage());
-        $user->setFirstName($firstName);
-        $user->setLastName($lastName);
-        $user->setPassword($password);
-        /*
-        $userService = new UserService();
-        $userService->save($user);
-        */
-        $vue = new UserView();
-        if($user->save()){
-            $vue->displayUser($user);
-        } else {
-            $vue->displayError($user->getErrors());
-        }
-
-
     }
 
     public function register(){
-        require_once 'application/views/_shared/header.php';
-        $this->generateView();
-        require_once 'application/views/_shared/footer.php';
+	    require_once(__DIR__."/../views/_shared/header.php");
+	    session_start();
+	    $this->generateView();
+	    require_once(__DIR__."/../views/_shared/footer.php");
     }
     /**
     public function listAction(){
