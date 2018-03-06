@@ -34,6 +34,7 @@ class userController extends Controller{
     public function logout() {
     	if (isset($_SESSION['user'])) {
     		unset($_SESSION['user']);
+    		session_destroy();
         }
         header('Location: index.php/controller=home');
     }
