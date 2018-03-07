@@ -7,7 +7,8 @@
  */
 
 require_once __DIR__.'/../models/Entity/Member.php';
-session_start();
+require_once __DIR__.'/../core/userService.php';
+//session_start();
 
 class userController extends Controller{
 
@@ -20,13 +21,15 @@ class userController extends Controller{
 
     public function index() {
     	require_once(__DIR__."/../views/_shared/header.php");
-        if(isset($_SESSION['user'])) {
-        	$test = $_SESSION['user'];
+    	$test = UserService::getCurrentUser();
+        if($test != null) {
         	if ($test instanceof Member) {
 			echo $test->getLogin().': '.$test->getPassword();
 	                echo '<a href="index.php?controller=user&action=logout">Logout</a>';
         	}
         }
+        else
+        	header('Location: index.php/controller=home');
         //$this->generateView();
         require_once(__DIR__."/../views/_shared/footer.php");
     }

@@ -4,7 +4,7 @@
 //require_once 'controller.php';
 //require_once 'request.php';
 require_once 'functions.php';
-session_start();
+//session_start();
 
 class UserService
 {
@@ -14,7 +14,7 @@ class UserService
      * @return Member copie de session['user'] / null si aucune
      * @throws Exception if session['user'] doesn't exist
      */
-    public static function getCurrentUser() : Member
+    public static function getCurrentUser() : ?Member
     {
 //        if (isset($_SESSION['name'])) {
 //            $cuName = $_SESSION['name'];
@@ -31,7 +31,7 @@ class UserService
 //            $cuPsw = null;
 //            out("pas de psw setté pour le moment");
 //        }
-
-	return isset($_SESSION['user']) ? ($temp = $_SESSION['user']) : null;
+		session_start();
+		return isset($_SESSION['user']) ? ($temp = $_SESSION['user']) : null;
     }
 }
