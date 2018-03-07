@@ -3,6 +3,8 @@
 //require_once 'view.php';
 //require_once 'controller.php';
 //require_once 'request.php';
+require_once 'functions.php';
+
 
 class UserService
 {
@@ -16,18 +18,18 @@ class UserService
     {
         if (isset($_SESSION['name'])) {
             $cuName = $_SESSION['name'];
-            echo $cuName;
+            out($cuName);
         } else {
             $cuName = null;
-            echo "pas de user setté pour le moment" . PHP_EOL;
+            out("pas de user setté pour le moment");
         }
 
         if (isset($_SESSION['password'])) {
             $cuPsw = $_SESSION['password'];
-            echo $cuPsw;
+            out($cuPsw);
         } else {
             $cuPsw = null;
-            echo "pas de psw setté pour le moment" . PHP_EOL;
+            out("pas de psw setté pour le moment");
         }
     }
 }
