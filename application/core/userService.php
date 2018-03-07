@@ -35,16 +35,3 @@ class UserService
 	    return isset($_SESSION['user']) ? $temp = $_SESSION['user'] : null;
     }
 }
-
-try
-{
-    /*session_start();
-    $_SESSION['name'] = "Cedric";
-    $_SESSION['password'] = "blabla";
-    */
-
-    UserService::getCurrentUser();
-
-} catch (Exception $ex) {
-    $this->handleError($ex); }
-
