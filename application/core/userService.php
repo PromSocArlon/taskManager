@@ -4,7 +4,7 @@
 //require_once 'controller.php';
 //require_once 'request.php';
 require_once 'functions.php';
-
+session_start();
 
 class UserService
 {
