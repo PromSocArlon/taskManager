@@ -11,7 +11,7 @@ class UserService
     /**
      * Give a copy of the User from the Session params
      * @param  : none
-     * @return copie de session['user'] / null si aucune
+     * @return Member copie de session['user'] / null si aucune
      * @throws Exception if session['user'] doesn't exist
      */
     public static function getCurrentUser() : Member
@@ -32,6 +32,6 @@ class UserService
 //            out("pas de psw setté pour le moment");
 //        }
 
-	    return isset($_SESSION['user']) ? $temp = $_SESSION['user'] : null;
+	    return isset($_SESSION['user']) ? ($temp = $_SESSION['user']) : null;
     }
 }
