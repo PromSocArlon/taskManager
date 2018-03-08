@@ -19,7 +19,7 @@ class taskController extends Controller
         $this->task = $this->model('task');
 
         // TODO: nouvelle instance de l'objet StorageMYsql pour chaque task... pas super opti !
-        //$this->storage = StorageFactory::getStorage($storageType);
+        $this->storage = $this->model('taskDAO');
     }
 
     public function create($taskName, $taskPriority, $taskDescription, $taskStatus)
@@ -65,12 +65,22 @@ class taskController extends Controller
     // Storage
     public function delete($day)
     {
-        $this->storage->deleteTask($day, $this->task);
+        $this->storage->delete($this->task, $day);
     }
 
-    public function save()
+    public function save($day)
     {
-        $this->storage->saveTask($this->task);
+        $this->storage->create($this->task, $day);
+    }
+
+    public function load()
+    {
+        return $this->storage->read();
+    }
+
+    public function update($day, $oldTask, $olDay)
+    {
+        $this->storage->update($this->task, $day, $oldTask, $olDay);
     }
 
     public function index(){

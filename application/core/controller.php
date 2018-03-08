@@ -55,9 +55,10 @@ abstract class Controller {
      * @throws Exception if class not found
      */
     public function model(string $model): object {
-        $modelFile = $model == 'StorageFactory' ? 'application/models/Storage/StorageFactory.php' : 'application/models/Entity/' . $model . '.php' ;
+        $modelFile = strpos($model, "DAO") !== false ? 'application/models/DAO/' . $model . '.php' : 'application/models/Entity/' . $model . '.php' ;
         if (file_exists($modelFile)) {
             require_once($modelFile);
+            //TODO: ajout support pour DAO du type de storage (file ou mysql) pour le moment DAO est par défaut sur mysql
             return new $model();
         } else {
             throw new Exception("File '".$modelFile."' not found.");
