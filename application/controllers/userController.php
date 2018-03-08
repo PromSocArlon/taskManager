@@ -7,7 +7,7 @@
  */
 
 require_once __DIR__.'/../models/Entity/Member.php';
-require_once __DIR__.'/../core/userService.php';
+require_once __DIR__ . '/../core/UserService.php';
 //session_start();
 
 class userController extends Controller{
@@ -47,7 +47,6 @@ class userController extends Controller{
 
     public function register(){
 	    require_once(__DIR__."/../views/_shared/header.php");
-	    session_start();
 	    $this->generateView();
 	    require_once(__DIR__."/../views/_shared/footer.php");
     }
