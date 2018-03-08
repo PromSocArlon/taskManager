@@ -1,6 +1,7 @@
 <?php
 
-require_once realpath('application/core/Storage/Storage.php');
+require_once __DIR__.('\Storage.php');
+require_once __DIR__.('\..\..\models\Entity\Member.php');
 
 class StorageMysql extends Storage
 {
@@ -63,6 +64,45 @@ class StorageMysql extends Storage
 
         return true;
     }
+    public function getMember($mail)
+    {
+
+            $query = $this->connection->prepare("SELECT mail from tbl_member where mail = :mail");
+            $query->bindValue(':mail',$mail,PDO::PARAM_STR);
+            if(!($query->execute())) return 0;else
+                return $query->fetchAll();
+    }
+    public function getMemberId($login,$password)
+    {
+
+        $query = $this->connection->prepare("SELECT * from tbl_member where login = :login and password = :password");
+        $query->bindValue(':login',$login,PDO::PARAM_STR);
+        $query->bindValue(':password',$password,PDO::PARAM_STR);
+        if(!($query->execute())) return 0;else
+            return $query->fetchAll();
+    }
+
+
+
+
+
+    public function add(Member $member)
+    {
+
+        try {
+                $query = $this->connection->prepare("INSERT INTO tbl_member (mail,login,teamleader,idTeam,password)  VALUES (:mail,:login,:teamleader,:idTeam,:password)");
+                $query->bindValue(':mail',$member->getMail(),PDO::PARAM_STR);
+                $query->bindValue(':login',$member->getLogin(),PDO::PARAM_STR);
+                $query->bindValue(':teamleader',false,PDO::PARAM_BOOL);
+                $query->bindValue(':idTeam',1,PDO::PARAM_INT);
+                $query->bindValue(':password',$member->getPassword(),PDO::PARAM_STR);
+                $query->execute();
+            } catch (PDOException $e)
+                {
+                    echo "Error !: " . $e->getMessage() . PHP_EOL;
+                }
+    }
+
 
     public function read(array $data)
     {
@@ -165,7 +205,8 @@ class StorageMysql extends Storage
         try {
             $request = $this->connection->prepare($sql);
             $request->execute();
-            return $request;
+            $data = $request->fetchAll();
+            return $data;
         } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
         }

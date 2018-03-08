@@ -6,43 +6,54 @@
  * Time: 10:56 AM
  */
 
-require_once __DIR__.'/../models/Entity/Member.php';
+require_once __DIR__ . '/../models/Entity/Member.php';
 require_once __DIR__ . '/../core/UserService.php';
+require_once __DIR__ . '/../models/DAO/TaskDAO.php';
+require_once __DIR__ . '/../models/DAO/UserDOA.php';
+require_once __DIR__ . '/../core/Security.php';
+require_once __DIR__ . '/homeController.php';
 //session_start();
 
 class userController extends Controller{
 
-    /**
-     * Show information for one user
-     */
-    public function showAction(){
-
-    }
-
     public function index() {
-    	require_once(__DIR__."/../views/_shared/header.php");
-    	$test = UserService::getCurrentUser();
-        if($test != null) {
-        	if ($test instanceof Member) {
-			echo $test->getLogin().': '.$test->getPassword();
-	                echo '<a href="index.php?controller=user&action=logout">Logout</a>';
-        	}
-        }
-        else
-        	header('Location: index.php/controller=home');
-        //$this->generateView();
+        require_once(__DIR__."/../views/_shared/header.php");
+        $this->generateView();
         require_once(__DIR__."/../views/_shared/footer.php");
     }
 
     public function logout() {
-    	if (isset($_SESSION['user'])) {
-    		unset($_SESSION['user']);
-    		//session_destroy();
+        if (isset($_SESSION['user'])) {
+            unset($_SESSION['user']);
+            //session_destroy();
         }
         header('Location: index.php/controller=home');
     }
 
+
     public function save() {
+
+        $password = $this->request->params['password'];
+        $firstName = $this->request->params['firstName'];
+        $lastName = $this->request->params['lastName'];
+
+        $storageFactory = new StorageFactory();
+        $user = new user($storageFactory->getStorage());
+        $user->setFirstName($firstName);
+        $user->setLastName($lastName);
+        $user->setPassword($password);
+        /*
+        $userService = new UserService();
+        $userService->save($user);
+        */
+        $vue = new UserView();
+        if($user->save()){
+            $vue->displayUser($user);
+        } else {
+            $vue->displayError($user->getErrors());
+        }
+
+
     }
 
     public function register(){
@@ -50,17 +61,23 @@ class userController extends Controller{
 	    $this->generateView();
 	    require_once(__DIR__."/../views/_shared/footer.php");
     }
-    /**
-    public function listAction(){
 
+    public function connexion()
+    {
+
+
+        $p = new Security();
+        $data = $p->getId($_POST['login'],$_POST['password']);
+        if ($data)
+        {
+            $x = new TaskDAO('mysql');
+            $x = $x->getAll();
+            self::$data = $x;
+            require_once(__DIR__."/../views/_shared/header.php");
+            $this->generateView();
+            require_once(__DIR__."/../views/_shared/footer.php");
+        }
+        else
+            header('Location:?controller=home&action=index');
     }
-
-    public function addAction(){
-
-    }
-
-    public function editAction(){
-
-    }
- */
 }

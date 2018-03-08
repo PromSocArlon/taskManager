@@ -1,9 +1,10 @@
 <?php
 
-require_once realpath('application/models/Entity/week.php');
-require_once realpath('application/models/Entity/task.php');
-require_once realpath('application/models/DAO/DAO.php');
-require_once realpath('application/core/Storage/StorageFactory.php');
+require_once __DIR__.('\..\Entity\week.php');
+require_once __DIR__.('\..\Entity\task.php');
+require_once __DIR__.('\DAO.php');
+require_once __DIR__.('\..\..\core\Storage\StorageFactory.php');
+
 
 class TaskDAO extends DAO
 {
@@ -16,7 +17,7 @@ class TaskDAO extends DAO
 
     public function getAll()
     {
-        $result = StorageFactory::getStorage()->query("SELECT * FROM tbl_task");
+        $result = StorageFactory::getStorage('mysql')->query("SELECT * FROM tbl_tasks");
         if (sizeof($result) > 0)
         {
             return $result;
@@ -65,7 +66,6 @@ class TaskDAO extends DAO
 
     public function read()
     {
-
     }
 
     public function update(Task $task)
