@@ -1,19 +1,36 @@
 <?php
 
-//require_once realpath('application/models/Entity/week.php');
-//require_once realpath('application/models/Entity/day.php');
-//require_once realpath('application/models/Entity/task.php');
-//require_once realpath('application/models/DAO/TaskDAO.php');
+/*
+require_once realpath('\'../application/models/Entity/week.php\'');
+require_once realpath('../application/models/Entity/day.php');
+require_once realpath('../application/models/Entity/task.php');
+require_once realpath('../application/models/DAO/TaskDAO.php');
+*/
+define('__ROOT__', dirname(dirname(__FILE__)));
 
-require_once '../application/models/Entity/week.php';
-require_once '../application/models/Entity/day.php';
-require_once '../application/models/Entity/task.php';
-require_once '../application/models/DAO/TaskDAO.php';
+echo __ROOT__;
+require_once __ROOT__ . '/application/models/Entity/week.php';
+require_once __ROOT__ . '/application/models/Entity/day.php';
+require_once __ROOT__ . '/application/models/Entity/task.php';
+require_once __ROOT__ . '/application/models/DAO/TaskDAO.php';
+require_once __ROOT__ . '/application/models/DAO/MemberDAO.php';
+require_once __ROOT__ . '/application/models/Entity/Member.php';
 
 
 // Phil, test sauvegarde generique.
 
+/*
 $taskDAO = new TaskDAO('mysql');
+*/
+
+$memberDAO = new MemberDAO('mysql');
+
+$member = new Member();
+$member->setLogin('test0');
+
+$memberDAO->create($member);
+
+
 
 //$task0 = new Task('');
 //$task0->setName('testAlbin');
@@ -23,6 +40,7 @@ $taskDAO = new TaskDAO('mysql');
 
 // Albin - delete
 
+/*
 $task = new Task('testAlbin');
 $task->setPriority(1);
 
@@ -34,6 +52,7 @@ $task->setPriority(1);
 $result = $taskDAO->delete($task, "monday");
 
 echo PHP_EOL . $result . PHP_EOL;
+*/
 
 /*
 $storage = new StorageMysql();
