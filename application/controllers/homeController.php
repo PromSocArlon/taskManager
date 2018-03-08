@@ -1,11 +1,8 @@
 <?php
 require_once(__DIR__."/../models/Entity/Member.php");
-
 require_once (__DIR__.'\..\models\DAO\TaskDAO.php');
 require_once (__DIR__.'\..\models\DAO\UserDOA.php');
 require_once (__DIR__.'\..\core\Security.php');
-class homeController extends Controller
-{
 
 class homeController extends Controller {
     
