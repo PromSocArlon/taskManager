@@ -13,7 +13,9 @@ class homeController extends Controller {
     public function login() {
         if (isset($_POST['loginID']) && isset($_POST['loginPassword'])) {
             if (true) { //TODO: Gestion de l'identifiant.
-                session_start();
+                if (session_status() == PHP_SESSION_NONE) {
+					session_start();
+				}
 
                 try { //TODO: Changer l'initialisation par un appel DAO.
                     $member = new Member();
