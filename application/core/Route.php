@@ -1,8 +1,8 @@
 <?php
 
-require_once 'view.php';
-require_once 'controller.php';
-require_once 'request.php';
+require_once 'View.php';
+require_once 'Controller.php';
+require_once 'Request.php';
 
 
 class Route {

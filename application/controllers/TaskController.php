@@ -6,9 +6,9 @@
  * Date: 30-01-18
  * Time: 01:58
  */
-require_once 'application/core/controller.php';
+require_once 'application/core/Controller.php';
 
-class taskController extends Controller
+class TaskController extends Controller
 {
     private $task;
     private $storage;

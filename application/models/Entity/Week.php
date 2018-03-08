@@ -1,5 +1,5 @@
 <?php
-require_once('day.php');
+require_once('Day.php');
 
 class Week {
 

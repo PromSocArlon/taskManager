@@ -69,23 +69,3 @@ CREATE TABLE `tbl_interTaskMember` (
 GRANT ALL ON taskManager.* TO 'taskManager'@'localhost'
 IDENTIFIED BY 'taskManager';
 FLUSH PRIVILEGES;
-
---
--- Default Data
---
-INSERT INTO tbl_day (`id`, `name`) VALUES
-  (1, 'monday'),
-  (2, 'tuesday'),
-  (3, 'wednesday'),
-  (4, 'thursday'),
-  (5, 'friday'),
-  (6, 'saturday'),
-  (7, 'sunday');
-
-INSERT INTO tbl_task (`id`, `name`, `priority`, `day`) VALUES
-  (1, 'Dormir', 1, 1),
-  (2, 'Gogo', 1, 1),
-  (3, 'Manger', 1, 5),
-  (4, 'Faire le menage', 1, 7),
-  (5, 'Test', 42, 7),
-  (6, 'Test2', 127, 7);

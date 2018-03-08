@@ -1,6 +1,6 @@
 <?php
 
-require_once 'application/models/Entity/status.php';
+require_once 'application/models/Entity/Status.php';
 
 class Task {
 	private $name;

@@ -1,7 +1,7 @@
 <?php
 
-require_once 'request.php';
-require_once 'view.php';
+require_once 'Request.php';
+require_once 'View.php';
 
 
 abstract class Controller {

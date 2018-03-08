@@ -1,6 +1,6 @@
 <?php
 
-class request {
+class Request {
     private $parameters;
 
     public function __construct(array $parameters) {

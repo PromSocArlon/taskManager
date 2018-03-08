@@ -16,7 +16,7 @@ class Security
         $this->m = new UserDOA('mysql');
     }
 
-    public function getId($login,$password)
+    public function getId($login, $password)
     {
        $data = $this->m->getConnection()->getMemberId($login,$password);
         return $data;

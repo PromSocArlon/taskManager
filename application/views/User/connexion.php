@@ -1,6 +1,6 @@
 
 <?php
-require_once (__DIR__.'\..\..\controllers\userController.php');
+require_once (__DIR__ . '\..\..\controllers\UserController.php');
 $data = userController::$data;
 foreach ($data as $value) {
     ?>

@@ -1,7 +1,7 @@
 <?php
 
-require_once 'application/models/Entity/week.php';
-require_once 'application/models/Entity/task.php';
+require_once 'application/models/Entity/Week.php';
+require_once 'application/models/Entity/Task.php';
 require_once 'application/models/DAO/DAO.php';
 require_once 'application/core/Storage/StorageFactory.php';
 

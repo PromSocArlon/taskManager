@@ -11,15 +11,13 @@ require_once __DIR__ . '/../core/UserService.php';
 require_once __DIR__ . '/../models/DAO/TaskDAO.php';
 require_once __DIR__ . '/../models/DAO/UserDOA.php';
 require_once __DIR__ . '/../core/Security.php';
-require_once __DIR__ . '/homeController.php';
+require_once __DIR__ . '/HomeController.php';
 //session_start();
 
-class userController extends Controller{
+class UserController extends Controller{
 
     public function index() {
-        require_once(__DIR__."/../views/_shared/header.php");
         $this->generateView();
-        require_once(__DIR__."/../views/_shared/footer.php");
     }
 
     public function logout() {
@@ -29,7 +27,9 @@ class userController extends Controller{
         }
         header('Location: index.php/controller=home');
     }
+    public function initializeModel(){
 
+    }
 
     public function save() {
 
@@ -57,9 +57,7 @@ class userController extends Controller{
     }
 
     public function register(){
-	    require_once(__DIR__."/../views/_shared/header.php");
 	    $this->generateView();
-	    require_once(__DIR__."/../views/_shared/footer.php");
     }
 
     public function connexion()
@@ -73,9 +71,7 @@ class userController extends Controller{
             $x = new TaskDAO('mysql');
             $x = $x->getAll();
             self::$data = $x;
-            require_once(__DIR__."/../views/_shared/header.php");
             $this->generateView();
-            require_once(__DIR__."/../views/_shared/footer.php");
         }
         else
             header('Location:?controller=home&action=index');

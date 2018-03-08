@@ -8,7 +8,7 @@
 
 abstract class DAO
 {
-    private $connection;
+    protected $connection;
 
     public function __construct($type = 'mysql')
     {

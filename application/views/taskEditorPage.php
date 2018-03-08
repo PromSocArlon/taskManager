@@ -5,8 +5,8 @@
  * Date: 30-01-18
  * Time: 23:02
  */
-require_once '../controllers/taskEditorController.php';
-require_once '../models/Entity/status.php';
+require_once '../controllers/TaskEditorController.php';
+require_once '../models/Entity/Status.php';
 require_once '../core/bootstrapTheme.php'
 ?>
 

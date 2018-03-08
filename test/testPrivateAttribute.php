@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/classes/task.php';
+require_once 'includes/classes/Task.php';
 
 $task = new Task();
 $task->setName('Super task');
