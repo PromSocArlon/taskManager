@@ -6,8 +6,7 @@
  * Date: 30-01-18
  * Time: 01:58
  */
-require_once 'application/core/controller.php';
-require_once 'application/models/DAO/TaskDAO.php';
+require_once 'application/core/services/controller.php';
 
 class taskController extends Controller
 {
@@ -19,7 +18,7 @@ class taskController extends Controller
     {
 
         // TODO: nouvelle instance de l'objet StorageMYsql pour chaque task... pas super opti !
-        //$this->storage = StorageFactory::getStorage($storageType);
+        $this->storage = $this->model('taskDAO');
     }
 
     public function create()

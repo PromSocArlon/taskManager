@@ -10,7 +10,7 @@ abstract class DAO
 {
     private $connection;
 
-    public function __construct($type)
+    public function __construct($type = 'mysql')
     {
         $this->connection = StorageFactory::getStorage($type);
     }
