@@ -6,7 +6,7 @@
  * Date: 30-01-18
  * Time: 01:58
  */
-require_once 'application/core/services/controller.php';
+require_once 'application/core/controller.php';
 
 class taskController extends Controller
 {
@@ -16,66 +16,52 @@ class taskController extends Controller
     //$storage doit etre = 'file' ou 'mysql'
     public function __construct(/*$storageType*/)
     {
-        $this->task = $this->model('task');
 
-        // TODO: nouvelle instance de l'objet StorageMYsql pour chaque task... pas super opti !
-        //$this->storage = StorageFactory::getStorage($storageType);
     }
 
-    public function create($taskName, $taskPriority, $taskDescription, $taskStatus)
+    public function create()
     {
-        $this->task->setName($taskName);
-        $this->task->setPriority($taskPriority);
-        $this->task->setDescription($taskDescription);
-        $this->task->addStatus($taskStatus, $taskDescription); //ne fonctionne pas encore
+       $this->generateView();
     }
-
-    //addSubTask est en dehors du create car il est optionnel
-    public function addSubTask($subTask)
-    {
-        $this->task->addSubTask($subTask);
-    }
-
-    //on passe l'objet task a la view pour l'afficher
+    
     public function read()
     {
         return $this->task;
     }
 
-    public function updateName($update)
+    public function delete()
     {
-        $this->task->setName($update);
-    }
-
-    public function updatePriority($update)
-    {
-        $this->task->setPriority($update);
-    }
-
-    public function updateDescription($update)
-    {
-        $this->task->setDescription($update);
-    }
-
-    public function updateStatus($update)
-    {
-        $this->task->setStatus($update);
-    }
-
-    // Storage
-    public function delete($day)
-    {
-        $this->storage->deleteTask($day, $this->task);
+        $this->initializeModel();
+        $this->storage = $this->model('taskDAO');
+        $this->storage->delete($this->task, $_POST['day']);
+        $this->generateView();
     }
 
     public function save()
     {
-        $this->storage->saveTask($this->task);
+        $this->initializeModel();
+        $this->storage = $this->model('taskDAO');
+        $this->storage->create($this->task,$_POST['day']);
+        $this->generateView();
     }
 
-    public function index(){
-        require_once 'application/views/_shared/header.php';
+    public function index()
+    {
         $this->generateView();
-        require_once 'application/views/_shared/footer.php';
+    }
+
+    public function initializeModel()
+    {
+        $this->task = $this->model('task');
+        $this->task->setName($_POST['taskName']);
+        $this->task->setPriority($_POST['taskPriority']);
+        $this->task->setDescription($_POST['taskDescription']);
+        $this->task->addStatus(0,'0');
+        $this->task->addSubTask(NULL);
+    }
+
+    public function deleteTest()
+    {
+        $this->generateView();
     }
 }

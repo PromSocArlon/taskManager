@@ -7,9 +7,7 @@ require_once (__DIR__.'\..\core\Security.php');
 class homeController extends Controller {
     
     public function index() {
-        require_once(__DIR__."/../views/_shared/header.php");
         $this->generateView();
-        require_once(__DIR__."/../views/_shared/footer.php");
     }
 
     public function login() {
@@ -60,5 +58,10 @@ class homeController extends Controller {
             require_once(__DIR__ . "/../views/_shared/footer.php");
         }else echo 'compte avec le mail  !!!!' .$_POST['mail']. ' !!!!! est existant Veuillez définir un autre email svp';
 
+    }
+
+    public function initializeModel()
+    {
+        // TODO: Implement initialize() method.
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.('\StorageMysql.php');
+require_once 'application/core/Storage/StorageMysql.php';
 
 class StorageFactory
 {

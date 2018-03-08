@@ -1,91 +1,37 @@
 <?php
 
-require_once __DIR__.('\..\Entity\week.php');
-require_once __DIR__.('\..\Entity\task.php');
-require_once __DIR__.('\DAO.php');
-require_once __DIR__.('\..\..\core\Storage\StorageFactory.php');
-
+require_once 'application/models/Entity/week.php';
+require_once 'application/models/Entity/task.php';
+require_once 'application/models/DAO/DAO.php';
+require_once 'application/core/Storage/StorageFactory.php';
 
 class TaskDAO extends DAO
 {
-    private $connection;
 
-    public function __construct($type)
+    protected function objectToArray($arguments)
     {
-        $this->connection = StorageFactory::getStorage($type);
-    }
+        $array['task'] = [];
 
-    public function getAll()
-    {
-        $result = StorageFactory::getStorage('mysql')->query("SELECT * FROM tbl_tasks");
-        if (sizeof($result) > 0)
-        {
-            return $result;
+        if (!empty($arguments) and count($arguments) >= 2) {
+            $newTaskArray = (array)$arguments[0];
+            $newDayKey = (new Week)->getDayIndex($arguments[1]);
+
+            foreach ($newTaskArray as $key => $value) {
+                $array['task'][0]['new'][str_replace('Task', '', $key)] = $value;
+            }
+            $array['task'][0]['new']['day'] = $newDayKey + 1;
+
+            if (count($arguments) > 2) {
+                $oldTaskArray = (array)$arguments[2];
+                $oldDayKey = (new Week)->getDayIndex($arguments[3]);
+                foreach ($oldTaskArray as $key => $value) {
+                    $array['task'][0]['old'][str_replace('Task', '', $key)] = $value;
+                }
+                $array['task'][0]['old']['day'] = $oldDayKey + 1;
+            }
         }
-
-        return null;
-    }
-
-    public function get(Task $task)
-    {
-        $result = StorageFactory::getStorage()->read($task);
-        if (sizeof($result) > 0)
-        {
-            // Create a new Task object with the name
-            return new Task($result[1]);
-        }
-        return null;
-    }
-
-    private function objectToArray(Task $task, $dayName)
-    {
-        $array = [];
-        $dayKey = (new Week)->getDayIndex($dayName);
-
-        $taskArray = (array)$task;
-
-        foreach ($taskArray as $key => $value) {
-            $array['tasks'][0][str_replace('Task', '', $key)] = $value;
-        }
-        $array['tasks'][0]['day'] = $dayKey + 1;
 
         return $array;
     }
 
-    public function create(Task $task, $dayName)
-    {
-        $array = $this->objectToArray($task, $dayName);
-
-        if ($this->connection->create($array))
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function read()
-    {
-    }
-
-    public function update(Task $task)
-    {
-        //$validTableUpdate['tasks'][0]['get']['name'] = "Test999";
-        //$validTableUpdate['tasks'][0]['set']['day'] = "2";
-
-        if (StorageFactory::getStorage()->update($task))
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public function delete(Task $task)
-    {
-        if (StorageFactory::getStorage()->delete($task))
-        {
-            return true;
-        }
-        return false;
-    }
 }

@@ -1,7 +1,6 @@
 <?php
 
-require_once __DIR__.('\Storage.php');
-require_once __DIR__.('\..\..\models\Entity\Member.php');
+require_once 'application/core/Storage/Storage.php';
 
 class StorageMysql extends Storage
 {
@@ -9,9 +8,10 @@ class StorageMysql extends Storage
 
     function __construct()
     {
-        $config = parse_ini_file(realpath('application/core/config.ini'));
+        $config = parse_ini_file( 'application/core/config.ini');
         try {
-            $this->connection = new PDO($this->type . ":host=" . $config['mysqlHost'] . ";port=" . $config['mysqlPort'] . ";dbname=" . $config['mysqlDb'], $config['mysqlUser'], $config['mysqlPassword']);
+            $this->connection = new PDO($this->type . ":host=" . $config['mysqlHost'] . ";port=" . $config['mysqlPort'] . ";dbname=" . $config['mysqlDb'],
+                $config['mysqlUser'], $config['mysqlPassword']);
             $this->connection->errorInfo();
         } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
@@ -33,7 +33,7 @@ class StorageMysql extends Storage
                 $field = "";
                 $value = "";
 
-                foreach ($arrayValue as $listKey => $listValue) {
+                foreach ($arrayValue['new'] as $listKey => $listValue) {
                     if (!is_array($listValue)) {
                         $field .= "`" . trim(strtolower($listKey)) . "`, ";
                         if (!empty(trim($listValue))) {
@@ -64,63 +64,35 @@ class StorageMysql extends Storage
 
         return true;
     }
-    public function getMember($mail)
-    {
-
-            $query = $this->connection->prepare("SELECT mail from tbl_member where mail = :mail");
-            $query->bindValue(':mail',$mail,PDO::PARAM_STR);
-            if(!($query->execute())) return 0;else
-                return $query->fetchAll();
-    }
-    public function getMemberId($login,$password)
-    {
-
-        $query = $this->connection->prepare("SELECT * from tbl_member where login = :login and password = :password");
-        $query->bindValue(':login',$login,PDO::PARAM_STR);
-        $query->bindValue(':password',$password,PDO::PARAM_STR);
-        if(!($query->execute())) return 0;else
-            return $query->fetchAll();
-    }
-
-
-
-
-
-    public function add(Member $member)
-    {
-
-        try {
-                $query = $this->connection->prepare("INSERT INTO tbl_member (mail,login,teamleader,idTeam,password)  VALUES (:mail,:login,:teamleader,:idTeam,:password)");
-                $query->bindValue(':mail',$member->getMail(),PDO::PARAM_STR);
-                $query->bindValue(':login',$member->getLogin(),PDO::PARAM_STR);
-                $query->bindValue(':teamleader',false,PDO::PARAM_BOOL);
-                $query->bindValue(':idTeam',1,PDO::PARAM_INT);
-                $query->bindValue(':password',$member->getPassword(),PDO::PARAM_STR);
-                $query->execute();
-            } catch (PDOException $e)
-                {
-                    echo "Error !: " . $e->getMessage() . PHP_EOL;
-                }
-    }
-
 
     public function read(array $data)
     {
         $sql = "";
+
         foreach ($data as $table => $array) {
 
-            foreach ($array as $arrayValue) {
-                $value = "";
+            if (!empty($array)) {
 
-                foreach ($arrayValue as $listKey => $listValue) {
-                    if (!empty(trim($listValue))) {
-                        $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) . "' AND ";
+                foreach ($array as $arrayValue) {
+                    $value = "";
+
+                    foreach ($arrayValue['new'] as $listKey => $listValue) {
+                        if (!is_array($listValue)) {
+                            if (!empty(trim($listValue))) {
+                                $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) . "' AND ";
+                            }
+                        } else {
+                            //TODO: ajout gestion tableau status & subtask
+                        }
                     }
+                    $value = trim($value, "AND ");
+
+                    $sql .= "SELECT * FROM tbl_" . $table . " WHERE " . $value . ";";
+
                 }
-                $value = trim($value, "AND ");
 
-                $sql .= "SELECT * FROM tbl_" . $table . " WHERE " . $value . ";";
-
+            } else {
+                $sql .= "SELECT * FROM tbl_" . $table . ";";
             }
 
         }
@@ -138,6 +110,7 @@ class StorageMysql extends Storage
     public function update(array $data)
     {
         $sql = "";
+
         foreach ($data as $table => $array) {
 
             foreach ($array as $arrayValue) {
@@ -145,16 +118,37 @@ class StorageMysql extends Storage
                 foreach ($arrayValue as $typeKey => $typeValue) {
                     $value[trim($typeKey)] = "";
 
-                    foreach ($typeValue as $listKey => $listValue) {
-                        $value[trim($typeKey)] .= "`" . trim(strtolower($listKey)) . "` = '" . trim(strtolower($listValue)) . "', ";
-                    }
+                    if (trim($typeKey) == "new") {
 
-                    $value[trim($typeKey)] = trim($value[trim($typeKey)], ", ");
+                        foreach ($typeValue as $listKey => $listValue) {
+                            if (!is_array($listValue)) {
+                                if (!empty(trim($listValue))) {
+                                    $value[trim($typeKey)] .= "`" . trim(strtolower($listKey)) . "` = '" . trim(strtolower($listValue)) . "', ";
+                                }
+                            } else {
+                                //TODO: ajout gestion tableau status & subtask
+                            }
+                        }
+                        $value[trim($typeKey)] = trim($value[trim($typeKey)], ", ");
+
+                    } else {
+
+                        foreach ($typeValue as $listKey => $listValue) {
+                            if (!is_array($listValue)) {
+                                if (!empty(trim($listValue))) {
+                                    $value[trim($typeKey)] .= "`" . trim(strtolower($listKey)) . "` = '" . trim(strtolower($listValue)) . "' and ";
+                                }
+                            } else {
+                                //TODO: ajout gestion tableau status & subtask
+                            }
+                        }
+                        $value[trim($typeKey)] = trim($value[trim($typeKey)], " and ");
+
+                    }
 
                 }
 
-                $sql .= "
-                UPDATE tbl_" . $table . " SET " . $value['set'] . " WHERE " . $value['get'] . ";";
+                $sql .= "UPDATE tbl_" . $table . " SET " . $value['new'] . " WHERE " . $value['old'] . ";";
 
             }
 
@@ -173,18 +167,28 @@ class StorageMysql extends Storage
     public function delete(array $data)
     {
         $sql = "";
+
         foreach ($data as $table => $array) {
 
             foreach ($array as $arrayValue) {
-                $field = "";
                 $value = "";
 
-                foreach ($arrayValue as $listKey => $listValue) {
-                    $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) . "' AND ";
+                foreach ($arrayValue['new'] as $listKey => $listValue) {
+
+                    // si la valeur n'est pas un tableau
+                    if (!is_array($listValue)) {
+
+                        // si la valeur n'est pas vide , on l'ajoute à $value
+                        if (!empty($listValue)) {
+                            $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) . "' AND ";
+                        }
+                    } else {
+                        //TODO: ajout gestion tableau status & subtask
+                    }
                 }
                 $value = trim($value, "AND ");
 
-                $sql .= "DELETE FROM tbl_" . $table . " WHERE " . $value;
+                $sql .= "DELETE FROM tbl_" . $table . " WHERE " . $value . ";";
 
             }
 
@@ -205,8 +209,7 @@ class StorageMysql extends Storage
         try {
             $request = $this->connection->prepare($sql);
             $request->execute();
-            $data = $request->fetchAll();
-            return $data;
+            return $request;
         } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
         }

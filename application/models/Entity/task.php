@@ -1,5 +1,6 @@
 <?php
-require_once realpath('application/models/Entity/status.php');
+
+require_once 'application/models/Entity/status.php';
 
 class Task {
 	private $name;
@@ -8,13 +9,8 @@ class Task {
 	private $status;
 	private $subtasks;
 
-	public function __construct($name) {
-		$this->setName($name);
-		$this->setPriority(0);
-		$this->setDescription('');
-		$this->subtasks = [];
-		$this->status = [];
-		$this->addStatus(Status::NON_DEFINI, "Mise en place de la tache.");
+	public function __construct() {
+
 	}
 
 	public function setPriority($priority) {
