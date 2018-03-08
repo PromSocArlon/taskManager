@@ -1,4 +1,4 @@
-<form action = "http://localhost/Task/?controller=home&action=session" method="post">
+<form action = "http://localhost/taskManager/?controller=User&action=connexion" method="post">
     <fieldset>
         <legend>Identifiant</legend>
         <p>

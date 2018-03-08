@@ -1,6 +1,6 @@
 
 <div class="backgroundColor">
-    <form method="POST" action="">
+    <form method="POST" action="http://localhost/taskManager/?controller=home&action=check">
         <div class="form-group">
             <label for="InputEmail1">Email address</label>
             <input type="email" name = "mail" placeholder="Enter mail">

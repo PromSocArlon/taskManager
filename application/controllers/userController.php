@@ -1,70 +1,39 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: localadm
- * Date: 1/21/2018
- * Time: 10:56 AM
- */
-
 //namespace TaskManager\controller;
-
+require_once (__DIR__.'\..\models\DAO\TaskDAO.php');
+require_once (__DIR__.'\..\models\DAO\UserDOA.php');
+require_once (__DIR__.'\..\core\Security.php');
+require_once (__DIR__.'\homeController.php');
 class userController extends Controller{
 
+    public static $data;
     /**
      * Show information for one user
      */
     public function edit(){
 
     }
-
     public function index() {
-        require_once(__DIR__."/../views/_shared/header.php");
-        $this->generateView();
-        require_once(__DIR__."/../views/_shared/footer.php");
-    }
-
-    public function save() {
-
-        $password = $this->request->params['password'];
-        $firstName = $this->request->params['firstName'];
-        $lastName = $this->request->params['lastName'];
-
-        $storageFactory = new StorageFactory();
-        $user = new user($storageFactory->getStorage());
-        $user->setFirstName($firstName);
-        $user->setLastName($lastName);
-        $user->setPassword($password);
-        /*
-        $userService = new UserService();
-        $userService->save($user);
-        */
-        $vue = new UserView();
-        if($user->save()){
-            $vue->displayUser($user);
-        } else {
-            $vue->displayError($user->getErrors());
-        }
-
 
     }
 
+    public function connexion()
+    {
 
-    public function register(){
-        require_once 'application/views/_shared/header.php';
-        $this->generateView();
-        require_once 'application/views/_shared/footer.php';
+
+        $p = new Security();
+        $data = $p->getId($_POST['login'],$_POST['password']);
+        if ($data)
+            {
+                $x = new TaskDAO('mysql');
+                $x = $x->getAll();
+                self::$data = $x;
+                require_once(__DIR__."/../views/_shared/header.php");
+                $this->generateView();
+                require_once(__DIR__."/../views/_shared/footer.php");
+            }
+        else
+            header('Location:http://localhost/taskManager/?controller=home&action=index');
     }
-    /**
-    public function listAction(){
 
-    }
-
-    public function addAction(){
-
-    }
-
-    public function editAction(){
-
-    }
- */
 }
