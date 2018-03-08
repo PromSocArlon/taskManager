@@ -6,7 +6,7 @@
  * Date: 30-01-18
  * Time: 01:58
  */
-require_once 'application/core/services/controller.php';
+require_once 'application/core/controller.php';
 
 class taskController extends Controller
 {
@@ -17,16 +17,13 @@ class taskController extends Controller
     public function __construct(/*$storageType*/)
     {
 
-        // TODO: nouvelle instance de l'objet StorageMYsql pour chaque task... pas super opti !
-        $this->storage = $this->model('taskDAO');
     }
 
     public function create()
     {
        $this->generateView();
     }
-
-    //on passe l'objet task a la view pour l'afficher
+    
     public function read()
     {
         return $this->task;
@@ -35,16 +32,16 @@ class taskController extends Controller
     public function delete()
     {
         $this->initializeModel();
-        $taskDao = new TaskDAO('mysql');
-        $taskDao->delete($this->task, $_POST['day']);
+        $this->storage = $this->model('taskDAO');
+        $this->storage->delete($this->task, $_POST['day']);
         $this->generateView();
     }
 
     public function save()
     {
         $this->initializeModel();
-        $taskDao = new TaskDAO('mysql');
-        $taskDao->create($this->task,$_POST['day']);
+        $this->storage = $this->model('taskDAO');
+        $this->storage->create($this->task,$_POST['day']);
         $this->generateView();
     }
 

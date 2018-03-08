@@ -1,6 +1,6 @@
 <?php
 
-require_once __ROOT__ . '/application/core/Storage/Storage.php';
+require_once 'application/core/Storage/Storage.php';
 
 class StorageMysql extends Storage
 {
@@ -8,7 +8,7 @@ class StorageMysql extends Storage
 
     function __construct()
     {
-        $config = parse_ini_file(__ROOT__ . '/application/core/config.ini');
+        $config = parse_ini_file( 'application/core/config.ini');
         try {
             $this->connection = new PDO($this->type . ":host=" . $config['mysqlHost'] . ";port=" . $config['mysqlPort'] . ";dbname=" . $config['mysqlDb'],
                 $config['mysqlUser'], $config['mysqlPassword']);
