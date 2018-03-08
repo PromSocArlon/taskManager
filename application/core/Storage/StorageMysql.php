@@ -1,6 +1,6 @@
 <?php
 
-require_once '../application/core/Storage/Storage.php';
+require_once __ROOT__ . '/application/core/Storage/Storage.php';
 
 class StorageMysql extends Storage
 {
@@ -8,9 +8,10 @@ class StorageMysql extends Storage
 
     function __construct()
     {
-        //$config = parse_ini_file('../config.ini');
+        $config = parse_ini_file(__ROOT__ . '/application/core/config.ini');
         try {
-            $this->connection = new PDO($this->type . ":host=" . "localhost" . ";port=" . "3306" . ";dbname=" . "taskmanager", "root", "");
+            $this->connection = new PDO($this->type . ":host=" . $config['mysqlHost'] . ";port=" . $config['mysqlPort'] . ";dbname=" . $config['mysqlDb'],
+                $config['mysqlUser'], $config['mysqlPassword']);
             $this->connection->errorInfo();
         } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
@@ -32,7 +33,7 @@ class StorageMysql extends Storage
                 $field = "";
                 $value = "";
 
-                foreach ($arrayValue as $listKey => $listValue) {
+                foreach ($arrayValue['new'] as $listKey => $listValue) {
                     if (!is_array($listValue)) {
                         $field .= "`" . trim(strtolower($listKey)) . "`, ";
                         if (!empty(trim($listValue))) {
@@ -67,20 +68,31 @@ class StorageMysql extends Storage
     public function read(array $data)
     {
         $sql = "";
+
         foreach ($data as $table => $array) {
 
-            foreach ($array as $arrayValue) {
-                $value = "";
+            if (!empty($array)) {
 
-                foreach ($arrayValue as $listKey => $listValue) {
-                    if (!empty(trim($listValue))) {
-                        $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) . "' AND ";
+                foreach ($array as $arrayValue) {
+                    $value = "";
+
+                    foreach ($arrayValue['new'] as $listKey => $listValue) {
+                        if (!is_array($listValue)) {
+                            if (!empty(trim($listValue))) {
+                                $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) . "' AND ";
+                            }
+                        } else {
+                            //TODO: ajout gestion tableau status & subtask
+                        }
                     }
+                    $value = trim($value, "AND ");
+
+                    $sql .= "SELECT * FROM tbl_" . $table . " WHERE " . $value . ";";
+
                 }
-                $value = trim($value, "AND ");
 
-                $sql .= "SELECT * FROM tbl_" . $table . " WHERE " . $value . ";";
-
+            } else {
+                $sql .= "SELECT * FROM tbl_" . $table . ";";
             }
 
         }
@@ -98,6 +110,7 @@ class StorageMysql extends Storage
     public function update(array $data)
     {
         $sql = "";
+
         foreach ($data as $table => $array) {
 
             foreach ($array as $arrayValue) {
@@ -105,16 +118,37 @@ class StorageMysql extends Storage
                 foreach ($arrayValue as $typeKey => $typeValue) {
                     $value[trim($typeKey)] = "";
 
-                    foreach ($typeValue as $listKey => $listValue) {
-                        $value[trim($typeKey)] .= "`" . trim(strtolower($listKey)) . "` = '" . trim(strtolower($listValue)) . "', ";
-                    }
+                    if (trim($typeKey) == "new") {
 
-                    $value[trim($typeKey)] = trim($value[trim($typeKey)], ", ");
+                        foreach ($typeValue as $listKey => $listValue) {
+                            if (!is_array($listValue)) {
+                                if (!empty(trim($listValue))) {
+                                    $value[trim($typeKey)] .= "`" . trim(strtolower($listKey)) . "` = '" . trim(strtolower($listValue)) . "', ";
+                                }
+                            } else {
+                                //TODO: ajout gestion tableau status & subtask
+                            }
+                        }
+                        $value[trim($typeKey)] = trim($value[trim($typeKey)], ", ");
+
+                    } else {
+
+                        foreach ($typeValue as $listKey => $listValue) {
+                            if (!is_array($listValue)) {
+                                if (!empty(trim($listValue))) {
+                                    $value[trim($typeKey)] .= "`" . trim(strtolower($listKey)) . "` = '" . trim(strtolower($listValue)) . "' and ";
+                                }
+                            } else {
+                                //TODO: ajout gestion tableau status & subtask
+                            }
+                        }
+                        $value[trim($typeKey)] = trim($value[trim($typeKey)], " and ");
+
+                    }
 
                 }
 
-                $sql .= "
-                UPDATE tbl_" . $table . " SET " . $value['set'] . " WHERE " . $value['get'] . ";";
+                $sql .= "UPDATE tbl_" . $table . " SET " . $value['new'] . " WHERE " . $value['old'] . ";";
 
             }
 
@@ -139,15 +173,17 @@ class StorageMysql extends Storage
             foreach ($array as $arrayValue) {
                 $value = "";
 
-                foreach ($arrayValue as $listKey => $listValue) {
+                foreach ($arrayValue['new'] as $listKey => $listValue) {
 
                     // si la valeur n'est pas un tableau
                     if (!is_array($listValue)) {
 
                         // si la valeur n'est pas vide , on l'ajoute à $value
-                        if(!empty($listValue)) {
+                        if (!empty($listValue)) {
                             $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) . "' AND ";
                         }
+                    } else {
+                        //TODO: ajout gestion tableau status & subtask
                     }
                 }
                 $value = trim($value, "AND ");

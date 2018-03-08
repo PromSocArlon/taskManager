@@ -6,29 +6,25 @@
  * Time: 22:03
  */
 
-class UserDOA extends DAO
+class MemberDAO extends DAO
 {
 
     protected function objectToArray($arguments)
     {
-        $array['user'] = [];
+        $array['member'] = [];
 
         if (!empty($arguments)) {
-            $newTaskArray = (array)$arguments[0];
-            $newDayKey = (new Week)->getDayIndex($arguments[1]);
+            $newMemberArray = (array)$arguments[0];
 
-            foreach ($newTaskArray as $key => $value) {
-                $array['task'][0]['new'][str_replace('Task', '', $key)] = $value;
+            foreach ($newMemberArray as $key => $value) {
+                $array['member'][0]['new'][str_replace('Member', '', $key)] = $value;
             }
-            $array['task'][0]['new']['day'] = $newDayKey + 1;
 
-            if (func_num_args() > 2) {
-                $oldTaskArray = (array)$arguments[3];
-                $oldDayKey = (new Week)->getDayIndex($arguments[4]);
-                foreach ($oldTaskArray as $key => $value) {
-                    $array['task'][0]['old'][str_replace('Task', '', $key)] = $value;
+            if (func_num_args() > 1) {
+                $oldMemberArray = (array)$arguments[1];
+                foreach ($oldMemberArray as $key => $value) {
+                    $array['member'][0]['old'][str_replace('Member', '', $key)] = $value;
                 }
-                $array['task'][0]['get']['old'] = $oldDayKey + 1;
             }
         }
 

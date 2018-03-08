@@ -1,6 +1,6 @@
 <?php
 
-require_once realpath('application/core/Storage/StorageMysql.php');
+require_once __ROOT__ . '/application/core/Storage/StorageMysql.php';
 
 class StorageFactory
 {
