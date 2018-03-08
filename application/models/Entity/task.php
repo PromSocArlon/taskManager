@@ -9,13 +9,8 @@ class Task {
 	private $status;
 	private $subtasks;
 
-	public function __construct($name) {
-		$this->setName($name);
-		$this->setPriority(0);
-		$this->setDescription('');
-		$this->subtasks = [];
-		$this->status = [];
-		$this->addStatus(Status::NON_DEFINI, "Mise en place de la tache.");
+	public function __construct() {
+
 	}
 
 	public function setPriority($priority) {

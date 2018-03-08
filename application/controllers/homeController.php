@@ -7,4 +7,9 @@ class homeController extends Controller {
         $this->generateView();
         require_once(__DIR__."/../views/_shared/footer.php");
     }
+
+    public function initializeModel()
+    {
+        // TODO: Implement initialize() method.
+    }
 }

@@ -9,6 +9,7 @@ abstract class Controller {
     protected $request;
 
     public abstract function index();
+    public abstract function initializeModel();
 
     /**
      * Set the the request attribute to the request parameter value
@@ -54,7 +55,7 @@ abstract class Controller {
      * @return object the object of the wanted model.
      * @throws Exception if class not found
      */
-    public function model(string $model): object {
+    public function model(string $model){
         $modelFile = $model == 'StorageFactory' ? 'application/models/Storage/StorageFactory.php' : 'application/models/Entity/' . $model . '.php' ;
         if (file_exists($modelFile)) {
             require_once($modelFile);
@@ -64,5 +65,4 @@ abstract class Controller {
         }
 
     }
-
 }
