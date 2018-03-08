@@ -31,6 +31,6 @@ class UserService
 //            $cuPsw = null;
 //            out("pas de psw setté pour le moment");
 //        }
-		return isset($_SESSION['user']) ? ($temp = $_SESSION['user']) : null;
+		return isset($_SESSION['user']) ? ($temp = unserialize($_SESSION['user'])) : null;
     }
 }

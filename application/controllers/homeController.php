@@ -20,7 +20,7 @@ class homeController extends Controller {
                     $member->setMail("Trump@windaube.usa");
                     $member->setPassword($this->request->getParameter('loginPassword'));
 
-                    $_SESSION['user'] = $member;
+                    $_SESSION['user'] = serialize($member);
                     header('Location: index.php?controller=user&action=index');
                 }
                 catch (Exception $exception) {
