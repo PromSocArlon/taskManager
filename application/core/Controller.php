@@ -45,10 +45,15 @@ abstract class Controller {
      * Generate the view with a given data set
      * @param array $data the data set to be added to the generation
      */
-    protected function generateView(array $data = array()) : void {
+    protected function generateView($data = array(),$action=null)    {
+        $actionView = $this->action;
+        if ($action !=null)
+        {
+            $actionView=$action;
+        }
         $classController = get_class($this);
         $controller = str_replace("Controller", "", $classController);
-        $view = new View($this->action, $controller);
+        $view= new view($actionView, $controller);
         $view->generate($data);
     }
 
