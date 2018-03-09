@@ -1,13 +1,30 @@
 <?php
 
-namespace TaskManager\controller;
-class TeamController{
+//namespace TaskManager\controller;
+
+require_once 'application/core/Controller.php';
+
+class TeamController extends Controller
+{
+
+    public function index() {
+        $this->generateView();
+    }
+
+    public function initializeModel()
+    {
+        // TODO: Implement initialize() method.
+    }
+
     /**
      * Show information for one team
      */
-    public function showAction(){
+    public function showAction()
+    {
     }
-    public function save($teamName, $teamID, $teamMember, $teamLeader, $teamTask) {
+
+    public function save($teamName, $teamID, $teamMember, $teamLeader, $teamTask)
+    {
         $storageFactory = new StorageFactory();
         $team = new team($storageFactory->getStorage());
         $team->setFirstName($teamName);
@@ -20,18 +37,18 @@ class TeamController{
         $teamService->save($team);
         */
         $vue = new UserView();
-        if($team->save()){
+        if ($team->save()) {
             $vue->displayTeam($team);
         } else {
             $vue->displayError($team->getErrors());
         }
     }
-/**
-    public function listAction(){
-    }
-    public function addAction(){
-    }
-    public function editAction(){
-    }
- */
+    /**
+     * public function listAction(){
+     * }
+     * public function addAction(){
+     * }
+     * public function editAction(){
+     * }
+     */
 }
