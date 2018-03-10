@@ -21,9 +21,9 @@ class TaskController extends Controller
 
     public function create()
     {
-       $this->generateView();
+        $this->generateView();
     }
-    
+
     public function read()
     {
         return $this->task;
@@ -37,27 +37,27 @@ class TaskController extends Controller
         $this->generateView();
     }
 
-    public function save()
-    {
-        $this->initializeModel();
-        $this->storage = $this->model('taskDAO');
-        $this->storage->create($this->task,$_POST['day']);
-        $this->generateView();
-    }
-
-    public function index()
-    {
-        $this->generateView();
-    }
-
     public function initializeModel()
     {
         $this->task = $this->model('task');
         $this->task->setName($_POST['taskName']);
         $this->task->setPriority($_POST['taskPriority']);
         $this->task->setDescription($_POST['taskDescription']);
-        $this->task->addStatus(0,'0');
+        $this->task->addStatus(0, '0');
         $this->task->addSubTask(NULL);
+    }
+
+    public function save()
+    {
+        $this->initializeModel();
+        $this->storage = $this->model('taskDAO');
+        $this->storage->create($this->task, $_POST['day']);
+        $this->generateView();
+    }
+
+    public function index()
+    {
+        $this->generateView();
     }
 
     public function deleteTest()
