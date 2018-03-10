@@ -1,7 +1,6 @@
 <?php
 define('__ROOT__', dirname(dirname(__FILE__)));
 
-echo __ROOT__;
 require_once __ROOT__ . '/application/models/Entity/Task.php';
 require_once __ROOT__ . '/application/models/DAO/TaskDAO.php';
 require_once __ROOT__ . '/application/models/DAO/MemberDAO.php';
@@ -14,14 +13,19 @@ require_once __ROOT__ . '/application/models/Entity/Member.php';
 $taskDAO = new TaskDAO('mysql');
 */
 
-$memberDAO = new MemberDAO('mysql');
+$taskDAO = new TaskDAO('mysql');
 
-$member = new Member();
-$member->setLogin('test0');
+$task = new Task();
+$task->setName('Test');
+$task->setDay('monday');
 
-$memberDAO->create($member);
+$taskRead = new Task();
+$taskRead->setId(6);
+$taskRead->setName('rdgdgdgtfhfthdt');
 
+//$taskDAO->create($task);
 
+$taskDAO->update($taskRead);
 
 //$task0 = new Task('');
 //$task0->setName('testAlbin');

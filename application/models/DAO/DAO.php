@@ -15,11 +15,11 @@ abstract class DAO
         $this->connection = StorageFactory::getStorage($type);
     }
 
-    abstract protected function objectToArray($array);
+    abstract protected function objectToArray($object);
 
-    public function create()
+    public function create($object)
     {
-        $array = $this->objectToArray(func_get_args());
+        $array = $this->objectToArray($object);
 
         if ($this->connection->create($array)) {
             return true;
@@ -27,11 +27,11 @@ abstract class DAO
         return false;
     }
 
-    public function read()
+    public function read($object = NULL)
     {
-        $array = $this->objectToArray(func_get_args());
+        $array = $this->objectToArray($object);
 
-        $result = StorageFactory::getStorage("mysql")->read($array);
+        $result = $this->connection->read($array);
 
         if (!empty($result)) {
             return $result;
@@ -39,20 +39,20 @@ abstract class DAO
         return false;
     }
 
-    public function update()
+    public function update($object)
     {
-        $array = $this->objectToArray(func_get_args());
+        $array = $this->objectToArray($object);
 
-        if (StorageFactory::getStorage("mysql")->update($array)) {
+        if ($this->connection->update($array)) {
             return true;
         }
         return false;
     }
 
-    public function delete()
+    public function delete($object)
     {
-        $array = $this->objectToArray(func_get_args());
-        if (StorageFactory::getStorage("mysql")->delete($array)) {
+        $array = $this->objectToArray($object);
+        if ($this->connection->delete($array)) {
             return true;
         }
         return false;

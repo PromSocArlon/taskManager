@@ -1,34 +1,28 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: philippedaniel
- * Date: 16/02/2018
- * Time: 22:03
- */
+require_once 'application/models/Entity/Member.php';
+require_once 'application/models/DAO/DAO.php';
+require_once 'application/core/Storage/StorageFactory.php';
 
 class MemberDAO extends DAO
 {
 
-    protected function objectToArray($arguments)
+    protected function objectToArray($object)
     {
         $array['member'] = [];
 
-        if (!empty($arguments)) {
-            $newMemberArray = (array)$arguments[0];
+        $MemberArray = (array)$object;
 
-            foreach ($newMemberArray as $key => $value) {
-                $array['member'][0]['new'][str_replace('Member', '', $key)] = $value;
-            }
+        foreach ($MemberArray as $key => $value) {
 
-            if (func_num_args() > 1) {
-                $oldMemberArray = (array)$arguments[1];
-                foreach ($oldMemberArray as $key => $value) {
-                    $array['member'][0]['old'][str_replace('Member', '', $key)] = $value;
-                }
-            }
+            $key = trim(strtolower(str_replace('Member', '', $key)));
+            $value = trim($value);
+
+            $array['member'][$key] = $value;
+
         }
 
         return $array;
+
     }
 
 }

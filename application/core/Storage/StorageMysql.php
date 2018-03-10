@@ -8,10 +8,16 @@ class StorageMysql extends Storage
 
     function __construct()
     {
-        $config = parse_ini_file( 'application/core/config.ini');
+        $config = parse_ini_file('application/core/config.ini');
         try {
-            $this->connection = new PDO($this->type . ":host=" . $config['mysqlHost'] . ";port=" . $config['mysqlPort'] . ";dbname=" . $config['mysqlDb'],
-                $config['mysqlUser'], $config['mysqlPassword']);
+            $this->connection = new PDO(
+                $this->type .
+                ":host=" . $config['mysqlHost'] .
+                ";port=" . $config['mysqlPort'] .
+                ";dbname=" . $config['mysqlDb'],
+                $config['mysqlUser'],
+                $config['mysqlPassword']
+            );
             $this->connection->errorInfo();
         } catch (PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
@@ -29,29 +35,26 @@ class StorageMysql extends Storage
         $sql = "";
         foreach ($data as $table => $array) {
 
-            foreach ($array as $arrayValue) {
-                $field = "";
-                $value = "";
+            $field = "";
+            $value = "";
 
-                foreach ($arrayValue['new'] as $listKey => $listValue) {
-                    if (!is_array($listValue)) {
-                        $field .= "`" . trim(strtolower($listKey)) . "`, ";
-                        if (!empty(trim($listValue))) {
-                            $value .= "'" . trim(strtolower($listValue)) . "', ";
-                        } else {
-                            $value .= "'NULL', ";
-                        }
+            foreach ($array as $arrayKey => $arrayValue) {
+                if (!is_array($arrayValue)) {
+                    $field .= "`" . $arrayKey . "`, ";
+                    if (!empty($arrayValue)) {
+                        $value .= "'" . $arrayValue . "', ";
                     } else {
-                        //TODO: ajout gestion tableau status & subtask
+                        $value .= "'NULL', ";
                     }
-
+                } else {
+                    //TODO: ajout gestion tableau status & subtask
                 }
-                $field = trim($field, ", ");
-                $value = trim($value, ", ");
-
-                $sql .= "INSERT INTO tbl_" . $table . " (" . $field . ") VALUES (" . $value . ");";
 
             }
+            $field = trim($field, ", ");
+            $value = trim($value, ", ");
+
+            $sql .= "INSERT INTO tbl_" . $table . " (" . $field . ") VALUES (" . $value . ");";
 
         }
 
@@ -73,26 +76,25 @@ class StorageMysql extends Storage
 
             if (!empty($array)) {
 
-                foreach ($array as $arrayValue) {
-                    $value = "";
+                $value = "";
 
-                    foreach ($arrayValue['new'] as $listKey => $listValue) {
-                        if (!is_array($listValue)) {
-                            if (!empty(trim($listValue))) {
-                                $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) . "' AND ";
-                            }
-                        } else {
-                            //TODO: ajout gestion tableau status & subtask
+                foreach ($array as $arrayKey => $arrayValue) {
+                    if (!is_array($arrayValue)) {
+                        if (!empty($arrayValue)) {
+                            $value .= $arrayKey . " = '" . $arrayValue . "' AND ";
                         }
+                    } else {
+                        //TODO: ajout gestion tableau status & subtask
                     }
-                    $value = trim($value, "AND ");
-
-                    $sql .= "SELECT * FROM tbl_" . $table . " WHERE " . $value . ";";
-
                 }
+                $value = trim($value, "AND ");
+
+                $sql .= "SELECT * FROM tbl_" . $table . " WHERE " . $value . ";";
 
             } else {
+
                 $sql .= "SELECT * FROM tbl_" . $table . ";";
+
             }
 
         }
@@ -104,7 +106,7 @@ class StorageMysql extends Storage
             return false;
         }
 
-        return $request->fetchAll();
+        return $request->fetch(PDO::FETCH_ASSOC);
     }
 
     public function update(array $data)
@@ -113,44 +115,25 @@ class StorageMysql extends Storage
 
         foreach ($data as $table => $array) {
 
-            foreach ($array as $arrayValue) {
+            $id = "";
+            $value = "";
 
-                foreach ($arrayValue as $typeKey => $typeValue) {
-                    $value[trim($typeKey)] = "";
-
-                    if (trim($typeKey) == "new") {
-
-                        foreach ($typeValue as $listKey => $listValue) {
-                            if (!is_array($listValue)) {
-                                if (!empty(trim($listValue))) {
-                                    $value[trim($typeKey)] .= "`" . trim(strtolower($listKey)) . "` = '" . trim(strtolower($listValue)) . "', ";
-                                }
-                            } else {
-                                //TODO: ajout gestion tableau status & subtask
-                            }
+            foreach ($array as $arrayKey => $arrayValue) {
+                if (!is_array($arrayValue)) {
+                    if (!empty($arrayValue)) {
+                        if ($arrayKey == 'id') {
+                            $id .= "`id` = '" . $arrayValue . "'";
+                        } else {
+                            $value .= "`" . $arrayKey . "` = '" . $arrayValue . "', ";
                         }
-                        $value[trim($typeKey)] = trim($value[trim($typeKey)], ", ");
-
-                    } else {
-
-                        foreach ($typeValue as $listKey => $listValue) {
-                            if (!is_array($listValue)) {
-                                if (!empty(trim($listValue))) {
-                                    $value[trim($typeKey)] .= "`" . trim(strtolower($listKey)) . "` = '" . trim(strtolower($listValue)) . "' and ";
-                                }
-                            } else {
-                                //TODO: ajout gestion tableau status & subtask
-                            }
-                        }
-                        $value[trim($typeKey)] = trim($value[trim($typeKey)], " and ");
-
                     }
-
+                } else {
+                    //TODO: ajout gestion tableau status & subtask
                 }
-
-                $sql .= "UPDATE tbl_" . $table . " SET " . $value['new'] . " WHERE " . $value['old'] . ";";
-
             }
+            $value = trim($value, ", ");
+
+            $sql .= "UPDATE tbl_" . $table . " SET " . $value . " WHERE " . $id . ";";
 
         }
 
@@ -169,28 +152,24 @@ class StorageMysql extends Storage
         $sql = "";
 
         foreach ($data as $table => $array) {
+            $value = "";
 
-            foreach ($array as $arrayValue) {
-                $value = "";
+            foreach ($array as $arrayKey => $arrayValue) {
 
-                foreach ($arrayValue['new'] as $listKey => $listValue) {
+                // si la valeur n'est pas un tableau
+                if (!is_array($arrayValue)) {
 
-                    // si la valeur n'est pas un tableau
-                    if (!is_array($listValue)) {
-
-                        // si la valeur n'est pas vide , on l'ajoute à $value
-                        if (!empty($listValue)) {
-                            $value .= trim(strtolower($listKey)) . " = '" . trim(strtolower($listValue)) . "' AND ";
-                        }
-                    } else {
-                        //TODO: ajout gestion tableau status & subtask
+                    // si la valeur n'est pas vide , on l'ajoute à $value
+                    if (!empty($arrayValue)) {
+                        $value .= $arrayKey . " = '" . $arrayValue . "' AND ";
                     }
+                } else {
+                    //TODO: ajout gestion tableau status & subtask
                 }
-                $value = trim($value, "AND ");
-
-                $sql .= "DELETE FROM tbl_" . $table . " WHERE " . $value . ";";
-
             }
+            $value = trim($value, "AND ");
+
+            $sql .= "DELETE FROM tbl_" . $table . " WHERE " . $value . ";";
 
         }
 
