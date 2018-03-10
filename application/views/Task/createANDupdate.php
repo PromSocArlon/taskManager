@@ -1,0 +1,30 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Chris
+ * Date: 10-03-18
+ * Time: 18:24
+ */
+?>
+<form method="POST" >
+    <input type="radio" name="day" value="Monday"> Monday<br>
+    <input type="radio" name="day" value="Tuesday"> Tuesday<br>
+    <input type="radio" name="day" value="Wednesday"> Wednesday<br>
+    <input type="radio" name="day" value="Thursday"> Thursday<br>
+    <input type="radio" name="day" value="Friday"> Friday<br>
+    <input type="radio" name="day" value="Saturday"> Saturday<br>
+    <input type="radio" name="day" value="Sunday"> Sunday<br>
+    <p > Task number (necessary only for update)</p>
+    <input type="text" name="taskNumber">
+    <p > Name </p>
+    <input type="text" name="taskName">
+    <input type="submit" value="Update name" formaction="?controller=task&action=update&updateAction=name">
+    <p > Priority </p>
+    <input type="text" name="taskPriority">
+    <input type="submit" value="Update priority" formaction="?controller=task&action=update&updateAction=priority">
+    <p > Description </p>
+    <input type="text" name="taskDescription">
+    <input type="submit" value="Update description" formaction="?controller=task&action=update&updateAction=description">
+    <p ></p>
+    <input type="submit" value="Save your new task" formaction="?controller=task&action=save">
+</form>

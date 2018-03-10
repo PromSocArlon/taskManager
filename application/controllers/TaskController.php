@@ -19,21 +19,31 @@ class TaskController extends Controller
 
     }
 
-    public function create()
+    public function createANDupdate()
     {
        $this->generateView();
     }
     
     public function read()
     {
-        return $this->task;
+        $this->initializeModel();
+        $this->storage = $this->model('taskDAO');
+        $this->generateView($this->storage->read($this->task, $this->request->getParameter('day')));
+    }
+
+    public function update()
+    {
+        $this->initializeModel();
+        $this->storage = $this->model('taskDAO');
+        //$this->storage->update($this->task, $this->request->getParameter('day'));
+        $this->generateView();
     }
 
     public function delete()
     {
         $this->initializeModel();
         $this->storage = $this->model('taskDAO');
-        $this->storage->delete($this->task, $_POST['day']);
+        $this->storage->delete($this->task, $this->request->getParameter('day'));
         $this->generateView();
     }
 
@@ -41,7 +51,7 @@ class TaskController extends Controller
     {
         $this->initializeModel();
         $this->storage = $this->model('taskDAO');
-        $this->storage->create($this->task,$_POST['day']);
+        $this->storage->create($this->task, $this->request->getParameter('day'));
         $this->generateView();
     }
 
@@ -53,15 +63,14 @@ class TaskController extends Controller
     public function initializeModel()
     {
         $this->task = $this->model('task');
-        $this->task->setName($_POST['taskName']);
-        $this->task->setPriority($_POST['taskPriority']);
-        $this->task->setDescription($_POST['taskDescription']);
-        $this->task->addStatus(0,'0');
-        $this->task->addSubTask(NULL);
-    }
-
-    public function deleteTest()
-    {
-        $this->generateView();
+        $this->task->setName($this->request->getParameter('taskName'));
+        $action = $this->request->getParameter('action');
+        if ($action == 'save' || $action == 'update') {
+            if ($action == 'update') $updateAction = $this->request->getParameter('updateAction');
+            if ($action == 'save' || $updateAction == 'priority')$this->task->setPriority($this->request->getParameter('taskPriority'));
+            if ($action == 'save' || $updateAction == 'description')$this->task->setDescription($this->request->getParameter('taskDescription'));
+            if ($action == 'save' || $updateAction == 'status')$this->task->addStatus(0, '0');
+            if ($action == 'save' || $updateAction == 'subTask')$this->task->addSubTask(NULL);
+        }
     }
 }
