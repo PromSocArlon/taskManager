@@ -1,11 +1,13 @@
 <?php
 
-class View {
+class View
+{
     private $file;
     private $title;
 
-    public function __construct($action, $controller = "") {
-       $file = "application/views/";
+    public function __construct($action, $controller = "")
+    {
+        $file = "application/views/";
         if ($controller != "") {
             $file = $file . $controller . "/";
         }
@@ -17,14 +19,15 @@ class View {
      * Generate the wanted view
      * @param array $data the data to add to the generation
      */
-    public function generate(array $data) : void {
+    public function generate(array $data): void
+    {
         try {
             $content = $this->generateFile($this->file, $data);
             $root = "taskManager";
             $view = $this->generateFile('application/views/template.php', array('title' => $this->title, 'content' => $content, 'root' => $root));
             echo $view;
         } catch (Exception $ex) {
-            //TODO: EXCEPTION MANAGEMENT
+            $this->handleError($ex);
         }
     }
 
@@ -34,15 +37,25 @@ class View {
      * @return string the generated file
      * @throws Exception if the file is not found.
      */
-    private function generateFile(string $filePath, array $data) : string {
+    private function generateFile(string $filePath, array $data): string
+    {
         if (file_exists($filePath)) {
             extract($data);
             ob_start();
             require($filePath);
             return ob_get_clean();
-        }
-        else {
+        } else {
             throw new Exception("File '$filePath' not found");
         }
+    }
+
+    /**
+     * Handle any error.
+     * @param Exception $exception the error that must be handled
+     */
+    private function handleError(Exception $exception): void
+    {
+        $view = new View('template');
+        $view->generate(array('msgError' => $exception->getMessage()));
     }
 }
