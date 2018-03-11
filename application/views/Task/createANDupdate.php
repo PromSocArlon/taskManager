@@ -7,6 +7,8 @@
  */
 ?>
 <form method="POST" >
+    <p > Task number </p>
+    <p ><input type="text" name="taskId"> </p>
     <input type="radio" name="day" value="Monday"> Monday<br>
     <input type="radio" name="day" value="Tuesday"> Tuesday<br>
     <input type="radio" name="day" value="Wednesday"> Wednesday<br>
@@ -14,8 +16,7 @@
     <input type="radio" name="day" value="Friday"> Friday<br>
     <input type="radio" name="day" value="Saturday"> Saturday<br>
     <input type="radio" name="day" value="Sunday"> Sunday<br>
-    <p > Task number (necessary only for update)</p>
-    <input type="text" name="taskNumber">
+    <input type="submit" value="Update day" formaction="?controller=task&action=update&updateAction=day">
     <p > Name </p>
     <input type="text" name="taskName">
     <input type="submit" value="Update name" formaction="?controller=task&action=update&updateAction=name">

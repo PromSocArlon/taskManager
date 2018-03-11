@@ -5,9 +5,9 @@
  * Date: 08-03-18
  * Time: 20:02
  */
-foreach ($data as $key =>$value){
-    echo '|| Task ' . ++$key .' || ' . PHP_EOL;
-    echo 'Name: ' . $value['name'] . PHP_EOL;
-    echo ', Priority: ' . $value['priority'] . PHP_EOL;
-    echo ', Description: ' . $value['description'] . PHP_EOL;
-}
+    echo '|| Task ' . $data['id'] .' || ' . PHP_EOL;
+    echo 'Name: ' . $data['name'] . PHP_EOL;
+    echo ', Priority: ' . $data['priority'] . PHP_EOL;
+    echo ', Description: ' . $data['description'] . PHP_EOL;
+    echo ', Day: ' . $data['day'] . PHP_EOL;
+

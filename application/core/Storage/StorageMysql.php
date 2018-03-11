@@ -44,7 +44,7 @@ class StorageMysql extends Storage
                     if (!empty($arrayValue)) {
                         $value .= "'" . $arrayValue . "', ";
                     } else {
-                        $value .= "'NULL', ";
+                        $value .= "NULL, ";
                     }
                 } else {
                     //TODO: ajout gestion tableau status & subtask

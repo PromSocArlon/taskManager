@@ -28,14 +28,14 @@ class TaskController extends Controller
     {
         $this->initializeModel();
         $this->storage = $this->model('taskDAO');
-        $this->generateView($this->storage->read($this->task, $this->request->getParameter('day')));
+        $this->generateView($this->storage->read($this->task));
     }
 
     public function update()
     {
         $this->initializeModel();
         $this->storage = $this->model('taskDAO');
-        //$this->storage->update($this->task, $this->request->getParameter('day'));
+        $this->storage->update($this->task);
         $this->generateView();
     }
 
@@ -43,7 +43,7 @@ class TaskController extends Controller
     {
         $this->initializeModel();
         $this->storage = $this->model('taskDAO');
-        $this->storage->delete($this->task, $this->request->getParameter('day'));
+        $this->storage->delete($this->task);
         $this->generateView();
     }
 
@@ -51,7 +51,7 @@ class TaskController extends Controller
     {
         $this->initializeModel();
         $this->storage = $this->model('taskDAO');
-        $this->storage->create($this->task, $this->request->getParameter('day'));
+        $this->storage->create($this->task);
         $this->generateView();
     }
 
@@ -63,14 +63,16 @@ class TaskController extends Controller
     public function initializeModel()
     {
         $this->task = $this->model('task');
-        $this->task->setName($this->request->getParameter('taskName'));
+        $this->task->setId($this->request->getParameter('taskId'));
         $action = $this->request->getParameter('action');
         if ($action == 'save' || $action == 'update') {
             if ($action == 'update') $updateAction = $this->request->getParameter('updateAction');
+            if ($action == 'save' || $updateAction == 'name')$this->task->setName($this->request->getParameter('taskName'));
             if ($action == 'save' || $updateAction == 'priority')$this->task->setPriority($this->request->getParameter('taskPriority'));
             if ($action == 'save' || $updateAction == 'description')$this->task->setDescription($this->request->getParameter('taskDescription'));
-            if ($action == 'save' || $updateAction == 'status')$this->task->addStatus(0, '0');
-            if ($action == 'save' || $updateAction == 'subTask')$this->task->addSubTask(NULL);
+            if ($action == 'save' || $updateAction == 'day')$this->task->setDay($this->request->getParameter('day'));
+            //if ($action == 'save' || $updateAction == 'status')$this->task->addStatus(0, '0');
+            //if ($action == 'save' || $updateAction == 'subTask')$this->task->addSubTask(0);
         }
     }
 }
