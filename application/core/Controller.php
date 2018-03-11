@@ -4,7 +4,8 @@ require_once 'Request.php';
 require_once 'View.php';
 
 
-abstract class Controller {
+abstract class Controller
+{
 
     private $action;
     /**
@@ -13,13 +14,15 @@ abstract class Controller {
     protected $request;
 
     public abstract function index();
+
     public abstract function initializeModel();
 
     /**
      * Set the the request attribute to the request parameter value
      * @param request $request request that called the controller
      */
-    public function setRequest(request $request) : void {
+    public function setRequest(request $request): void
+    {
         if ($request) {
             $this->request = $request;
         }
@@ -30,12 +33,12 @@ abstract class Controller {
      * @param string $action the action to perform
      * @throws Exception if action not defined
      */
-    public function executeAction(string $action) : void {
+    public function executeAction(string $action): void
+    {
         if (method_exists($this, $action)) {
             $this->action = $action;
             $this->{$this->action}();
-        }
-        else {
+        } else {
             $classController = get_class($this);
             throw new Exception("Action '$action' not defined in the class $classController");
         }
@@ -44,19 +47,25 @@ abstract class Controller {
     /**
      * Generate the view with a given data set
      * @param array $data the data set to be added to the generation
+     * @param string $action
      */
-    protected function generateView($data = array(),$action=null)    {
+    protected function generateView($data = array(), $action = null)
+    {
         $actionView = $this->action;
-        if ($action !=null)
-        {
-            $actionView=$action;
+        if ($action != null) {
+            $actionView = $action;
         }
         $classController = get_class($this);
         $controller = str_replace("Controller", "", $classController);
-        $view= new view($actionView, $controller);
+
+        $view = new view($actionView, $controller);
         $view->generate($data);
     }
 
+    protected function redirect($controller, $action = null)
+    {
+        header("taskManager/" . $controller . "/" . $action);
+    }
 
     /**
      * Give an instance of the given class.
@@ -64,14 +73,15 @@ abstract class Controller {
      * @return object the object of the wanted model.
      * @throws Exception if class not found
      */
-    public function model(string $model){
-        $modelFile = strpos($model, "DAO") !== false ? 'application/models/DAO/' . $model . '.php' : 'application/models/Entity/' . $model . '.php' ;
+    protected function model(string $model)
+    {
+        $modelFile = strpos($model, "DAO") !== false ? 'application/models/DAO/' . $model . '.php' : 'application/models/Entity/' . $model . '.php';
         if (file_exists($modelFile)) {
             require_once($modelFile);
             //TODO: ajout support pour DAO du type de storage (file ou mysql) pour le moment DAO est par défaut sur mysql
             return new $model();
         } else {
-            throw new Exception("File '".$modelFile."' not found.");
+            throw new Exception("File '" . $modelFile . "' not found.");
         }
 
     }
