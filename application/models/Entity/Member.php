@@ -16,7 +16,7 @@ class Member {
     public function setTask($task)
     {
         $this->task = $task;
-
+ 
     }
 
     /**
