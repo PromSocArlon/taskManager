@@ -5,6 +5,7 @@
  * Date: 16/02/2018
  * Time: 22:03
  */
+require_once 'application/models/DAO/DAO.php';
 
 class MemberDAO extends DAO
 {

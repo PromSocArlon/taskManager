@@ -7,7 +7,6 @@ class Member {
     private $password;
     private $mail;
     private $teamLeader;
-    private $task=[];
     private $team;
 
 
