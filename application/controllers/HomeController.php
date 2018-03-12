@@ -4,8 +4,19 @@ require_once __DIR__.'\..\models\DAO\TaskDAO.php';
 require_once __DIR__.'\..\models\DAO\UserDOA.php';
 require_once __DIR__.'\..\core\Security.php';
 
+
 class HomeController extends Controller {
     
+	public function __construct()
+	{
+		$perms = [
+			'index' => ['public' => true, 'connect' => true],
+			'login' => ['public' => true, 'connect' => false],
+			'logout' => ['public' => false, 'connect' => true]
+		];
+		$this->setPermissions($perms);
+	}
+	
     public function index() {
         $this->generateView();
     }

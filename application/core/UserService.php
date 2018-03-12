@@ -28,4 +28,9 @@ class UserService
 //        }
 		return isset($_SESSION['user']) ? ($temp = unserialize($_SESSION['user'])) : null;
     }
+	
+	public static function isConnected()
+	{
+		return isset($_SESSION['user']);
+	}
 }

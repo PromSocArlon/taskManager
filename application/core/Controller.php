@@ -2,6 +2,7 @@
 
 require_once 'Request.php';
 require_once 'View.php';
+require_once 'UserService.php';
 
 
 abstract class Controller {
@@ -11,7 +12,11 @@ abstract class Controller {
      * @var request $request
      */
     protected $request;
-
+	/**
+	 * @var [][] $permissions
+	 */
+	private $permissions;
+	
     public abstract function index();
     public abstract function initializeModel();
 
@@ -31,7 +36,7 @@ abstract class Controller {
      * @throws Exception if action not defined
      */
     public function executeAction(string $action) : void {
-        if (method_exists($this, $action)) {
+        if (method_exists($this, $action) && $this->isAllowed($action)) {
             $this->action = $action;
             $this->{$this->action}();
         }
@@ -70,5 +75,24 @@ abstract class Controller {
         }
 
     }
+	
+	protected function setPermissions($t_perm) : void
+	{
+		$this->permissions = $t_perm;
+	}
+	
+	/**
+	 * check the permission for the given $action
+	 * @param string $action the name of the action
+	 * @return bool the permission of the action
+	 */
+	public function isAllowed($action)
+	{
+		echo 'hello' . $action;
+		if(UserService::isConnected())
+			return $this->permissions[$action]['connect'];
+		else
+			return $this->permissions[$action]['public'];
+	}
 
 }
