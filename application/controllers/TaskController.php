@@ -28,6 +28,7 @@ class TaskController extends Controller
     {
         $this->initializeModel();
         $this->storage = $this->model('taskDAO');
+        include 'application/views/_shared/header.php';
         $this->generateView($this->storage->read($this->task));
     }
 
@@ -57,6 +58,7 @@ class TaskController extends Controller
 
     public function index()
     {
+        include 'application/views/_shared/header.php';
         $this->generateView();
     }
 
