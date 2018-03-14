@@ -90,7 +90,6 @@ abstract class Controller {
 	    else {
 		    throw new Exception("Permission not set !");
         }
-
 	}
 	
 	/**
@@ -100,7 +99,6 @@ abstract class Controller {
 	 */
 	public function isAllowed($action)
 	{
-		echo 'hello' . $action;
 //		if(UserService::isConnected())
 //			return $this->permissions[$action]['connect'];
 //		else
