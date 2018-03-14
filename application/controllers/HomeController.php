@@ -41,6 +41,10 @@ class HomeController extends Controller {
         $this->generateView();
     }
 
+    public function profil(){
+        $this->generateView();
+    }
+
     public function check()
     {
         $p = new Security();                /* objet pour verifier si le compte existe via le mail introduit  */
