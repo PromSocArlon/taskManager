@@ -16,6 +16,17 @@ require_once __DIR__ . '/HomeController.php';
 
 class UserController extends Controller{
 
+	public function __construct()
+		{
+			$perms = [
+				'index' => ['public' => false, 'connect' => true],
+				'save' => ['public' => true, 'connect' => false],
+				'register' => ['public' => true, 'connect' => false],
+				'initializeModel' => ['public' => true, 'connect' => true]
+			];
+			$this->setPermissions($perms);
+		}
+
     public function index() {
         $this->generateView();
     }

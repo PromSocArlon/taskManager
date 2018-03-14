@@ -33,4 +33,10 @@ class UserService
 	{
 		return isset($_SESSION['user']);
 	}
+	
+	public function getId($dao, $login, $password)
+    {
+       $data = $dao->getConnection()->getMemberId($login,$password);
+       return $data;
+    }
 }
