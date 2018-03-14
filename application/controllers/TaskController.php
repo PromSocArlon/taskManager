@@ -17,9 +17,11 @@ class TaskController extends Controller
     public function __construct(/*$storageType*/)
     {
         $perms = [
-            'index' => ['public' => false, 'connect' => true],
-            'login' => ['public' => true, 'connect' => true],
-            'logout' => ['public' => false, 'connect' => true]   //<^modif. des val bool des 2 1ières lignes par cédric?
+            'index' => ['public' => true, 'connect' => true],
+            'create' => ['public' => false, 'connect' => true],
+            'delete' => ['public' => false, 'connect' => true],
+            'save' => ['public' => false, 'connect' => true],
+            'deleteTest' => ['public' => true, 'connect' => true] //vs de Sami, inclus par Cédric tmp. dans les actions.
         ];
         $this->setPermissions($perms);
     }
