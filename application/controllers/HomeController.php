@@ -67,4 +67,12 @@ class HomeController extends Controller {
     {
         // TODO: Implement initialize() method.
     }
+
+    public function logout() {
+        if (isset($_SESSION['user'])) {
+            unset($_SESSION['user']);
+            //session_destroy();
+        }
+        header('Location: index.php/controller=home');
+    }
 }
