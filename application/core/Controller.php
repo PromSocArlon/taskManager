@@ -89,10 +89,12 @@ abstract class Controller {
 	public function isAllowed($action)
 	{
 		echo 'hello' . $action;
-		if(UserService::isConnected())
-			return $this->permissions[$action]['connect'];
-		else
-			return $this->permissions[$action]['public'];
+//		if(UserService::isConnected())
+//			return $this->permissions[$action]['connect'];
+//		else
+//			return $this->permissions[$action]['public'];
+
+		return UserService::isConnected() ? $this->permissions[$action]['connect'] : $this->permissions[$action]['public'];
 	}
 
 }
