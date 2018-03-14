@@ -75,10 +75,22 @@ abstract class Controller {
         }
 
     }
-	
-	protected function setPermissions($t_perm) : void
+
+
+    /**
+     * Set the permission for the controller
+     * @param array $t_perm the array of permission for the controller
+     * @throws Exception if $t_perm not set
+     */
+    protected function setPermissions(array $t_perm) : void
 	{
-		$this->permissions = $t_perm;
+		if ($t_perm!=null) {
+            $this->permissions = $t_perm;
+        }
+	    else {
+		    throw new Exception("Permission not set !");
+        }
+
 	}
 	
 	/**
