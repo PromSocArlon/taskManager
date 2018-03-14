@@ -1,7 +1,8 @@
 <?php
 require_once('Member.php');
 /* MAJ */
-class Team{
+class Team extends Entity {
+	
     private $teamID;
     private $teamName;
     private $teamMember = array ();

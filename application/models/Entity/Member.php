@@ -1,8 +1,7 @@
 <?php
 /* MAJ */
-class Member {
+class Member extends Entity {
 
-    private $id;
     private $login;
     private $password;
     private $mail;

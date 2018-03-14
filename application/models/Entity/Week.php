@@ -1,7 +1,7 @@
 <?php
 require_once('Day.php');
 
-class Week {
+class Week extends Entity {
 
 	private $days;
 	

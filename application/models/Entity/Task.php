@@ -5,8 +5,8 @@ require_once 'application/models/Entity/Status.php';
 /**
  * Class Task
  */
-class Task {
-    private $id;
+class Task extends Entity {
+	
     private $name;
     private $priority;
     private $description;

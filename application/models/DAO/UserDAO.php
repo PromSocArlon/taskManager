@@ -9,7 +9,8 @@ require_once __DIR__.('\..\Entity\Team.php');
 require_once __DIR__.('\..\Entity\Member.php');
 require_once __DIR__.('\DAO.php');
 require_once __DIR__.('\..\..\core\Storage\StorageFactory.php');
-class UserDOA extends DAO
+
+class UserDAO extends DAO
 {
 
     private $member;
