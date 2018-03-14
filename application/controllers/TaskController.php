@@ -21,7 +21,8 @@ class TaskController extends Controller
 
     public function createANDupdate()
     {
-       $this->generateView();
+        include 'application/views/_shared/header.php';
+        $this->generateView();
     }
     
     public function read()
@@ -45,6 +46,7 @@ class TaskController extends Controller
         $this->initializeModel();
         $this->storage = $this->model('taskDAO');
         $this->storage->delete($this->task);
+        include 'application/views/_shared/header.php';
         $this->generateView();
     }
 
@@ -53,6 +55,7 @@ class TaskController extends Controller
         $this->initializeModel();
         $this->storage = $this->model('taskDAO');
         $this->storage->create($this->task);
+        include 'application/views/_shared/header.php';
         $this->generateView();
     }
 
