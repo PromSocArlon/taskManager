@@ -16,7 +16,12 @@ class TaskController extends Controller
     //$storage doit etre = 'file' ou 'mysql'
     public function __construct(/*$storageType*/)
     {
-
+        $perms = [
+            'index' => ['public' => false, 'connect' => true],
+            'login' => ['public' => true, 'connect' => true],
+            'logout' => ['public' => false, 'connect' => true]   //<^modif. des val bool des 2 1ières lignes par cédric?
+        ];
+        $this->setPermissions($perms);
     }
 
     public function create()
