@@ -1,15 +1,15 @@
 <?php
 
-class Entity {
+abstract class Entity {
 	
-	protected $id;
+	private static $id;
 	
 	public function getID()
     {
         return $this->id;
     }
 	
-	public function setID($id)
+	public function setID(int $id)
     {
         $this->id = $id;
     }

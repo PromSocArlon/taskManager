@@ -68,7 +68,7 @@ class TaskController extends Controller
     public function initializeModel()
     {
         $this->task = $this->model('task');
-        $this->task->setId($this->request->getParameter('taskId'));
+        $this->task->setID($this->request->getParameter('taskId'));
         $action = $this->request->getParameter('action');
         if ($action == 'save' || $action == 'update') {
             if ($action == 'update') $updateAction = $this->request->getParameter('updateAction');

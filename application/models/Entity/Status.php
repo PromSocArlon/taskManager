@@ -8,7 +8,7 @@
 
 require_once 'Task.php';
 
-class Status extends Entity {
+class Status {
 	
 	public const NON_DEFINI = 0;
 	public const A_FAIRE = 1;

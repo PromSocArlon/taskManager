@@ -1,9 +1,9 @@
 <?php
 require_once('Member.php');
+require_once 'application/models/Entity/Entity.php';
 /* MAJ */
 class Team extends Entity {
-	
-    private $teamID;
+
     private $teamName;
     private $teamMember = array ();
     private $teamLeader;
@@ -22,16 +22,7 @@ class Team extends Entity {
 	public function get_tName() {                                           // from database
 		return $this->teamName;
 	}	
-	
-	
-	public function set_tID($new_teamID) {                      // $New_teamID from database (sizeof team +1)
-		$this->teamID = $new_teamID;                             //save in database
-	}
-	 public function get_tID() {                                // from database too
-		return $this->teamID;
-	}	
-	
-	
+
 	public function set_tMember($new_IdMember) {
         //$new_IdMember  must be tested before , if exists in teamMember throw exception and propose another teamMemeber)
         array_push($this->teamMember,$new_IdMember);            //save in database

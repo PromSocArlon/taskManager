@@ -1,6 +1,6 @@
 <?php
 
-class Day extends Entity {
+class Day {
 
     const MONDAY = 'monday';
     const TUESDAY = 'tuesday';
