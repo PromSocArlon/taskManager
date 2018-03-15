@@ -21,6 +21,7 @@ class TaskController extends Controller
             'create' => ['public' => false, 'connect' => true],
             'delete' => ['public' => false, 'connect' => true],
             'save' => ['public' => false, 'connect' => true],
+			'initializeModel' => ['public' => true, 'connect' => true], //TODO:public doit être false mais pour l'instant true
             'deleteTest' => ['public' => true, 'connect' => true] //vs de Sami, inclus par Cédric tmp. dans les actions.
         ];
         $this->setPermissions($perms);
