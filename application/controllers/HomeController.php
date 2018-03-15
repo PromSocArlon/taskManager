@@ -21,31 +21,39 @@ class HomeController extends Controller {
         $this->generateView();
     }
 
-    public function login() {
-        if (isset($_POST['loginID']) && isset($_POST['loginPassword'])) {
-            if (true) { //TODO: Gestion de l'identifiant.
-                try { //TODO: Changer l'initialisation par un appel DAO.
-                    $member = new Member();
-                    $member->setId(0001);
-                    $member->setLogin($this->request->getParameter('loginID'));
-                    $member->setMail("Trump@windaube.usa");
-                    $member->setPassword($this->request->getParameter('loginPassword'));
-
-                    $_SESSION['user'] = serialize($member);
-                    header('Location: index.php?controller=user&action=index');
-                }
-                catch (Exception $exception) {
-                    echo 'Parameter Problem';
-                }
-            }
-            else {
-                $this->generateView();
-            }
-        }
-        else {
+    public function login()
+	{
             $this->generateView();
-        }
     }
+	
+	public function logConnect()
+	{
+		try
+		{
+			$login = $this->request->getParameter('loginID');
+			$pwd = $this->request->getParameter('loginPassword');
+			//TODO : verifier que c'est correct quand les toute les fonction object_to_array sont faites
+			//$dao = new MemberDAO();
+			//$id = UserService::getId($dao, $login, $pwd);
+			$id = true;
+			if($id != false)
+			{
+				
+				$_SESSION['user'] = $login;
+				$this->generateView();
+			}
+			else
+			{
+				echo 'Mauvaise combinaison login/password' . PHP_EOL;
+				header('Location: index.php?controller=home&action=login');
+			}
+		}
+		catch (Exception $e)
+		{
+			echo 'error';
+			$e->getMessage();
+		}
+	}
 
     public function register()
     {

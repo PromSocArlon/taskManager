@@ -26,7 +26,7 @@ class UserService
 //            $cuPsw = null;
 //            out("pas de psw setté pour le moment");
 //        }
-		return isset($_SESSION['user']) ? ($temp = unserialize($_SESSION['user'])) : null;
+		return isset($_SESSION['user']) ? ($temp = $_SESSION['user']) : null;
     }
 	
 	public static function isConnected()
@@ -36,7 +36,10 @@ class UserService
 	
 	public function getId($dao, $login, $password)
     {
-       $data = $dao->getConnection()->getMemberId($login,$password);
-       return $data;
+		$tempMember = new Member();
+		$tempMember->setLogin($login);
+		$tempMember->setPassword($password);
+		$data = $dao->read($tempMember);
+		return $data;
     }
 }
