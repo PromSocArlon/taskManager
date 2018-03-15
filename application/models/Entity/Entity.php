@@ -2,7 +2,7 @@
 
 abstract class Entity {
 	
-	private static $id;
+	public $id;
 	
 	public function getID()
     {
