@@ -37,5 +37,16 @@ class MemberController extends Controller
     {
         // TODO: Implement index() method.
     }
+	
+	public function read()
+    {
+        return $this->member;
+    }
 
+	public function delete()
+    {
+        $this->initializeModel();
+        $this->storage = $this->model('MemberDAO');
+        $this->storage->delete($this->member);
+    }
 }
