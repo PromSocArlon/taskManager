@@ -1,7 +1,6 @@
 <?php
 
-class Day
-{
+class Day {
 
     const MONDAY = 'monday';
     const TUESDAY = 'tuesday';

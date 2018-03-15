@@ -9,6 +9,7 @@
 require_once 'Task.php';
 
 class Status {
+	
 	public const NON_DEFINI = 0;
 	public const A_FAIRE = 1;
 	public const BLOQUE = 2;    // d abord, deja demarree

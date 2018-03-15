@@ -21,13 +21,15 @@ class TaskController extends Controller
 
     public function createANDupdate()
     {
-       $this->generateView();
+        include 'application/views/_shared/header.php';
+        $this->generateView();
     }
     
     public function read()
     {
         $this->initializeModel();
         $this->storage = $this->model('taskDAO');
+        include 'application/views/_shared/header.php';
         $this->generateView($this->storage->read($this->task));
     }
 
@@ -44,6 +46,7 @@ class TaskController extends Controller
         $this->initializeModel();
         $this->storage = $this->model('taskDAO');
         $this->storage->delete($this->task);
+        include 'application/views/_shared/header.php';
         $this->generateView();
     }
 
@@ -52,18 +55,20 @@ class TaskController extends Controller
         $this->initializeModel();
         $this->storage = $this->model('taskDAO');
         $this->storage->create($this->task);
+        include 'application/views/_shared/header.php';
         $this->generateView();
     }
 
     public function index()
     {
+        include 'application/views/_shared/header.php';
         $this->generateView();
     }
 
     public function initializeModel()
     {
         $this->task = $this->model('task');
-        $this->task->setId($this->request->getParameter('taskId'));
+        $this->task->setID($this->request->getParameter('taskId'));
         $action = $this->request->getParameter('action');
         if ($action == 'save' || $action == 'update') {
             if ($action == 'update') $updateAction = $this->request->getParameter('updateAction');

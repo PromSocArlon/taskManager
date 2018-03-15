@@ -6,7 +6,10 @@
  * Time: 18:24
  */
 ?>
-<form method="POST" >
+
+<h1>Create or update a task</h1>
+<br>
+<form method="POST" class="form-control" >
     <p > Task number </p>
     <p ><input type="text" name="taskId"> </p>
     <input type="radio" name="day" value="Monday"> Monday<br>
@@ -27,5 +30,5 @@
     <input type="text" name="taskDescription">
     <input type="submit" value="Update description" formaction="?controller=task&action=update&updateAction=description">
     <p ></p>
-    <input type="submit" value="Save your new task" formaction="?controller=task&action=save">
+    <input type="submit" value="Save your new task" formaction="?controller=task&action=save" class="btn btn-primary">
 </form>

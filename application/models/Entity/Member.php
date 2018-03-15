@@ -1,8 +1,9 @@
 <?php
 /* MAJ */
-class Member {
+require_once 'application/models/Entity/Entity.php';
 
-    private $id;
+class Member extends Entity {
+
     private $login;
     private $password;
     private $mail;
@@ -43,15 +44,7 @@ class Member {
     {
         $this->team = $team;
     }
-
-    public function setId($new_id) {
-        $this->id = $new_id;
-    }
-    public function getId() {
-        return $this->id;
-    }
-
-
+    
     public function setLogin($new_login) {
         $this->login = $new_login;
     }

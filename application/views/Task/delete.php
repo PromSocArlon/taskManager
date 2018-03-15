@@ -6,4 +6,6 @@
  * Time: 21:09
  */
 
-echo "Task Deleted !";
+?>
+
+<p>Task deleted!</p>
