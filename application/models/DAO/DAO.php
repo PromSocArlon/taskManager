@@ -8,15 +8,30 @@
 
 abstract class DAO
 {
+    /**
+     * @var StorageFile|StorageMysql
+     */
     protected $connection;
 
+    /**
+     * DAO constructor.
+     * @param string $type
+     */
     public function __construct($type = 'mysql')
     {
         $this->connection = StorageFactory::getStorage($type);
     }
 
+    /**
+     * @param $object
+     * @return mixed
+     */
     abstract protected function objectToArray($object);
 
+    /**
+     * @param $object
+     * @return bool
+     */
     public function create($object)
     {
         $array = $this->objectToArray($object);
@@ -27,6 +42,10 @@ abstract class DAO
         return false;
     }
 
+    /**
+     * @param null $object
+     * @return bool|mixed
+     */
     public function read($object = NULL)
     {
         $array = $this->objectToArray($object);
@@ -39,6 +58,10 @@ abstract class DAO
         return false;
     }
 
+    /**
+     * @param $object
+     * @return bool
+     */
     public function update($object)
     {
         $array = $this->objectToArray($object);
@@ -49,6 +72,10 @@ abstract class DAO
         return false;
     }
 
+    /**
+     * @param $object
+     * @return bool
+     */
     public function delete($object)
     {
         $array = $this->objectToArray($object);

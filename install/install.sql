@@ -18,7 +18,8 @@ CREATE TABLE tbl_day (
 
 
 CREATE TABLE tbl_task (
-  id          SMALLINT NOT NULL UNIQUE AUTO_INCREMENT,
+  idTask      SMALLINT NOT NULL UNIQUE AUTO_INCREMENT,
+  id          SMALLINT,
   name        VARCHAR(100),
   priority    TINYINT,
   description TEXT,
@@ -26,38 +27,39 @@ CREATE TABLE tbl_task (
   subtasks    TINYINT,
   day         TINYINT,
   PRIMARY KEY (id),
-  KEY `day` (`day`)
+  KEY day (day)
 )
   ENGINE = INNODB;
 
 
-CREATE TABLE `tbl_member` (
-  `id`         SMALLINT(6) NOT NULL UNIQUE AUTO_INCREMENT,
-  `mail`       VARCHAR(100)                DEFAULT NULL,
-  `login`      VARCHAR(100)                DEFAULT NULL,
-  `teamleader` BOOLEAN                     DEFAULT NULL,
-  `team`       SMALLINT(6)                 DEFAULT NULL,
-  `password`   VARCHAR(50)                 DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idTeam` (`team`)
+CREATE TABLE tbl_member (
+  idMember   SMALLINT(6) NOT NULL UNIQUE AUTO_INCREMENT,
+  id         SMALLINT,
+  mail       VARCHAR(100),
+  login      VARCHAR(100),
+  teamleader BOOLEAN,
+  team       SMALLINT(6),
+  password   VARCHAR(50),
+  PRIMARY KEY (id),
+  KEY idTeam (team)
 )
-  ENGINE = InnoDB;
+  ENGINE = INNODB;
 
 
-CREATE TABLE `tbl_team` (
-  `id`   SMALLINT(6) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100)         DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE tbl_team (
+  id   SMALLINT(6) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100),
+  PRIMARY KEY (id)
 )
-  ENGINE = InnoDB;
+  ENGINE = INNODB;
 
 
-CREATE TABLE `tbl_interTaskMember` (
-  `idTask`   SMALLINT(6) NOT NULL,
-  `idMember` SMALLINT(6) NOT NULL,
-  PRIMARY KEY (`idTask`, `idMember`)
+CREATE TABLE tbl_interTaskMember (
+  idTask   SMALLINT(6) NOT NULL,
+  idMember SMALLINT(6) NOT NULL,
+  PRIMARY KEY (idTask, idMember)
 )
-  ENGINE = InnoDB;
+  ENGINE = INNODB;
 
 #TODO: Ajout support table externe (lié a la gestion array dans StorageMysql.php
 #ALTER TABLE tbl_member
@@ -69,3 +71,13 @@ CREATE TABLE `tbl_interTaskMember` (
 GRANT ALL ON taskManager.* TO 'taskManager'@'localhost'
 IDENTIFIED BY 'taskManager';
 FLUSH PRIVILEGES;
+
+# Default data set
+INSERT INTO `tbl_task`
+VALUES
+  (1, 6, 'Dormir', 1, NULL, NULL, NULL, 1),
+  (2, 5, 'Gogo', 1, NULL, NULL, NULL, 1),
+  (3, 4, 'Manger', 1, NULL, NULL, NULL, 5),
+  (4, 3, 'Faire le menage', 1, NULL, NULL, NULL, 7),
+  (5, 2, 'Test', 127, NULL, NULL, NULL, 7),
+  (6, 1, '42', 42, NULL, NULL, NULL, 7);

@@ -47,7 +47,19 @@ class StorageMysql extends Storage
                         $value .= "NULL, ";
                     }
                 } else {
-                    //TODO: ajout gestion tableau status & subtask
+                    //TODO: ajout gestion tableau
+                    /*
+                    switch (strtolower($table)) {
+                        case "member":
+                            echo "member";
+                            break;
+                        case "task":
+                            echo "task";
+                            break;
+                        default:
+                            echo "Default";
+                    }
+                    */
                 }
 
             }
@@ -106,7 +118,11 @@ class StorageMysql extends Storage
             return false;
         }
 
-        return $request->fetch(PDO::FETCH_ASSOC);
+        $result = $request->fetch(PDO::FETCH_ASSOC);
+        // remove reserved id for database
+        unset($result['id' . ucfirst($table)]);
+
+        return $result;
     }
 
     public function update(array $data)

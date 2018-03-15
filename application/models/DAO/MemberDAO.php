@@ -8,16 +8,24 @@ class MemberDAO extends DAO
 
     protected function objectToArray($object)
     {
-        $array['member'] = [];
+        $table = "member";
+
+        $array[$table] = [];
 
         $MemberArray = (array)$object;
 
         foreach ($MemberArray as $key => $value) {
 
             $key = trim(strtolower(str_replace('Member', '', $key)));
-            $value = trim($value);
 
-            $array['member'][$key] = $value;
+            if (!is_array($value)) {
+                $value = trim($value);
+                $array[$table][$key] = $value;
+            } else {
+                foreach ($value as $object) {
+                    $array[$table][$key][] = (array)$object;
+                }
+            }
 
         }
 

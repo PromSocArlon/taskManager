@@ -9,10 +9,42 @@ require_once __ROOT__ . '/application/models/Entity/Member.php';
 
 // Phil, test sauvegarde generique.
 
+$memberDAO = new MemberDAO('mysql');
+
+$member = new Member();
+$member->setId(1);
+$member->setLogin('test');
+$member->setPassword('test');
+$member->setMail('test@mail.com');
+$member->setTeamLeader('testLeader');
+//$member->setTask();
+$member->setTeam(3);
+
+$task = new Task();
+$task->setId(1);
+$task->setName('test');
+$task->setPriority(0);
+$task->setDescription('task test');
+$task->setDay('monday');
+//$task->addStatus();
+//$task->addSubTask();
+
+$taskArray[] = $task;
+$member->setTask($taskArray);
+
+$memberDAO->create($member);
+
+//var_dump($member);
+
+//$arrayTest = $memberDAO->create($member);
+//$arrayTest = $memberDAO->read();
+
+//var_dump($arrayTest);
+
 /*
 $taskDAO = new TaskDAO('mysql');
 */
-
+/*
 $taskDAO = new TaskDAO('mysql');
 
 $task = new Task();
@@ -26,7 +58,7 @@ $taskRead->setName('rdgdgdgtfhfthdt');
 //$taskDAO->create($task);
 
 $taskDAO->update($taskRead);
-
+*/
 //$task0 = new Task('');
 //$task0->setName('testAlbin');
 //$task0->setPriority(1);
