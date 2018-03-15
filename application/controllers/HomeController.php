@@ -2,6 +2,7 @@
 require_once __DIR__.'/../models/Entity/Member.php';
 require_once __DIR__.'\..\models\DAO\TaskDAO.php';
 require_once __DIR__.'\..\models\DAO\UserDOA.php';
+require_once __DIR__.'\..\models\DAO\MemberDAO.php';
 require_once __DIR__.'\..\core\Security.php';
 
 
@@ -12,7 +13,9 @@ class HomeController extends Controller {
 		$perms = [
 			'index' => ['public' => true, 'connect' => true],
 			'login' => ['public' => true, 'connect' => false],
-			'logout' => ['public' => false, 'connect' => true]
+			'logConnect' => ['public' => true, 'connect' => false],
+			'logout' => ['public' => false, 'connect' => true],
+			'register' => ['public' => true, 'connect' => false]
 		];
 		$this->setPermissions($perms);
 	}
@@ -32,11 +35,11 @@ class HomeController extends Controller {
 		{
 			$login = $this->request->getParameter('loginID');
 			$pwd = $this->request->getParameter('loginPassword');
-			//TODO : verifier que c'est correct quand les toute les fonction object_to_array sont faites
-			//$dao = new MemberDAO();
-			//$id = UserService::getId($dao, $login, $pwd);
-			$id = true;
-			if($id != false)
+			$dao = new MemberDAO();
+			//TODO : ajouter user in db pour check
+			//$check = UserService::checkCredential($dao, $login, $pwd);
+			$check = true;
+			if($check)
 			{
 				
 				$_SESSION['user'] = $login;

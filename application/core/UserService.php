@@ -34,12 +34,12 @@ class UserService
 		return isset($_SESSION['user']);
 	}
 	
-	public function getId($dao, $login, $password)
+	public function checkCredential($dao, $login, $password)
     {
 		$tempMember = new Member();
 		$tempMember->setLogin($login);
 		$tempMember->setPassword($password);
 		$data = $dao->read($tempMember);
-		return $data;
+		return $data != false ? true : false;
     }
 }
