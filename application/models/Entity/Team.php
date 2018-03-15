@@ -1,7 +1,7 @@
 <?php
 require_once('Member.php');
 require_once 'application/models/Entity/Entity.php';
-/* MAJ */
+
 class Team extends Entity {
 
     private $teamName;

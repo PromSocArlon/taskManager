@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: philippedaniel
- * Date: 16/02/2018
- * Time: 22:03
- */
+
 require_once __DIR__.('\..\Entity\Team.php');
 require_once __DIR__.('\..\Entity\Member.php');
 require_once __DIR__.('\DAO.php');

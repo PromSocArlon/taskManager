@@ -1,5 +1,5 @@
 <?php
-/* MAJ */
+
 require_once 'application/models/Entity/Entity.php';
 
 class Member extends Entity {
