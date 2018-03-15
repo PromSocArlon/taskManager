@@ -1,6 +1,5 @@
 <?php
 
-namespace TaskManager\controller;
 class TeamController{
     /**
      * Show information for one team

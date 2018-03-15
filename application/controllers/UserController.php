@@ -11,10 +11,10 @@ require_once __DIR__ . '/../core/UserService.php';
 require_once __DIR__ . '/../models/DAO/TaskDAO.php';
 require_once __DIR__ . '/../models/DAO/UserDOA.php';
 require_once __DIR__ . '/../core/Security.php';
-require_once __DIR__ . '/HomeController.php';
+//require_once __DIR__ . '/HomeController.php';
 //session_start();
 
-class UserController extends Controller{
+class UserController extends app\core\Controller{
 
     public function index() {
         $this->generateView();

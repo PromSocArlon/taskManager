@@ -4,7 +4,7 @@ require_once __DIR__.'\..\models\DAO\TaskDAO.php';
 require_once __DIR__.'\..\models\DAO\UserDOA.php';
 require_once __DIR__.'\..\core\Security.php';
 
-class HomeController extends Controller {
+class HomeController extends app\core\Controller {
     
     public function index() {
         $this->generateView();

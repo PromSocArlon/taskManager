@@ -1,7 +1,7 @@
 <?php
-
-require_once 'Request.php';
-require_once 'View.php';
+namespace app\core;
+//require_once 'Request.php';
+//require_once 'View.php';
 
 
 abstract class Controller {
@@ -28,7 +28,7 @@ abstract class Controller {
     /**
      * Execute the given action
      * @param string $action the action to perform
-     * @throws Exception if action not defined
+     * @throws \Exception if action not defined
      */
     public function executeAction(string $action) : void {
         if (method_exists($this, $action)) {
@@ -37,7 +37,7 @@ abstract class Controller {
         }
         else {
             $classController = get_class($this);
-            throw new Exception("Action '$action' not defined in the class $classController");
+            throw new \Exception("Action '$action' not defined in the class $classController");
         }
     }
 
@@ -57,7 +57,7 @@ abstract class Controller {
      * Give an instance of the given class.
      * @param string $model the wanted model object
      * @return object the object of the wanted model.
-     * @throws Exception if class not found
+     * @throws \Exception if class not found
      */
     public function model(string $model){
         $modelFile = strpos($model, "DAO") !== false ? 'application/models/DAO/' . $model . '.php' : 'application/models/Entity/' . $model . '.php' ;
@@ -66,7 +66,7 @@ abstract class Controller {
             //TODO: ajout support pour DAO du type de storage (file ou mysql) pour le moment DAO est par défaut sur mysql
             return new $model();
         } else {
-            throw new Exception("File '".$modelFile."' not found.");
+            throw new \Exception("File '".$modelFile."' not found.");
         }
 
     }

@@ -6,7 +6,7 @@
  * Time: 7:45 AM
  */
 
-class MemberController extends Controller
+class MemberController extends app\core\Controller
 {
     private $member;
     private $storage;

@@ -1,8 +1,8 @@
 <?php
-
-require_once 'View.php';
-require_once 'Controller.php';
-require_once 'Request.php';
+namespace app\core;
+//require_once 'View.php';
+//require_once 'Controller.php';
+//require_once 'Request.php';
 
 
 class Route {
@@ -17,7 +17,7 @@ class Route {
             $action = $this->getNewAction($request);
             $controller->executeAction($action);
         }
-        catch (Exception $ex) {
+        catch (\Exception $ex) {
             $this->handleError($ex);
         }
     }
@@ -26,7 +26,7 @@ class Route {
      * Give the controller wanted by a request
      * @param request $request request that create the controller
      * @return Controller the wanted controller
-     * @throws Exception if controller doesn't exist
+     * @throws \Exception if controller doesn't exist
      */
     private function getNewController(request $request) : Controller {
         $controllerValue = "home";

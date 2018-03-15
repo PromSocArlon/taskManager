@@ -1,5 +1,5 @@
 <?php
-
+namespace app\core;
 class View {
     private $file;
     private $title;
@@ -23,7 +23,7 @@ class View {
             $root = "taskManager";
             $view = $this->generateFile('application/views/template.php', array('title' => $this->title, 'content' => $content, 'root' => $root));
             echo $view;
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             //TODO: EXCEPTION MANAGEMENT
         }
     }
@@ -32,7 +32,7 @@ class View {
      * @param string $filePath the path of the file to base the generation on.
      * @param array $data the data to add to the generation
      * @return string the generated file
-     * @throws Exception if the file is not found.
+     * @throws \Exception if the file is not found.
      */
     private function generateFile(string $filePath, array $data) : string {
         if (file_exists($filePath)) {
@@ -42,7 +42,7 @@ class View {
             return ob_get_clean();
         }
         else {
-            throw new Exception("File '$filePath' not found");
+            throw new \Exception("File '$filePath' not found");
         }
     }
 }
