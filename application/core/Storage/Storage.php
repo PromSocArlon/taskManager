@@ -1,5 +1,5 @@
 <?php
-
+namespace app\core\Storage;
 abstract class Storage
 {
     protected $connection;

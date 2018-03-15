@@ -1,6 +1,7 @@
 <?php
 /* MAJ */
-class Member {
+
+class member extends \app\core\Members {
 
     private $id;
     private $login;

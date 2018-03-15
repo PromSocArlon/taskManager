@@ -1,5 +1,5 @@
 <?php
-require_once('Day.php');
+//require_once('Day.php');
 
 class Week {
 
@@ -7,17 +7,17 @@ class Week {
 	
 	public function __construct() {
         $this->days = [];
-		$this->days[] = new Day(Day::MONDAY);
-		$this->days[] = new Day(Day::TUESDAY);
-		$this->days[] = new Day(Day::WEDNESDAY);
-		$this->days[] = new Day(Day::THURSDAY);
-		$this->days[] = new Day(Day::FRIDAY);
-		$this->days[] = new Day(Day::SATURDAY);
-		$this->days[] = new Day(Day::SUNDAY);
+		$this->days[] = new \Day(Day::MONDAY);
+		$this->days[] = new \Day(Day::TUESDAY);
+		$this->days[] = new \Day(Day::WEDNESDAY);
+		$this->days[] = new \Day(Day::THURSDAY);
+		$this->days[] = new \Day(Day::FRIDAY);
+		$this->days[] = new \Day(Day::SATURDAY);
+		$this->days[] = new \Day(Day::SUNDAY);
     }
 	
 	public function getDayByName($name){
-		$tempDay = new Day($name);
+		$tempDay = new \Day($name);
 		foreach($this->days as $day){
 			if($day->getName() == $tempDay->getName()){
 				return $day;
@@ -27,7 +27,7 @@ class Week {
 	}
 
     public function getDayIndex($name){
-        $tempDay = new Day($name);
+        $tempDay = new \Day($name);
         foreach($this->days as $key => $day){
             if($day->getName() == $tempDay->getName()){
                 return $key;
@@ -36,7 +36,7 @@ class Week {
         return null;
     }
 	
-	public function setDay(Day $day){
+	public function setDay(\Day $day){
 		for($i = 0; $i < count($this->days); ++$i){
 			if($this->days[$i]->getName() == $day->getName()){
 				$this->days[$i] = $day;

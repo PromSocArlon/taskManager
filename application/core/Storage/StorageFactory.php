@@ -1,7 +1,5 @@
 <?php
-
-require_once 'application/core/Storage/StorageMysql.php';
-
+namespace app\core\Storage;
 class StorageFactory
 {
     public static function getStorage($type)

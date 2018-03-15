@@ -1,8 +1,7 @@
 <?php
-
-require_once 'application/core/Storage/Storage.php';
-
+namespace app\core\Storage;
 class StorageMysql extends Storage
+
 {
     protected $type = 'mysql';
 
@@ -10,10 +9,10 @@ class StorageMysql extends Storage
     {
         $config = parse_ini_file( 'application/core/config.ini');
         try {
-            $this->connection = new PDO($this->type . ":host=" . $config['mysqlHost'] . ";port=" . $config['mysqlPort'] . ";dbname=" . $config['mysqlDb'],
+            $this->connection = new \PDO($this->type . ":host=" . $config['mysqlHost'] . ";port=" . $config['mysqlPort'] . ";dbname=" . $config['mysqlDb'],
                 $config['mysqlUser'], $config['mysqlPassword']);
             $this->connection->errorInfo();
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
             die();
         }
@@ -210,7 +209,7 @@ class StorageMysql extends Storage
             $request = $this->connection->prepare($sql);
             $request->execute();
             return $request;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
         }
     }

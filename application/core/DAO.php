@@ -5,6 +5,7 @@
  * Date: 16/02/2018
  * Time: 22:01
  */
+namespace app\core;
 
 abstract class DAO
 {
@@ -12,7 +13,7 @@ abstract class DAO
 
     public function __construct($type = 'mysql')
     {
-        $this->connection = StorageFactory::getStorage($type);
+        $this->connection = Storage\StorageFactory::getStorage($type);
     }
 
     abstract protected function objectToArray($array);
@@ -31,7 +32,7 @@ abstract class DAO
     {
         $array = $this->objectToArray(func_get_args());
 
-        $result = StorageFactory::getStorage("mysql")->read($array);
+        $result = Storage\StorageFactory::getStorage("mysql")->read($array);
 
         if (!empty($result)) {
             return $result;
@@ -43,7 +44,7 @@ abstract class DAO
     {
         $array = $this->objectToArray(func_get_args());
 
-        if (StorageFactory::getStorage("mysql")->update($array)) {
+        if (Storage\StorageFactory::getStorage("mysql")->update($array)) {
             return true;
         }
         return false;
@@ -52,7 +53,7 @@ abstract class DAO
     public function delete()
     {
         $array = $this->objectToArray(func_get_args());
-        if (StorageFactory::getStorage("mysql")->delete($array)) {
+        if (Storage\StorageFactory::getStorage("mysql")->delete($array)) {
             return true;
         }
         return false;

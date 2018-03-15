@@ -31,6 +31,7 @@ class MemberController extends app\core\Controller
         $this->initializeModel();
         $this->storage = $this->model('MemberDAO');
         $this->storage->create($this->member);
+        $this->generateView();
     }
 
     public function update()

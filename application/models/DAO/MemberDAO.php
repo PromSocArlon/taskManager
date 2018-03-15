@@ -5,9 +5,8 @@
  * Date: 16/02/2018
  * Time: 22:03
  */
-require_once 'application/models/DAO/DAO.php';
 
-class MemberDAO extends DAO
+class MemberDAO extends app\core\DAO
 {
 
     protected function objectToArray($arguments)
@@ -18,13 +17,13 @@ class MemberDAO extends DAO
             $newMemberArray = (array)$arguments[0];
 
             foreach ($newMemberArray as $key => $value) {
-                $array['member'][0]['new'][str_replace('Member', '', $key)] = $value;
+                $array['member'][0]['new'][str_replace('member', '', $key)] = $value;
             }
 
             if (func_num_args() > 1) {
                 $oldMemberArray = (array)$arguments[1];
                 foreach ($oldMemberArray as $key => $value) {
-                    $array['member'][0]['old'][str_replace('Member', '', $key)] = $value;
+                    $array['member'][0]['old'][str_replace('member', '', $key)] = $value;
                 }
             }
         }

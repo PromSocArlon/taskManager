@@ -1,8 +1,8 @@
 <?php
 
-require_once 'application/models/Entity/Status.php';
+//require_once 'application/models/Entity/Status.php';
 
-class Task {
+class Task extends \app\core\Members{
 	private $name;
 	private $priority;
 	private $description;

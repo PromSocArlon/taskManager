@@ -1,11 +1,9 @@
 <?php
 
-require_once 'application/models/Entity/Week.php';
-require_once 'application/models/Entity/Task.php';
-require_once 'application/models/DAO/DAO.php';
-require_once 'application/core/Storage/StorageFactory.php';
 
-class TaskDAO extends DAO
+//require_once 'application/core/Storage/StorageFactory.php';
+
+class TaskDAO extends app\core\DAO
 {
 
     protected function objectToArray($arguments)
@@ -14,7 +12,7 @@ class TaskDAO extends DAO
 
         if (!empty($arguments) and count($arguments) >= 2) {
             $newTaskArray = (array)$arguments[0];
-            $newDayKey = (new Week)->getDayIndex($arguments[1]);
+            $newDayKey = (new app\models\Week)->getDayIndex($arguments[1]);
 
             foreach ($newTaskArray as $key => $value) {
                 $array['task'][0]['new'][str_replace('Task', '', $key)] = $value;
@@ -23,7 +21,7 @@ class TaskDAO extends DAO
 
             if (count($arguments) > 2) {
                 $oldTaskArray = (array)$arguments[2];
-                $oldDayKey = (new Week)->getDayIndex($arguments[3]);
+                $oldDayKey = (new app\models\Week)->getDayIndex($arguments[3]);
                 foreach ($oldTaskArray as $key => $value) {
                     $array['task'][0]['old'][str_replace('Task', '', $key)] = $value;
                 }

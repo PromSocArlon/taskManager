@@ -1,6 +1,5 @@
 <?php
-require_once 'application/models/Storage/Storage.php';
-
+namespace app\core\Storage;
 class StorageFile extends Storage
 {
     protected $type = 'file';

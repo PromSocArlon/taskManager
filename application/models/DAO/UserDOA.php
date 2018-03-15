@@ -7,9 +7,8 @@
  */
 require_once __DIR__.('\..\Entity\Team.php');
 require_once __DIR__.('\..\Entity\Member.php');
-require_once __DIR__.('\DAO.php');
 require_once __DIR__.('\..\..\core\Storage\StorageFactory.php');
-class UserDOA extends DAO
+class UserDOA extends app\core\DAO
 {
 
     private $member;
@@ -27,7 +26,7 @@ class UserDOA extends DAO
     public function addMember($mail,$login,$password)
     {
 
-           $this->member = new Member();
+           $this->member = new member();
            $this->member->setLogin($login);
            $this->member->setMail($mail);
            $this->member->setPassword($password);

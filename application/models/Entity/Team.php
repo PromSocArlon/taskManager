@@ -1,7 +1,8 @@
 <?php
-require_once('Member.php');
+
+//require_once('Member.php');
 /* MAJ */
-class Team{
+class Team extends \app\core\Members{
     private $teamID;
     private $teamName;
     private $teamMember = array ();
@@ -11,7 +12,7 @@ class Team{
 
     public function __construct($idMember)
     {
-        $this->teamMember[0] = new Member($idMember);
+        $this->teamMember[0] = new member($idMember);
     }
 
 
