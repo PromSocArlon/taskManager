@@ -37,6 +37,22 @@ class TeamController extends Controller
         }
     }
 
+    public function delete()
+    {
+        $this->initializeModel();
+        $this->storage = $this->model('teamDAO');
+        $this->storage->delete($this->team, $_POST['id']);
+        $this->generateView();
+    }
+
+    public function update()
+    {
+        $this->initializeModel();
+        $this->storage = $this->model('teamDAO');
+        $this->storage->update($this->team, $_POST['id']);
+        $this->generateView();
+    }
+
     /**
      * Show information for one team
      */
@@ -64,6 +80,8 @@ class TeamController extends Controller
 //            $vue->displayError($team->getErrors());
 //        }
 //    }
+
+
     /**
      * public function listAction(){
      * }
