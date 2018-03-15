@@ -37,7 +37,7 @@ class HomeController extends Controller {
 			$pwd = $this->request->getParameter('loginPassword');
 			$dao = new MemberDAO();
 			//TODO : ajouter user in db pour check
-			//$check = UserService::checkCredential($dao, $login, $pwd);
+			$check = UserService::checkCredential($dao, $login, $pwd);
 			$check = true;
 			if($check)
 			{

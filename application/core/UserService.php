@@ -34,7 +34,7 @@ class UserService
 		return isset($_SESSION['user']);
 	}
 	
-	public function checkCredential($dao, $login, $password)
+	public static function checkCredential($dao, $login, $password)
     {
 		$tempMember = new Member();
 		$tempMember->setLogin($login);
