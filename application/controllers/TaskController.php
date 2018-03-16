@@ -19,65 +19,100 @@ class TaskController extends Controller
 
     }
 
-    public function createANDupdate()
+    public function create()
     {
-        include 'application/views/_shared/header.php';
         $this->generateView();
+    }
+
+    public function edit()
+    {
+       $this->read();
     }
     
     public function read()
     {
-        $this->initializeModel();
-        $this->storage = $this->model('taskDAO');
-        include 'application/views/_shared/header.php';
-        $this->generateView($this->storage->read($this->task));
+        try
+        {
+            $this->task = $this->model('task');
+            $this->task->setID($this->request->getParameter('id'));
+            $this->storage = $this->model('taskDAO');
+            $this->task = $this->storage->read($this->task);
+        }
+        catch(Exception $ex)
+        {
+            $this->task = [];
+            $this->task['Exception'] = $ex;
+        }
+        $this->generateView($this->task);
     }
 
     public function update()
     {
-        $this->initializeModel();
-        $this->storage = $this->model('taskDAO');
-        $this->storage->update($this->task);
-        $this->generateView();
+        try
+        {
+            $this->initializeModel();
+            $this->storage = $this->model('taskDAO');
+            $this->storage->update($this->task);
+            $this->generateView();
+        }
+        catch(Exception $ex)
+        {
+            $this->generateView(['Exception' => $ex]);
+        }
     }
 
     public function delete()
     {
-        $this->initializeModel();
-        $this->storage = $this->model('taskDAO');
-        $this->storage->delete($this->task);
-        include 'application/views/_shared/header.php';
-        $this->generateView();
+        try
+        {
+            $this->task = $this->model('task');
+            $this->task->setID($this->request->getParameter('id'));
+            $this->storage = $this->model('taskDAO');
+            $this->storage->delete($this->task);
+            $this->generateView();
+        }
+        catch(Exception $ex)
+        {
+            $this->generateView(['Exception' => $ex]);
+        }
     }
 
     public function save()
     {
-        $this->initializeModel();
-        $this->storage = $this->model('taskDAO');
-        $this->storage->create($this->task);
-        include 'application/views/_shared/header.php';
-        $this->generateView();
+        try
+        {
+            $this->initializeModel();
+            $this->storage = $this->model('taskDAO');
+            $this->storage->create($this->task);
+            $this->generateView();
+        }
+        catch(Exception $ex)
+        {
+            $this->generateView(['Exception' => $ex]);
+        }
     }
 
     public function index()
     {
-        include 'application/views/_shared/header.php';
         $this->generateView();
     }
 
     public function initializeModel()
     {
-        $this->task = $this->model('task');
-        $this->task->setID($this->request->getParameter('taskId'));
-        $action = $this->request->getParameter('action');
-        if ($action == 'save' || $action == 'update') {
-            if ($action == 'update') $updateAction = $this->request->getParameter('updateAction');
-            if ($action == 'save' || $updateAction == 'name')$this->task->setName($this->request->getParameter('taskName'));
-            if ($action == 'save' || $updateAction == 'priority')$this->task->setPriority($this->request->getParameter('taskPriority'));
-            if ($action == 'save' || $updateAction == 'description')$this->task->setDescription($this->request->getParameter('taskDescription'));
-            if ($action == 'save' || $updateAction == 'day')$this->task->setDay($this->request->getParameter('day'));
-            //if ($action == 'save' || $updateAction == 'status')$this->task->addStatus(0, '0');
-            //if ($action == 'save' || $updateAction == 'subTask')$this->task->addSubTask(0);
+        try
+        {
+            $this->task = $this->model('task');
+            $this->task->setID($this->request->getParameter('id'));
+            $this->task->setName($this->request->getParameter('name'));
+            $this->task->setPriority($this->request->getParameter('priority'));
+            $this->task->setDescription($this->request->getParameter('description'));
+            $this->task->setDay($this->request->getParameter('day'));
+            //$this->task->addStatus(0, '0');
+            //$this->task->addSubTask(0);
+        }
+        catch(Exception $ex)
+        {
+            throw $ex;
         }
     }
 }
