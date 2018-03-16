@@ -1,8 +1,8 @@
 <?php
 
-//namespace TaskManager\controller;
+//namespace app\controllers;
 
-require_once '../core/Controller.php';
+require_once 'application/core/Controller.php';
 
 class TeamController extends Controller
 {
@@ -33,7 +33,7 @@ class TeamController extends Controller
             $this->team = $this->model('team');
             $this->team->set_tName($this->request->getParameter('teamName'));
         } catch (Exception $ex) {
-            throw;
+            throw $ex;
         }
     }
 
@@ -41,7 +41,7 @@ class TeamController extends Controller
     {
         $this->initializeModel();
         $this->storage = $this->model('teamDAO');
-        $this->storage->delete($this->team, $_POST['id']);
+        $this->storage->delete($this->team, $this->request->getParameter('id'));
         $this->generateView();
     }
 
@@ -49,7 +49,7 @@ class TeamController extends Controller
     {
         $this->initializeModel();
         $this->storage = $this->model('teamDAO');
-        $this->storage->update($this->team, $_POST['id']);
+        $this->storage->update($this->team, $this->request->getParameter('id'));
         $this->generateView();
     }
 
