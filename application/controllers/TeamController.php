@@ -16,14 +16,14 @@ class TeamController extends Controller
 
     public function save()
     {
-
         try {
             $this->initializeModel();
             $this->storage = $this->model('teamDAO');
             $this->storage->create($this->team, 0);
             $this->redirect('team', 'index');
         } catch (Exception $ex) {
-            $this->generateView($ex);
+            $view = new  View('error');
+            $view->handleError($ex);
         }
     }
 
@@ -39,18 +39,28 @@ class TeamController extends Controller
 
     public function delete()
     {
-        $this->initializeModel();
-        $this->storage = $this->model('teamDAO');
-        $this->storage->delete($this->team, $this->request->getParameter('id'));
-        $this->generateView();
+        try {
+            $this->initializeModel();
+            $this->storage = $this->model('teamDAO');
+            $this->storage->delete($this->team, $this->request->getParameter('id'));
+            $this->generateView();
+        } catch (Exception $ex) {
+            $view = new  View('error');
+            $view->handleError($ex);
+        }
     }
 
     public function update()
     {
-        $this->initializeModel();
-        $this->storage = $this->model('teamDAO');
-        $this->storage->update($this->team, $this->request->getParameter('id'));
-        $this->generateView();
+        try {
+            $this->initializeModel();
+            $this->storage = $this->model('teamDAO');
+            $this->storage->update($this->team, $this->request->getParameter('id'));
+            $this->generateView();
+        } catch (Exception $ex) {
+            $view = new  View('error');
+            $view->handleError($ex);
+        }
     }
 
     /**
