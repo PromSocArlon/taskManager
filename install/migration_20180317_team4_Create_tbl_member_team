@@ -1,0 +1,18 @@
+CREATE TABLE tbl_member_team
+(
+  id           INT AUTO_INCREMENT
+    PRIMARY KEY,
+  fk_team_id   SMALLINT(6) NOT NULL,
+  fk_member_id SMALLINT(6) NOT NULL,
+  CONSTRAINT tbl_team_member_id_uindex
+  UNIQUE (id),
+  CONSTRAINT tbl_team_member_id_uindex_2
+  UNIQUE (id)
+)
+  ENGINE = MyISAM;
+
+CREATE INDEX tbl_team_member_tbl_team_id_fk
+  ON tbl_member_team (fk_team_id);
+
+CREATE INDEX tbl_team_member_tbl_member_id_fk
+  ON tbl_member_team (fk_member_id);
