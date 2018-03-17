@@ -103,7 +103,7 @@ class StorageMysql extends Storage
             return false;
         }
 
-        return $request->fetchAll();
+        return $request->fetchAll(MYSQLI_NUM);
     }
 
     public function update(array $data)

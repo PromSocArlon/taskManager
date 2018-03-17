@@ -13,7 +13,9 @@ class MemberController extends app\core\Controller
 
     public function index()
     {
-        // TODO: Implement index() method.
+        $this->storage = $this->model('MemberDAO');
+        $members = $this->storage->read();
+        $this->generateView($members);
     }
 
 
