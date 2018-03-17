@@ -22,8 +22,7 @@ class TeamController extends Controller
             $this->storage->create($this->team, 0);
             $this->redirect('team', 'index');
         } catch (Exception $ex) {
-            $view = new  View('error');
-            $view->handleError($ex);
+            handleError($ex);
         }
     }
 
@@ -45,8 +44,7 @@ class TeamController extends Controller
             $this->storage->delete($this->team, $this->request->getParameter('id'));
             $this->generateView();
         } catch (Exception $ex) {
-            $view = new  View('error');
-            $view->handleError($ex);
+            handleError($ex);
         }
     }
 
@@ -58,8 +56,7 @@ class TeamController extends Controller
             $this->storage->update($this->team, $this->request->getParameter('id'));
             $this->generateView();
         } catch (Exception $ex) {
-            $view = new  View('error');
-            $view->handleError($ex);
+            handleError($ex);
         }
     }
 
