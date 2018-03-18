@@ -15,7 +15,15 @@ class TaskController extends app\core\Controller
     //$storage doit etre = 'file' ou 'mysql'
     public function __construct(/*$storageType*/)
     {
-
+        $perms = [
+            'index' => ['public' => true, 'connect' => true],
+            'create' => ['public' => false, 'connect' => true],
+            'delete' => ['public' => false, 'connect' => true],
+            'save' => ['public' => false, 'connect' => true],
+			'initializeModel' => ['public' => true, 'connect' => true], //TODO:public doit être false mais pour l'instant true
+            'deleteTest' => ['public' => true, 'connect' => true] //vs de Sami, inclus par Cédric tmp. dans les actions.
+        ];
+        $this->setPermissions($perms);
     }
 
     public function create()

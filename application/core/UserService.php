@@ -26,6 +26,25 @@ class UserService
 //            $cuPsw = null;
 //            out("pas de psw setté pour le moment");
 //        }
-		return isset($_SESSION['user']) ? ($temp = unserialize($_SESSION['user'])) : null;
+		return isset($_SESSION['user']) ? ($temp = $_SESSION['user']) : null;
     }
+	
+	public static function isConnected()
+	{
+		return isset($_SESSION['user']);
+	}
+	
+	public static function checkCredential($dao, $login, $password)
+    {
+		$searchMember = new Member();
+		$searchMember->setLogin($login);
+		$searchMember->setPassword($password);
+		$data = $dao->read($searchMember);
+		return $data != false ? $data->getId() : false;
+    }
+	
+	public static function disconnect()
+	{
+		unset($_SESSION['user']);
+	}
 }

@@ -16,17 +16,22 @@ require_once __DIR__ . '/../core/Security.php';
 
 class UserController extends app\core\Controller{
 
+	public function __construct()
+		{
+			$perms = [
+				'index' => ['public' => false, 'connect' => true],
+				'save' => ['public' => true, 'connect' => false],
+				'register' => ['public' => true, 'connect' => false],
+				'initializeModel' => ['public' => true, 'connect' => true]
+			];
+			$this->setPermissions($perms);
+		}
+
     public function index() {
         $this->generateView();
     }
 
-    public function logout() {
-        if (isset($_SESSION['user'])) {
-            unset($_SESSION['user']);
-            //session_destroy();
-        }
-        header('Location: index.php/controller=home');
-    }
+
     public function initializeModel(){
 
     }

@@ -1,7 +1,5 @@
 <?php
 namespace app\core;
-//require_once 'Request.php';
-//require_once 'View.php';
 
 abstract class Controller {
 
@@ -10,6 +8,10 @@ abstract class Controller {
      * @var request $request
      */
     protected $request;
+	/**
+	 * @var [][] $permissions
+	 */
+	private $permissions;
 
     public abstract function index();
     public abstract function initializeModel();
@@ -30,7 +32,7 @@ abstract class Controller {
      * @throws \Exception if action not defined
      */
     public function executeAction(string $action) : void {
-        if (method_exists($this, $action)) {
+        if (method_exists($this, $action) && $this->isAllowed($action)) {
             $this->action = $action;
             $this->{$this->action}();
         }
@@ -69,5 +71,36 @@ abstract class Controller {
         }
 
     }
+
+
+    /**
+     * Set the permission for the controller
+     * @param array $t_perm the array of permission for the controller
+     * @throws \Exception if $t_perm not set
+     */
+    protected function setPermissions(array $t_perm) : void
+	{
+		if ($t_perm!=null) {
+            $this->permissions = $t_perm;
+        }
+	    else {
+		    throw new \Exception("Permission not set !");
+        }
+	}
+
+	/**
+	 * check the permission for the given $action
+	 * @param string $action the name of the action
+	 * @return bool the permission of the action
+	 */
+	public function isAllowed($action)
+	{
+//		if(UserService::isConnected())
+//			return $this->permissions[$action]['connect'];
+//		else
+//			return $this->permissions[$action]['public'];
+
+		return UserService::isConnected() ? $this->permissions[$action]['connect'] : $this->permissions[$action]['public'];
+	}
 
 }

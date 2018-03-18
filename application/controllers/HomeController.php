@@ -1,11 +1,18 @@
 <?php
-require_once __DIR__ . '/../models/Entity/Member.php';
-require_once __DIR__.'\..\models\DAO\TaskDAO.php';
-require_once __DIR__.'\..\models\DAO\UserDOA.php';
-require_once __DIR__.'\..\core\Security.php';
-
 class HomeController extends app\core\Controller {
     
+	public function __construct()
+	{
+		$perms = [
+			'index' => ['public' => true, 'connect' => true],
+			'login' => ['public' => true, 'connect' => false],
+			'logConnect' => ['public' => true, 'connect' => false],
+			'logout' => ['public' => false, 'connect' => true],
+			'register' => ['public' => true, 'connect' => false]
+		];
+		$this->setPermissions($perms);
+	}
+
     public function index() {
         $this->generateView();
     }
@@ -36,12 +43,37 @@ class HomeController extends app\core\Controller {
         }
     }
 
+
+    public function logConnect()
+    {
+        try
+        {
+            $login = $this->request->getParameter('loginID');
+            $pwd = $this->request->getParameter('loginPassword');
+            $dao = new MemberDAO();
+            //TODO : ajouter user in db pour check
+            $userId = UserService::checkCredential($dao, $login, $pwd);
+            if(true)
+            {
+                UserService::setCurrentUser($userId);
+                $this->generateView();
+            }
+            else
+            {
+                echo 'Mauvaise combinaison login/password' . PHP_EOL;
+                header('Location: index.php?controller=home&action=login');
+            }
+        }
+        catch (Exception $e)
+        {
+            echo 'error';
+            $e->getMessage();
+        }
+    }
     public function register()
     {
         $this->generateView();
     }
-
-
 
     public function check()
     {
@@ -57,5 +89,13 @@ class HomeController extends app\core\Controller {
     public function initializeModel()
     {
         // TODO: Implement initialize() method.
+    }
+
+    public function logout() {
+        if(UserService::isConnected()) {
+			UserService::disconnect();
+            //session_destroy();
+        }
+        header('Location: index.php/controller=home');
     }
 }

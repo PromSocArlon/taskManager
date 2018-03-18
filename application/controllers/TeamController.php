@@ -4,6 +4,17 @@ class TeamController{
     /**
      * Show information for one team
      */
+
+    public function __construct()
+    {
+        $perms = [
+            'index' => ['public' => false, 'connect' => true],
+            'save' => ['public' => false, 'connect' => true],
+            'showAction' => ['public' => false, 'connect' => true]
+        ];
+        $this->setPermissions($perms);
+    }
+
     public function showAction(){
     }
     public function save($teamName, $teamID, $teamMember, $teamLeader, $teamTask) {
