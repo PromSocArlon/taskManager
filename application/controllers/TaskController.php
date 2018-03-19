@@ -94,6 +94,7 @@ class TaskController extends Controller
 
     public function index()
     {
+        // include '../views/_shared/header.php';
         $this->generateView();
     }
 
