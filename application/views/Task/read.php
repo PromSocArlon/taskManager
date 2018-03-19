@@ -42,6 +42,10 @@ include 'application\views\_shared\header.php';
 <p><b>Description:</b> <?php echo $data['description'] ?></p>
 <p><b>Day:</b> <?php echo $day ?></p>
 
+    <br>
+
+    <a href="?controller=task&action=delete&id=<?php echo $data['id'] ?>" class="btn btn-danger">Delete</a>
+
 <?php
 
 include 'application\views\_shared\footer.php';
