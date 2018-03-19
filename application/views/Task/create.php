@@ -18,8 +18,8 @@ include 'application\views\_shared\header.php';
 <form method="POST" action="?controller=task&action=save">
 
     <div class="form-group">
-        <label for="number">Number:</label>
-        <input type="text" class="form-control" placeholder="Task Number">
+        <label for="taskId">Number:</label>
+        <input type="text" class="form-control" placeholder="Task Number" name="id">
     </div>
     <div class="form-group">
         <label for="day">Select the day:</label>
@@ -33,16 +33,16 @@ include 'application\views\_shared\header.php';
         <input type="radio" name="day" value="Sunday"> Sunday<br>
     </div>
     <div class="form-group">
-        <label for="name">Name:</label>
-        <input type="text" class="form-control" placeholder="Name">
+        <label for="taskName">Name:</label>
+        <input type="text" class="form-control" placeholder="Name" name="name">
     </div>
     <div class="form-group">
-        <label for="priority">Priority:</label>
-        <input type="text" class="form-control" placeholder="Priority">
+        <label for="taskPriority">Priority:</label>
+        <input type="text" class="form-control" placeholder="Priority" name="priority">
     </div>
     <div class="form-group">
-        <label for="description">Description:</label>
-        <input type="text" class="form-control" placeholder="description">
+        <label for="taskDescription">Description:</label>
+        <input type="text" class="form-control" placeholder="description" name="description">
     </div>
 
     <button class="btn btn-primary" type="submit">Create</button>
