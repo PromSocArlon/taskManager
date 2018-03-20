@@ -19,7 +19,7 @@ include 'application\views\_shared\header.php';
 
     <div class="form-group">
         <label for="taskId">Number:</label>
-        <input type="text" class="form-control" placeholder="<?php echo $data['id'] ?>" name="id" readonly>
+        <input type="text" class="form-control" value="<?php echo $data['id'] ?>" name="id" readonly>
     </div>
     <div class="form-group">
         <label for="day">Select the day:</label>
