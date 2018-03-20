@@ -153,8 +153,6 @@ class StorageMysql extends Storage
 
             $sql .= "UPDATE tbl_" . $table . " SET " . $value . " WHERE " . $id . ";";
 
-            print_r($sql);
-
         }
 
         $request = $this->query($sql);
