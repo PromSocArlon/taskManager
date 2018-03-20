@@ -6,7 +6,6 @@
  * Time: 23:17
  */
 include 'application\views\_shared\header.php';
-
 ?>
 
 <h1>Task</h1>
@@ -16,7 +15,7 @@ include 'application\views\_shared\header.php';
         <h3>Index</h3>
     </div>
     <div class="col-sm-2">
-        <a href="?controller=task?action=create" class="btn btn-primary">Create a new task</a>
+        <a href="?controller=task?action=create" class="btn btn-success">Create a new task</a>
     </div>
 </div>
 
@@ -38,7 +37,16 @@ include 'application\views\_shared\header.php';
             </thead>
             <tbody>
                 <?php
-                    //loop
+                    foreach ($data as $task) {
+                        echo '<tr>';
+                            echo '<th>' . $task['id'] . '</th>';
+                            echo '<th>' . $task['name'] . '</th>';
+                            echo '<th>' . $task['priority'] . '</th>';
+                            echo '<th>' . $task['description'] . '</th>';
+                            echo '<th>' . '<a href="?controller=task&action=edit&id=' . $task['id'] . ' " class="btn btn-primary">Edit</a>' . '</th>';
+                            echo '<th>' . '<a href="?controller=task&action=read&id=' . $task['id'] . ' " class="btn btn-secondary">View</a>' . '</th>';
+                        echo '</tr>';
+                    }
                 ?>
             </tbody>
         </table>

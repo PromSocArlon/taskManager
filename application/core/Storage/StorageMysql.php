@@ -107,6 +107,8 @@ class StorageMysql extends Storage
 
                 $sql .= "SELECT * FROM tbl_" . $table . ";";
 
+                return $this->query($sql)->fetchAll(MYSQLI_NUM);
+
             }
 
         }
