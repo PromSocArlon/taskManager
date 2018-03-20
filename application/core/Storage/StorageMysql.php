@@ -33,6 +33,7 @@ class StorageMysql extends Storage
     public function create(array $data)
     {
         $sql = "";
+        $subSql = "";
         foreach ($data as $table => $array) {
 
             $field = "";
@@ -47,28 +48,34 @@ class StorageMysql extends Storage
                         $value .= "NULL, ";
                     }
                 } else {
-                    //TODO: ajout gestion tableau
-                    /*
-                    switch (strtolower($table)) {
-                        case "member":
-                            echo "member";
-                            break;
-                        case "task":
-                            echo "task";
-                            break;
-                        default:
-                            echo "Default";
+
+                    foreach ($arrayValue as $subArray) {
+
+                        $subField = "";
+                        $subValue = "";
+
+                        foreach ($subArray as $subArrayKey => $subArrayValue) {
+
+                            $subField .= "`" . $subArrayKey . "`, ";
+                            $subValue .= "'" . $subArrayValue . "', ";
+
+                        }
+
+                        $subSql .= " INSERT INTO tbl_" . $arrayKey . " (" . trim($subField, ", ") . ") VALUES (" . trim($subValue, ", ") . ");";
+
                     }
-                    */
+
                 }
 
             }
             $field = trim($field, ", ");
             $value = trim($value, ", ");
 
-            $sql .= "INSERT INTO tbl_" . $table . " (" . $field . ") VALUES (" . $value . ");";
+            $sql .= "INSERT INTO tbl_" . $table . " (" . $field . ") VALUES (" . $value . ");" . $subSql;
 
         }
+
+        var_dump($sql);
 
         $request = $this->query($sql);
 

@@ -76,4 +76,8 @@ class Member extends Entity {
         return $this->teamLeader;
     }
 
+    public function entityToArray() {
+        return get_object_vars($this);
+    }
+
 }
