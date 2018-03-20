@@ -8,24 +8,35 @@ require_once 'application/core/Storage/StorageFactory.php';
 class TaskDAO extends DAO
 {
 
+    /**
+     * @param Task $object
+     * @return mixed
+     */
     protected function objectToArray($object)
     {
         $array['task'] = [];
+        $array['interSubTask'] = [];
 
-        $TaskArray = (array)$object;
+        $TaskArray = $object->entityToArray();
 
         foreach ($TaskArray as $key => $value) {
 
-            $key = trim(strtolower(str_replace('Task', '', $key)));
-            $value = trim($value);
-
             if ($key == 'day' and !empty($value)) {
                 $array['task']['day'] = (new Week)->getDayIndex($value) + 1;
+            } elseif (is_array($value)) {
+                foreach ($value as $subObject) {
+                    $array['interSubTask'][] = [
+                        'idTask' => $TaskArray['id'],
+                        'idSubTask' => $subObject->entityToArray()['id']
+                    ];
+                }
             } else {
                 $array['task'][$key] = $value;
             }
 
         }
+
+        //var_dump($array);
 
         return $array;
     }

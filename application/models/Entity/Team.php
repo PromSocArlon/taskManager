@@ -47,4 +47,9 @@ class Team extends Entity {
         public function get_tTask() {
 		return $this->teamTask; // or get from database
 	}
+
+    public function entityToArray() {
+        return get_object_vars($this);
+    }
+
 }

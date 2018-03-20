@@ -168,4 +168,9 @@ class Task extends Entity {
 			return null;
 		}
 	}
+
+    public function entityToArray() {
+        return get_object_vars($this);
+    }
+
 }

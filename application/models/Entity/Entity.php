@@ -1,7 +1,8 @@
 <?php
 
 abstract class Entity {
-	
+
+    //TODO: set to protected ?
 	public $id;
 	
 	public function getID()
@@ -13,4 +14,8 @@ abstract class Entity {
     {
         $this->id = $id;
     }
+
+    //TODO: usable ?
+    //abstract function entityToArray();
+
 }

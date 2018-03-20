@@ -42,7 +42,7 @@ abstract class DAO
      */
     public function read($object = NULL)
     {
-        $array = $this->objectToArray($object);
+        if ($object != NULL) $array = $this->objectToArray($object);
 
         $result = $this->connection->read($array);
 
