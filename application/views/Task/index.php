@@ -15,7 +15,7 @@ include 'application\views\_shared\header.php';
         <h3>Index</h3>
     </div>
     <div class="col-sm-2">
-        <a href="?controller=task?action=create" class="btn btn-success">Create a new task</a>
+        <a href="?controller=task&action=create" class="btn btn-success">Create a new task</a>
     </div>
 </div>
 

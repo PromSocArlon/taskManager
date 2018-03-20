@@ -44,8 +44,8 @@ include 'application\views\_shared\header.php';
 
     <br>
 
+    <a href="?controller=task&action=edit&id=<?php echo $data['id'] ?>" class="btn btn-primary">Edit</a>
     <a href="?controller=task&action=delete&id=<?php echo $data['id'] ?>" class="btn btn-danger">Delete</a>
-
 <?php
 
 include 'application\views\_shared\footer.php';
