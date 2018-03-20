@@ -19,12 +19,12 @@ include 'application\views\_shared\header.php';
 
     <div class="form-group">
         <label for="taskId">Number:</label>
-        <input type="text" class="form-control" placeholder="Task Number" name="id">
+        <input type="text" class="form-control" placeholder="Task Number" name="id" required>
     </div>
     <div class="form-group">
         <label for="day">Select the day:</label>
         <br>
-        <input type="radio" name="day" value="Monday"> Monday<br>
+        <input type="radio" name="day" value="Monday" checked> Monday<br>
         <input type="radio" name="day" value="Tuesday"> Tuesday<br>
         <input type="radio" name="day" value="Wednesday"> Wednesday<br>
         <input type="radio" name="day" value="Thursday"> Thursday<br>
@@ -34,15 +34,15 @@ include 'application\views\_shared\header.php';
     </div>
     <div class="form-group">
         <label for="taskName">Name:</label>
-        <input type="text" class="form-control" placeholder="Name" name="name">
+        <input type="text" class="form-control" placeholder="Name" name="name" required>
     </div>
     <div class="form-group">
         <label for="taskPriority">Priority:</label>
-        <input type="text" class="form-control" placeholder="Priority" name="priority">
+        <input type="text" class="form-control" placeholder="Priority" name="priority" required>
     </div>
     <div class="form-group">
         <label for="taskDescription">Description:</label>
-        <input type="text" class="form-control" placeholder="description" name="description">
+        <input type="text" class="form-control" placeholder="description" name="description" required>
     </div>
 
     <button class="btn btn-primary" type="submit">Create</button>
