@@ -47,6 +47,9 @@ $subtask2->setDay('monday');
 
 $task->addSubTask($subtask2);
 
+$taskRead = new Task();
+$taskRead->setId(1);
+
 //$taskDAO->create($task);
 
 //var_dump($task);
@@ -56,7 +59,8 @@ $taskArray[] = $subtask;
 $taskArray[] = $subtask2;
 $member->setTask($taskArray);
 
-$memberDAO->create($member);
+//$memberDAO->create($member);
+var_dump($taskDAO->read($taskRead));
 
 //var_dump($member);
 

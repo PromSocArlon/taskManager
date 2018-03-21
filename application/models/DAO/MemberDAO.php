@@ -15,21 +15,23 @@ class MemberDAO extends DAO
     {
         $array['member'] = [];
 
-        $MemberArray = $object->entityToArray();
+        if ($object != null) {
+            $MemberArray = $object->entityToArray();
 
-        foreach ($MemberArray as $key => $value) {
+            foreach ($MemberArray as $key => $value) {
 
-            if (is_array($value)) {
-                foreach ($value as $task) {
-                    $array['member']['interTaskMember'][] = [
-                        'idMember' => $MemberArray['id'],
-                        'idTask' => $task->entityToArray()['id']
-                    ];
+                if (is_array($value)) {
+                    foreach ($value as $task) {
+                        $array['member']['interTaskMember'][] = [
+                            'idMember' => $MemberArray['id'],
+                            'idTask' => $task->entityToArray()['id']
+                        ];
+                    }
+                } else {
+                    $array['member'][$key] = $value;
                 }
-            } else {
-                $array['member'][$key] = $value;
-            }
 
+            }
         }
 
         return $array;
