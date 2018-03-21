@@ -2,7 +2,11 @@
 /**
  * Created by PhpStorm.
  * User: Chris
- * Date: 10-03-18
- * Time: 17:27
+ * Date: 01-03-18
+ * Time: 11:53
  */
-echo "Task Updated !";
+include 'application\views\_shared\header.php';
+
+echo '<b>Task updated!<b>' . PHP_EOL;
+
+header("refresh: 1; url=?controller=task&action=index");

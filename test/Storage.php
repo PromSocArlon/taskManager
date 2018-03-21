@@ -10,9 +10,10 @@ require_once __ROOT__ . '/application/models/Entity/Member.php';
 // Phil, test sauvegarde generique.
 
 $memberDAO = new MemberDAO('mysql');
+$taskDAO = new TaskDAO('mysql');
 
 $member = new Member();
-$member->setId(1);
+$member->setId(2);
 $member->setLogin('test');
 $member->setPassword('test');
 $member->setMail('test@mail.com');
@@ -22,17 +23,44 @@ $member->setTeam(3);
 
 $task = new Task();
 $task->setId(1);
-$task->setName('test');
-$task->setPriority(0);
+$task->setName('42');
+$task->setPriority(42);
 $task->setDescription('task test');
 $task->setDay('monday');
-//$task->addStatus();
-//$task->addSubTask();
+$task->addStatus(0, 'test insertion');
+
+$subtask = new Task();
+$subtask->setId(2);
+$subtask->setName('test');
+$subtask->setPriority(127);
+$subtask->setDescription('task test');
+$subtask->setDay('monday');
+
+$task->addSubTask($subtask);
+
+$subtask2 = new Task();
+$subtask2->setId(3);
+$subtask2->setName('test3');
+$subtask2->setPriority(127);
+$subtask2->setDescription('task test');
+$subtask2->setDay('monday');
+
+$task->addSubTask($subtask2);
+
+$taskRead = new Task();
+$taskRead->setId(1);
+
+//$taskDAO->create($task);
+
+//var_dump($task);
 
 $taskArray[] = $task;
+$taskArray[] = $subtask;
+$taskArray[] = $subtask2;
 $member->setTask($taskArray);
 
-$memberDAO->create($member);
+//$memberDAO->create($member);
+var_dump($taskDAO->read($taskRead));
 
 //var_dump($member);
 

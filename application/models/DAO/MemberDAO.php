@@ -9,27 +9,31 @@ require_once 'application/core/Storage/StorageFactory.php';
 class MemberDAO extends DAO
 {
 
+    /**
+     * @param Member $object
+     * @return mixed
+     */
     protected function objectToArray($object)
     {
-        $table = "member";
+        $array['member'] = [];
 
-        $array[$table] = [];
+        if ($object != null) {
+            $MemberArray = $object->entityToArray();
 
-        $MemberArray = (array)$object;
+            foreach ($MemberArray as $key => $value) {
 
-        foreach ($MemberArray as $key => $value) {
-
-            $key = trim(strtolower(str_replace('Member', '', $key)));
-
-            if (!is_array($value)) {
-                $value = trim($value);
-                $array[$table][$key] = $value;
-            } else {
-                foreach ($value as $object) {
-                    $array[$table][$key][] = (array)$object;
+                if (is_array($value)) {
+                    foreach ($value as $task) {
+                        $array['member']['interTaskMember'][] = [
+                            'idMember' => $MemberArray['id'],
+                            'idTask' => $task->entityToArray()['id']
+                        ];
+                    }
+                } else {
+                    $array['member'][$key] = $value;
                 }
-            }
 
+            }
         }
 
         return $array;

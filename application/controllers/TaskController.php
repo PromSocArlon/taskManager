@@ -29,7 +29,19 @@ class TaskController extends Controller
 
     public function edit()
     {
-       $this->read();
+        try
+        {
+            $this->task = $this->model('task');
+            $this->task->setID($this->request->getParameter('id'));
+            $this->storage = $this->model('taskDAO');
+            $this->task = $this->storage->read($this->task);
+        }
+        catch(Exception $ex)
+        {
+            $this->task = [];
+            $this->task['Exception'] = $ex;
+        }
+        $this->generateView($this->task);
     }
     
     public function read()
@@ -97,7 +109,9 @@ class TaskController extends Controller
 
     public function index()
     {
-        $this->generateView();
+        $this->storage = $this->model('taskDAO');
+        $tasks = $this->storage->read();
+        $this->generateView($tasks);
     }
 
     public function initializeModel()

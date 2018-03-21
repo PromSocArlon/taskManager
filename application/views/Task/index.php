@@ -5,23 +5,55 @@
  * Date: 22-02-18
  * Time: 23:17
  */
+include 'application\views\_shared\header.php';
 ?>
 
 <h1>Task</h1>
-<br><br>
 <hr>
 <div class="row">
     <div class="col-sm">
-        <form method="POST" action="?controller=task&action=createANDupdate">
-            <input type="submit" value="Create/Update" class="btn btn-primary">
-        </form>
+        <h3>Index</h3>
     </div>
-
-    <div class="col-sm">
-        <form method="POST" class="form-inline">
-            <input type="text" name="taskId" placeholder="Task Number" class="form-control">
-            <input type="submit" value="View task" formaction="?controller=task&action=read" class="btn btn-primary">
-            <input type="submit" value="Delete task" formaction="?controller=task&action=delete" class="btn btn-danger">
-        </form>
+    <div class="col-sm-2">
+        <a href="?controller=task&action=create" class="btn btn-success">Create a new task</a>
     </div>
 </div>
+
+<br><br>
+
+<div class="row">
+    <div class="col-sm">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">View</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    foreach ($data as $task) {
+                        echo '<tr>';
+                            echo '<th>' . $task['id'] . '</th>';
+                            echo '<th>' . $task['name'] . '</th>';
+                            echo '<th>' . $task['priority'] . '</th>';
+                            echo '<th>' . $task['description'] . '</th>';
+                            echo '<th>' . '<a href="?controller=task&action=edit&id=' . $task['id'] . ' " class="btn btn-primary">Edit</a>' . '</th>';
+                            echo '<th>' . '<a href="?controller=task&action=read&id=' . $task['id'] . ' " class="btn btn-secondary">View</a>' . '</th>';
+                        echo '</tr>';
+                    }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<?php
+
+include 'application\views\_shared\footer.php';
+

@@ -6,6 +6,9 @@
  * Time: 21:09
  */
 
-?>
+include 'application\views\_shared\header.php';
 
-<p>Task deleted!</p>
+echo '<b>Task deleted!<b>' . PHP_EOL;
+
+header("refresh: 1; url=?controller=task&action=index");
+
