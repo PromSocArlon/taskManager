@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__.'/../../core/bootstrapTheme.php';
+require_once __DIR__ . '/../../core/bootstrapTheme.php';
 ?>
 <!DOCTYPE html>
 <html>

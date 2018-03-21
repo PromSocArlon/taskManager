@@ -8,6 +8,12 @@
 
 class MemberDAO extends app\core\DAO
 {
+    /*-------------------------------
+    * Retourne un utilisateur d'id = $id
+    -------------------------------*/
+    public function getMember($id){
+
+    }
 
     protected function objectToArray($arguments)
     {

@@ -41,9 +41,7 @@ class HomeController extends app\core\Controller {
         $this->generateView();
     }
 
-    public function profil(){
-        $this->generateView();
-    }
+
 
     public function check()
     {

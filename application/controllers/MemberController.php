@@ -56,4 +56,10 @@ class MemberController extends app\core\Controller
         $this->storage = $this->model('MemberDAO');
         $this->storage->delete($this->member);
     }
+
+    public function profil(){
+        $this->storage = $this->model('MemberDAO');
+        $myMember = $this->storage->getMember($_GET['id']);
+        $this->generateView($myMember);
+    }
 }
