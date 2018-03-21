@@ -1,5 +1,7 @@
 <?php
 
+namespace TasMan;
+
 require_once 'application/core/Storage/Storage.php';
 
 class StorageMysql extends Storage

@@ -6,6 +6,9 @@
  * Date: 30-01-18
  * Time: 01:58
  */
+
+namespace TasMan;
+ 
 require_once 'application/core/Controller.php';
 
 class TaskController extends Controller

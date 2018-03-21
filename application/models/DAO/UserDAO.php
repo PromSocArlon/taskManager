@@ -1,5 +1,7 @@
 <?php
 
+namespace TasMan;
+
 require_once __DIR__.('\..\Entity\Team.php');
 require_once __DIR__.('\..\Entity\Member.php');
 require_once __DIR__.('\DAO.php');

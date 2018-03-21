@@ -1,5 +1,7 @@
 <?php
 
+namespace TasMan;
+
 require_once 'application/core/Storage/StorageMysql.php';
 
 class StorageFactory

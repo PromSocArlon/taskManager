@@ -1,5 +1,7 @@
 <?php
 
+namespace TasMan;
+
 require_once 'application/models/Entity/Member.php';
 require_once 'application/models/DAO/DAO.php';
 require_once 'application/core/Storage/StorageFactory.php';
