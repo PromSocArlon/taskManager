@@ -49,7 +49,7 @@ class Route {
              return $controller;
         }
         else {
-            throw new Exception("File '$fileController' not found.");
+            throw new \Exception("File '$fileController' not found.");
         }
     }
 
@@ -63,7 +63,7 @@ class Route {
         try {
             $action = $request->getParameter('action');
         }
-        catch (Exception $e) {
+        catch (\Exception $e) {
             $action ="index";
         }
         finally {
@@ -73,9 +73,9 @@ class Route {
 
     /**
      * Handle any error.
-     * @param Exception $exception the error that must be handled
+     * @param \Exception $exception the error that must be handled
      */
-    private function handleError(Exception $exception) : void {
+    private function handleError(\Exception $exception) : void {
         $view = new View('template');
         $view->generate(array('msgError'=> $exception->getMessage()));
     }

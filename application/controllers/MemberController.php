@@ -21,7 +21,9 @@ class MemberController extends app\core\Controller
 
     public  function initializeModel()
     {
+
         $this->member = $this->model('member');
+       // $this->member->setid($idFromEdite);
         $this->member->setMail($_POST['mail']);
         $this->member->setTeam($_POST['team']);
         $this->member->setLogin($_POST['login']);
@@ -38,7 +40,9 @@ class MemberController extends app\core\Controller
 
     public function update()
     {
-        // TODO: Implement index() method.
+        $data[0]="test";
+       //recuperation de la ligne editer sous forme de tableau et la transmettre à la vue
+        $this->generateView($data);
     }
 	
 	public function read()
