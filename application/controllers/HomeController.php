@@ -70,6 +70,8 @@ class HomeController extends app\core\Controller {
             $e->getMessage();
         }
     }
+
+
     public function register()
     {
         $this->generateView();
