@@ -1,5 +1,10 @@
 <?php
-class HomeController extends app\core\Controller {
+namespace app\controllers;
+
+use app\core\UserService;
+use app\models\DAO\MemberDAO;
+
+class HomeController extends \app\core\Controller {
 
 	public function __construct()
 	{
@@ -30,7 +35,7 @@ class HomeController extends app\core\Controller {
                     $_SESSION['user'] = serialize($member);
                     header('Location: index.php?controller=user&action=index');
                 }
-                catch (Exception $exception) {
+                catch (\Exception $exception) {
                     echo 'Parameter Problem';
                 }
             }
@@ -64,7 +69,7 @@ class HomeController extends app\core\Controller {
                 header('Location: index.php?controller=home&action=login');
             }
         }
-        catch (Exception $e)
+        catch (\Exception $e)
         {
             echo 'error';
             $e->getMessage();
@@ -75,17 +80,6 @@ class HomeController extends app\core\Controller {
     public function register()
     {
         $this->generateView();
-    }
-
-    public function check()
-    {
-        $p = new Security();                /* objet pour verifier si le compte existe via le mail introduit  */
-        $data = $p->m->read() ($_POST['mail']);
-        if(!($data)) {
-            $p->m->addMember($_POST['mail'], $_POST['login'], $_POST['password']);  /*un objet dao qui vient du constructeur securite */
-            $this->generateView();
-        }else echo 'compte avec le mail  !!!!' .$_POST['mail']. ' !!!!! est existant Veuillez définir un autre email svp';
-
     }
 
     public function initializeModel()

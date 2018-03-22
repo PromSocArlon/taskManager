@@ -3,7 +3,6 @@ namespace app\core;
 
 class Route
 {
-
     private $request;
 
     /**
@@ -20,7 +19,7 @@ class Route
             $action = $this->getNewAction();
             $controller->executeAction($action);
         } catch (\Exception $ex) {
-            $this->handleError($ex);
+            handleError($ex);
         }
     }
 
@@ -36,22 +35,14 @@ class Route
         if ($this->request->existParameter("controller")) {
             $controllerValue = strtolower($this->request->getParameter("controller"));
         }
-        $classController = $controllerValue . "Controller";
+        $classController = '\\app\\controllers\\' . $controllerValue . "Controller";
 
-        $fileController = "application/controllers/" . $classController . ".php";
-
-        if (file_exists($fileController)) {
-            /** @var string $fileController */
-            require($fileController);
-
-            $controller = new $classController();
-            if (isset($this->request) && $controller instanceof Controller) {
-                $controller->setRequest($this->request);
-            }
-            return $controller;
-        } else {
-            throw new \Exception("File '$fileController' not found.");
+        $controller = new $classController();
+        if (isset($this->request) && $controller instanceof Controller) {
+            $controller->setRequest($this->request);
         }
+        return $controller;
+
     }
 
     /**

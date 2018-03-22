@@ -1,8 +1,7 @@
 <?php
+namespace app\models\DAO;
 
-require_once 'DAO.php';
-
-class TeamDAO extends DAO
+class TeamDAO extends \app\core\DAO
 {
 
     /**

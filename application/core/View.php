@@ -1,5 +1,6 @@
 <?php
 namespace app\core;
+
 class View {
     private $file;
     private $title;
@@ -8,7 +9,7 @@ class View {
     {
         $file = "application/views/";
         if ($controller != "") {
-            $file = $file . $controller . "/";
+            $file = $file . $this->getControllerName($controller) . "/";
         }
         $this->file = $file . $action . ".php";
     }
@@ -46,6 +47,11 @@ class View {
         } else {
             throw new \Exception("File '$filePath' not found");
         }
+    }
+
+    public function getControllerName($fullControllerName){
+        $temp = explode('\\', $fullControllerName);
+        return end($temp);
     }
 
 

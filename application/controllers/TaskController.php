@@ -1,13 +1,9 @@
 <?php
+namespace app\controllers;
 
-/**
- * Created by PhpStorm.
- * User: Chris
- * Date: 30-01-18
- * Time: 01:58
- */
+use app\models\DAO\TaskDAO;
 
-class TaskController extends app\core\Controller
+class TaskController extends \app\core\Controller
 {
     private $task;
     private $storage;
@@ -17,9 +13,9 @@ class TaskController extends app\core\Controller
     {
         $perms = [
             'index' => ['public' => true, 'connect' => true],
-            'create' => ['public' => false, 'connect' => true],
-            'delete' => ['public' => false, 'connect' => true],
-            'save' => ['public' => false, 'connect' => true],
+            'create' => ['public' => true, 'connect' => true],
+            'delete' => ['public' => true, 'connect' => true],
+            'save' => ['public' => true, 'connect' => true],
 			'initializeModel' => ['public' => true, 'connect' => true], //TODO:public doit être false mais pour l'instant true
             'deleteTest' => ['public' => true, 'connect' => true] //vs de Sami, inclus par Cédric tmp. dans les actions.
         ];
@@ -37,10 +33,10 @@ class TaskController extends app\core\Controller
         {
             $this->task = $this->model('task');
             $this->task->setID($this->request->getParameter('id'));
-            $this->storage = $this->model('taskDAO');
+            $this->storage = new TaskDAO();
             $this->task = $this->storage->read($this->task);
         }
-        catch(Exception $ex)
+        catch(\Exception $ex)
         {
             $this->task = [];
             $this->task['Exception'] = $ex;
@@ -54,10 +50,10 @@ class TaskController extends app\core\Controller
         {
             $this->task = $this->model('task');
             $this->task->setID($this->request->getParameter('id'));
-            $this->storage = $this->model('taskDAO');
+            $this->storage = new TaskDAO();
             $this->task = $this->storage->read($this->task);
         }
-        catch(Exception $ex)
+        catch(\Exception $ex)
         {
             $this->task = [];
             $this->task['Exception'] = $ex;
@@ -70,11 +66,11 @@ class TaskController extends app\core\Controller
         try
         {
             $this->initializeModel();
-            $this->storage = $this->model('taskDAO');
+            $this->storage = new TaskDAO();
             $this->storage->update($this->task);
             $this->generateView();
         }
-        catch(Exception $ex)
+        catch(\Exception $ex)
         {
             $this->generateView(['Exception' => $ex]);
         }
@@ -86,11 +82,11 @@ class TaskController extends app\core\Controller
         {
             $this->task = $this->model('task');
             $this->task->setID($this->request->getParameter('id'));
-            $this->storage = $this->model('taskDAO');
+            $this->storage = new TaskDAO();
             $this->storage->delete($this->task);
             $this->generateView();
         }
-        catch(Exception $ex)
+        catch(\Exception $ex)
         {
             $this->generateView(['Exception' => $ex]);
         }
@@ -101,11 +97,11 @@ class TaskController extends app\core\Controller
         try
         {
             $this->initializeModel();
-            $this->storage = $this->model('taskDAO');
+            $this->storage = new TaskDAO();
             $this->storage->create($this->task);
             $this->generateView();
         }
-        catch(Exception $ex)
+        catch(\Exception $ex)
         {
             $this->generateView(['Exception' => $ex]);
         }
@@ -113,7 +109,7 @@ class TaskController extends app\core\Controller
 
     public function index()
     {
-        $this->storage = $this->model('taskDAO');
+        $this->storage = new TaskDAO();
         $tasks = $this->storage->read();
 
         // if there is no tasks in the database
@@ -136,7 +132,7 @@ class TaskController extends app\core\Controller
             //$this->task->addStatus(0, '0');
             //$this->task->addSubTask(0);
         }
-        catch(Exception $ex)
+        catch(\Exception $ex)
         {
             throw $ex;
         }

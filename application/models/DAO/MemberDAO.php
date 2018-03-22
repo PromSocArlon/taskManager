@@ -1,12 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: philippedaniel
- * Date: 16/02/2018
- * Time: 22:03
- */
+namespace app\models\DAO;
 
-class MemberDAO extends app\core\DAO
+class MemberDAO extends \app\core\DAO
 {
     /*-------------------------------
     * Retourne un utilisateur d'id = $id

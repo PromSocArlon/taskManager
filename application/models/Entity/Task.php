@@ -1,4 +1,6 @@
 <?php
+namespace app\models\Entity;
+
 class Task extends Entity {
 
     private $name;

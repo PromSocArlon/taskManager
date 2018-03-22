@@ -1,15 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Sebastien Munoz
- * Date: 3/10/2018
- * Time: 7:45 AM
- */
+namespace app\controllers;
 
-class MemberController extends app\core\Controller
+class MemberController extends \app\core\Controller
 {
     private $member;
     private $storage;
+
+    public function __construct()
+    {
+        $perms = [
+            'index' => ['public' => true, 'connect' => true],
+        ];
+        $this->setPermissions($perms);
+    }
 
     public function index()
     {

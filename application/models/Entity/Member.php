@@ -1,4 +1,5 @@
 <?php
+namespace app\models\Entity;
 
 class Member extends Entity {
 

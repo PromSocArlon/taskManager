@@ -1,12 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Stephane
- * Date: 17-01-18
- * Time: 19:34
- */
-
-require_once 'Task.php';
+namespace app\models\Entity;
 
 class Status {
 	

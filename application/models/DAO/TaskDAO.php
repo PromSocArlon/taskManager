@@ -1,6 +1,7 @@
 <?php
+namespace app\models\DAO;
 
-class TaskDAO extends app\core\DAO
+class TaskDAO extends \app\core\DAO
 {
 
     /**
@@ -17,7 +18,7 @@ class TaskDAO extends app\core\DAO
             foreach ($TaskArray as $key => $value) {
 
                 if ($key == 'day' and !empty($value)) {
-                    $array['task']['day'] = (new Week)->getDayIndex($value) + 1;
+                    $array['task']['day'] =  1;
                 } elseif (is_array($value)) {
                     foreach ($value as $subObject) {
                         $array['task']['interSubTask'][] = [

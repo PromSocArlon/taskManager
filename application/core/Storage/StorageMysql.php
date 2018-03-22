@@ -1,5 +1,8 @@
 <?php
 namespace app\core\Storage;
+
+use app\models\Entity\Member;
+
 class StorageMysql extends Storage
 {
     protected $type = 'mysql';
@@ -122,14 +125,14 @@ class StorageMysql extends Storage
             return false;
         }
 
-        $result = $request->fetch(PDO::FETCH_ASSOC);
+        $result = $request->fetch(\PDO::FETCH_ASSOC);
         // remove reserved id for database
         unset($result['id' . ucfirst($table)]);
 
         return $result;
     }
 
-    public function update1($member){
+    public function update1(Member $member){
 
         $sql='';
         $id = $member->getId();

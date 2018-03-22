@@ -1,12 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: utiN0
- * Date: 16/03/2018
- * Time: 22:31
- */
+namespace app\models\DAO;
 
-class TaskTeamDAO extends DAO
+class TaskTeamDAO extends \app\core\DAO
 {
     protected function objectToArray($arguments)
     {

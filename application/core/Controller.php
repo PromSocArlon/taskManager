@@ -33,6 +33,7 @@ abstract class Controller {
      * @throws \Exception if action not defined
      */
     public function executeAction(string $action) : void {
+
         if (method_exists($this, $action) && $this->isAllowed($action)) {
             $this->action = $action;
             $this->{$this->action}();
@@ -72,15 +73,9 @@ abstract class Controller {
      * @throws \Exception if class not found
      */
     public function model(string $model){
-        $modelFile = strpos($model, "DAO") !== false ? 'application/models/DAO/' . $model . '.php' : 'application/models/Entity/' . $model . '.php' ;
-        if (file_exists($modelFile)) {
-            require_once($modelFile);
-            //TODO: ajout support pour DAO du type de storage (file ou mysql) pour le moment DAO est par défaut sur mysql
-            return new $model();
-        } else {
-            throw new \Exception("File '".$modelFile."' not found.");
-        }
+        $className = '\\app\\models\\Entity\\' . $model;
 
+        return new $className();
     }
 
 
@@ -111,7 +106,7 @@ abstract class Controller {
 //		else
 //			return $this->permissions[$action]['public'];
 
-		return UserService::isConnected() ? $this->permissions[$action]['connect'] : $this->permissions[$action]['public'];
+		return \app\core\UserService::isConnected() ? $this->permissions[$action]['connect'] : $this->permissions[$action]['public'];
 	}
 
 }

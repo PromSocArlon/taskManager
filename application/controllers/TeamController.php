@@ -1,10 +1,7 @@
 <?php
+namespace app\controllers;
 
-//namespace app\controllers;
-
-require_once 'application/core/Controller.php';
-
-class TeamController extends Controller
+class TeamController extends \app\core\Controller
 {
     private $team;
     private $storage;
@@ -12,7 +9,7 @@ class TeamController extends Controller
     public function __construct()
     {
         $perms = [
-            'index' => ['public' => false, 'connect' => true],
+            'index' => ['public' => true, 'connect' => true],
             'save' => ['public' => false, 'connect' => true],
             'showAction' => ['public' => false, 'connect' => true]
         ];
@@ -31,7 +28,7 @@ class TeamController extends Controller
             $this->storage = $this->model('teamDAO');
             $this->storage->create($this->team, 0);
             $this->redirect('team', 'index');
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             handleError($ex);
         }
     }
@@ -41,7 +38,7 @@ class TeamController extends Controller
         try {
             $this->team = $this->model('team');
             $this->team->set_tName($this->request->getParameter('teamName'));
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             throw $ex;
         }
     }
@@ -53,7 +50,7 @@ class TeamController extends Controller
             $this->storage = $this->model('teamDAO');
             $this->storage->delete($this->team, $this->request->getParameter('id'));
             $this->generateView();
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             handleError($ex);
         }
     }
@@ -65,7 +62,7 @@ class TeamController extends Controller
             $this->storage = $this->model('teamDAO');
             $this->storage->delete($this->team, $this->request->getParameter('id'));
             $this->generateView();
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             handleError($ex);
         }
     }
@@ -77,7 +74,7 @@ class TeamController extends Controller
             $this->storage = $this->model('teamDAO');
             $this->storage->delete($this->team, $this->request->getParameter('id'));
             $this->generateView();
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             handleError($ex);
         }
     }
@@ -89,7 +86,7 @@ class TeamController extends Controller
             $this->storage = $this->model('teamDAO');
             $this->storage->update($this->team, $this->request->getParameter('id'));
             $this->generateView();
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             handleError($ex);
         }
     }

@@ -1,6 +1,7 @@
 <?php
+namespace app\models\DAO;
 
-class MemberTeamDAO extends DAO
+class MemberTeamDAO extends \app\core\DAO
 {
     protected function objectToArray($arguments)
     {

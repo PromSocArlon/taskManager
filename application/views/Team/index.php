@@ -1,21 +1,3 @@
-<?php
-/**
- * Created by Jeremy Laurensis.
- * Date: 20-03-18
- * Time: 08:01
- */
-require_once '../../core/bootstrapTheme.php'
-?>
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>Team Management - Action Selection</title>
-    <?php echo getBootstrapTag(); ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-</head>
-<body>
 <div class="border border-secondary rounded w-50 h-85 mx-auto mt-5 p-4">
     <div id="team" class="container w-10">
         <div class="row">
@@ -43,5 +25,3 @@ require_once '../../core/bootstrapTheme.php'
         </div>
     </div>
 </div>
-</body>
-</html>
