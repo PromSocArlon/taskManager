@@ -14,6 +14,7 @@ abstract class Controller {
 	private $permissions;
 
     public abstract function index();
+
     public abstract function initializeModel();
 
     /**
@@ -35,8 +36,7 @@ abstract class Controller {
         if (method_exists($this, $action) && $this->isAllowed($action)) {
             $this->action = $action;
             $this->{$this->action}();
-        }
-        else {
+        } else {
             $classController = get_class($this);
             throw new \Exception("Action '$action' not defined in the class $classController");
         }
@@ -45,14 +45,25 @@ abstract class Controller {
     /**
      * Generate the view with a given data set
      * @param array $data the data set to be added to the generation
+     * @param string $action
      */
-    protected function generateView(array $data = array()) : void {
+    protected function generateView($data = array(), $action = null)
+    {
+        $actionView = $this->action;
+        if ($action != null) {
+            $actionView = $action;
+        }
         $classController = get_class($this);
         $controller = str_replace("Controller", "", $classController);
-        $view = new View($this->action, $controller);
+
+        $view = new view($actionView, $controller);
         $view->generate($data);
     }
 
+    protected function redirect($controller, $action = null)
+    {
+        header("taskManager/" . $controller . "/" . $action);
+    }
 
     /**
      * Give an instance of the given class.

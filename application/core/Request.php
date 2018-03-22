@@ -15,8 +15,7 @@ class Request {
     public function getParameter(string $parameterName) : string{
         if ($this->existParameter($parameterName)){
             return $this->parameters[$parameterName];
-        }
-        else {
+        } else {
             throw new \Exception("Missing parameter '$parameterName'.");
         }
     }

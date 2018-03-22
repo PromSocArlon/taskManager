@@ -1,9 +1,13 @@
 <?php
 
-class TeamController{
-    /**
-     * Show information for one team
-     */
+//namespace app\controllers;
+
+require_once 'application/core/Controller.php';
+
+class TeamController extends Controller
+{
+    private $team;
+    private $storage;
 
     public function __construct()
     {
@@ -15,33 +19,78 @@ class TeamController{
         $this->setPermissions($perms);
     }
 
-    public function showAction(){
+    public function index()
+    {
+        $this->generateView();
     }
-    public function save($teamName, $teamID, $teamMember, $teamLeader, $teamTask) {
-        $storageFactory = new StorageFactory();
-        $team = new team($storageFactory->getStorage());
-        $team->setFirstName($teamName);
-        $team->setLastName($teamID);
-        $team->setTeamMember($teamMember);
-        $team->setTeamLeader($teamLeader);
-        $team->setPassword($teamTask);
-        /*
-        $teamService = new TeamService();
-        $teamService->save($team);
-        */
-        $vue = new UserView();
-        if($team->save()){
-            $vue->displayTeam($team);
-        } else {
-            $vue->displayError($team->getErrors());
+
+    public function save()
+    {
+        try {
+            $this->initializeModel();
+            $this->storage = $this->model('teamDAO');
+            $this->storage->create($this->team, 0);
+            $this->redirect('team', 'index');
+        } catch (Exception $ex) {
+            handleError($ex);
         }
     }
-/**
-    public function listAction(){
+
+    public function initializeModel()
+    {
+        try {
+            $this->team = $this->model('team');
+            $this->team->set_tName($this->request->getParameter('teamName'));
+        } catch (Exception $ex) {
+            throw $ex;
+        }
     }
-    public function addAction(){
+
+    public function create()
+    {
+        try {
+            $this->initializeModel();
+            $this->storage = $this->model('teamDAO');
+            $this->storage->delete($this->team, $this->request->getParameter('id'));
+            $this->generateView();
+        } catch (Exception $ex) {
+            handleError($ex);
+        }
     }
-    public function editAction(){
+
+    public function viewTeamMembers()
+    {
+        try {
+            $this->initializeModel();
+            $this->storage = $this->model('teamDAO');
+            $this->storage->delete($this->team, $this->request->getParameter('id'));
+            $this->generateView();
+        } catch (Exception $ex) {
+            handleError($ex);
+        }
     }
- */
+
+    public function delete()
+    {
+        try {
+            $this->initializeModel();
+            $this->storage = $this->model('teamDAO');
+            $this->storage->delete($this->team, $this->request->getParameter('id'));
+            $this->generateView();
+        } catch (Exception $ex) {
+            handleError($ex);
+        }
+    }
+
+    public function update()
+    {
+        try {
+            $this->initializeModel();
+            $this->storage = $this->model('teamDAO');
+            $this->storage->update($this->team, $this->request->getParameter('id'));
+            $this->generateView();
+        } catch (Exception $ex) {
+            handleError($ex);
+        }
+    }
 }
