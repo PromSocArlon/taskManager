@@ -1,43 +1,77 @@
 <?php
+class Task extends Entity {
 
-//require_once 'application/models/Entity/Status.php';
+    private $name;
+    private $priority;
+    private $description;
+    private $day;
+    private $status;
+    private $subtasks;
 
-class Task extends \app\core\Members{
-	private $name;
-	private $priority;
-	private $description;
-	private $status;
-	private $subtasks;
-
-	public function __construct() {
+    public function __construct() {
 
 	}
 
-	public function setPriority($priority) {
-		$this->priority = $priority;
-	}
-
-	public function getPriority() {
-		return $this->priority;
-	}
-
-	public function setName($name) {
+    /**
+     * @param String $name
+     */
+    public function setName(String $name) {
 		$this->name = ucfirst(strtolower($name));
 	}
 
-	public function getName() {
+    /**
+     * @return String
+     */
+    public function getName() : String {
 		return $this->name;
 	}
 
-	public function setDescription($description) {
+    /**
+     * @param String $priority
+     */
+    public function setPriority(String $priority) {
+        $this->priority = $priority;
+    }
+
+    /**
+     * @return String
+     */
+    public function getPriority() : String {
+        return $this->priority;
+    }
+
+    /**
+     * @param String $description
+     */
+    public function setDescription(String $description) {
 		$this->description = $description;
 	}
 
-	public function getDescription() {
+    /**
+     * @return String
+     */
+    public function getDescription() : String {
 		return $this->description;
 	}
 
-	public function addSubTask($subtask) {
+    /**
+     * @param String $day
+     */
+    public function setDay(String $day) {
+        $this->day = $day;
+    }
+
+    /**
+     * @return String
+     */
+    public function getDay() : String {
+        return $this->day;
+    }
+
+    /**
+     * @param $subtask
+     */
+    public function addSubTask($subtask) {
 		$this->subtasks[] = $subtask;
 	}
 
@@ -96,19 +130,30 @@ class Task extends \app\core\Members{
 		return $array;
 	}
 
-	public function addStatus(int $statusName, string $description): void {
+    /**
+     * @param int $statusName
+     * @param string $description
+     */
+    public function addStatus(int $statusName, string $description): void {
 		if($description != "") {
 			$status[] = new Status($statusName, $description);
 		}
 	}
 
-	public function removeStatus(int $index): void {
+    /**
+     * @param int $index
+     */
+    public function removeStatus(int $index): void {
 		if($index>=0 && $index < count($this->status)) {
 			array_splice($this->status, $index,1);
 		}
 	}
 
-	public function getStatus(int $index): Status {
+    /**
+     * @param int $index
+     * @return Status
+     */
+    public function getStatus(int $index): Status {
 		if($index>=0 && $index < count($this->status)) {
 			return $this->status[$index];
 		}
@@ -116,4 +161,9 @@ class Task extends \app\core\Members{
 			return null;
 		}
 	}
+
+    public function entityToArray() {
+        return get_object_vars($this);
+    }
+
 }

@@ -1,14 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: philippedaniel
- * Date: 16/02/2018
- * Time: 22:03
- */
+
+// namespace TasMan;
+
 require_once __DIR__.('\..\Entity\Team.php');
 require_once __DIR__.('\..\Entity\Member.php');
+require_once __DIR__.('\DAO.php');
 require_once __DIR__.('\..\..\core\Storage\StorageFactory.php');
-class UserDOA extends app\core\DAO
+
+class UserDAO extends DAO
 {
 
     private $member;
@@ -26,7 +25,7 @@ class UserDOA extends app\core\DAO
     public function addMember($mail,$login,$password)
     {
 
-           $this->member = new member();
+           $this->member = new Member();
            $this->member->setLogin($login);
            $this->member->setMail($mail);
            $this->member->setPassword($password);

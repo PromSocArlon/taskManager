@@ -28,47 +28,117 @@ class TaskController extends app\core\Controller
 
     public function create()
     {
-       $this->generateView();
+        $this->generateView();
     }
-    
+
+    public function edit()
+    {
+        try
+        {
+            $this->task = $this->model('task');
+            $this->task->setID($this->request->getParameter('id'));
+            $this->storage = $this->model('taskDAO');
+            $this->task = $this->storage->read($this->task);
+        }
+        catch(Exception $ex)
+        {
+            $this->task = [];
+            $this->task['Exception'] = $ex;
+        }
+        $this->generateView($this->task);
+    }
+
     public function read()
     {
-        return $this->task;
+        try
+        {
+            $this->task = $this->model('task');
+            $this->task->setID($this->request->getParameter('id'));
+            $this->storage = $this->model('taskDAO');
+            $this->task = $this->storage->read($this->task);
+        }
+        catch(Exception $ex)
+        {
+            $this->task = [];
+            $this->task['Exception'] = $ex;
+        }
+        $this->generateView($this->task);
+    }
+
+    public function update()
+    {
+        try
+        {
+            $this->initializeModel();
+            $this->storage = $this->model('taskDAO');
+            $this->storage->update($this->task);
+            $this->generateView();
+        }
+        catch(Exception $ex)
+        {
+            $this->generateView(['Exception' => $ex]);
+        }
     }
 
     public function delete()
     {
-        $this->initializeModel();
-        $this->storage = $this->model('taskDAO');
-        $this->storage->delete($this->task, $_POST['day']);
-        $this->generateView();
+        try
+        {
+            $this->task = $this->model('task');
+            $this->task->setID($this->request->getParameter('id'));
+            $this->storage = $this->model('taskDAO');
+            $this->storage->delete($this->task);
+            $this->generateView();
+        }
+        catch(Exception $ex)
+        {
+            $this->generateView(['Exception' => $ex]);
+        }
     }
 
     public function save()
     {
-        $this->initializeModel();
-        $this->storage = $this->model('taskDAO');
-        $this->storage->create($this->task,$_POST['day']);
-        $this->generateView();
+        try
+        {
+            $this->initializeModel();
+            $this->storage = $this->model('taskDAO');
+            $this->storage->create($this->task);
+            $this->generateView();
+        }
+        catch(Exception $ex)
+        {
+            $this->generateView(['Exception' => $ex]);
+        }
     }
 
     public function index()
     {
-        $this->generateView();
+        $this->storage = $this->model('taskDAO');
+        $tasks = $this->storage->read();
+
+        // if there is no tasks in the database
+        if ($tasks == false) {
+            $tasks = array();
+        }
+        $this->generateView($tasks);
     }
 
     public function initializeModel()
     {
-        $this->task = $this->model('task');
-        $this->task->setName($_POST['taskName']);
-        $this->task->setPriority($_POST['taskPriority']);
-        $this->task->setDescription($_POST['taskDescription']);
-        $this->task->addStatus(0,'0');
-        $this->task->addSubTask(NULL);
-    }
-
-    public function deleteTest()
-    {
-        $this->generateView();
+        try
+        {
+            $this->task = $this->model('task');
+            $this->task->setID($this->request->getParameter('id'));
+            $this->task->setName($this->request->getParameter('name'));
+            $this->task->setPriority($this->request->getParameter('priority'));
+            $this->task->setDescription($this->request->getParameter('description'));
+            $this->task->setDay($this->request->getParameter('day'));
+            //$this->task->addStatus(0, '0');
+            //$this->task->addSubTask(0);
+        }
+        catch(Exception $ex)
+        {
+            throw $ex;
+        }
     }
 }

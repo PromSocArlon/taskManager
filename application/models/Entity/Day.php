@@ -1,7 +1,6 @@
 <?php
 
-class Day extends \app\core\Members
-{
+class Day {
 
     const MONDAY = 'monday';
     const TUESDAY = 'tuesday';

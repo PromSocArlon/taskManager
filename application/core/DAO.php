@@ -9,18 +9,33 @@ namespace app\core;
 
 abstract class DAO
 {
+    /**
+     * @var StorageFile|StorageMysql
+     */
     protected $connection;
 
+    /**
+     * DAO constructor.
+     * @param string $type
+     */
     public function __construct($type = 'mysql')
     {
         $this->connection = Storage\StorageFactory::getStorage($type);
     }
 
-    abstract protected function objectToArray($array);
+    /**
+     * @param $object
+     * @return mixed
+     */
+    abstract protected function objectToArray($object);
 
-    public function create()
+    /**
+     * @param $object
+     * @return bool
+     */
+    public function create($object)
     {
-        $array = $this->objectToArray(func_get_args());
+        $array = $this->objectToArray($object);
 
         if ($this->connection->create($array)) {
             return true;
@@ -28,11 +43,15 @@ abstract class DAO
         return false;
     }
 
-    public function read()
+    /**
+     * @param null $object
+     * @return bool|mixed
+     */
+    public function read($object = NULL)
     {
-        $array = $this->objectToArray(func_get_args());
+        $array = $this->objectToArray($object);
 
-        $result = Storage\StorageFactory::getStorage("mysql")->read($array);
+        $result = $this->connection->read($array);
 
         if (!empty($result)) {
             return $result;
@@ -40,22 +59,28 @@ abstract class DAO
         return false;
     }
 
-
-    public function update()
+    /**
+     * @param $object
+     * @return bool
+     */
+    public function update($object)
     {
-        $array = $this->objectToArray(func_get_args());
+        $array = $this->objectToArray($object);
 
-        if (Storage\StorageFactory::getStorage("mysql")->update($array)) {
+        if ($this->connection->update($array)) {
             return true;
         }
         return false;
     }
 
-
-    public function delete()
+    /**
+     * @param $object
+     * @return bool
+     */
+    public function delete($object)
     {
-        $array = $this->objectToArray(func_get_args());
-        if (Storage\StorageFactory::getStorage("mysql")->delete($array)) {
+        $array = $this->objectToArray($object);
+        if ($this->connection->delete($array)) {
             return true;
         }
         return false;

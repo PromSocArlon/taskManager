@@ -1,0 +1,1 @@
+ErrorDocument 404 /application/core/error_404.php

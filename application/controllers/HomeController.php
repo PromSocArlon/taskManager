@@ -1,6 +1,6 @@
 <?php
 class HomeController extends app\core\Controller {
-    
+
 	public function __construct()
 	{
 		$perms = [

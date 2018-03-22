@@ -1,9 +1,7 @@
 <?php
-/* MAJ */
 
-class member extends \app\core\Members {
+class Member extends Entity {
 
-    private $id;
     private $login;
     private $password;
     private $mail;
@@ -17,7 +15,7 @@ class member extends \app\core\Members {
     public function setTask($task)
     {
         $this->task = $task;
- 
+
     }
 
     /**
@@ -43,14 +41,6 @@ class member extends \app\core\Members {
     {
         $this->team = $team;
     }
-
-    public function setId($new_id) {
-        $this->id = $new_id;
-    }
-    public function getId() {
-        return $this->id;
-    }
-
 
     public function setLogin($new_login) {
         $this->login = $new_login;
@@ -81,6 +71,10 @@ class member extends \app\core\Members {
     }
     public function getTeamLeader() {
         return $this->teamLeader;
+    }
+
+    public function entityToArray() {
+        return get_object_vars($this);
     }
 
 }

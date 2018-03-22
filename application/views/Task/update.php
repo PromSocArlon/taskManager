@@ -7,6 +7,6 @@
  */
 include 'application\views\_shared\header.php';
 
-echo '<b>Task created!<b>' . PHP_EOL;
+echo '<b>Task updated!<b>' . PHP_EOL;
 
 header("refresh: 1; url=?controller=task&action=index");

@@ -1,5 +1,5 @@
 <?php
-require_once (__DIR__.'\..\models\DAO\UserDOA.php');
+require_once (__DIR__.'\..\models\DAO\UserDAO.php');
 
 /**
  * Created by PhpStorm.

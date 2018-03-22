@@ -12,30 +12,38 @@ class MemberDAO extends app\core\DAO
     * Retourne un utilisateur d'id = $id
     -------------------------------*/
     public function getMember($member){
-
-    $this->connection->update1($member);
+        $this->connection->update1($member);
     }
 
-    protected function objectToArray($arguments)
+    /**
+     * @param Member $object
+     * @return mixed
+     */
+    protected function objectToArray($object)
     {
         $array['member'] = [];
 
-        if (!empty($arguments)) {
-            $newMemberArray = (array)$arguments[0];
+        if ($object != null) {
+            $MemberArray = $object->entityToArray();
 
-            foreach ($newMemberArray as $key => $value) {
-                $array['member'][0]['new'][str_replace('member', '', $key)] = $value;
-            }
+            foreach ($MemberArray as $key => $value) {
 
-            if (func_num_args() > 1) {
-                $oldMemberArray = (array)$arguments[1];
-                foreach ($oldMemberArray as $key => $value) {
-                    $array['member'][0]['old'][str_replace('member', '', $key)] = $value;
+                if (is_array($value)) {
+                    foreach ($value as $task) {
+                        $array['member']['interTaskMember'][] = [
+                            'idMember' => $MemberArray['id'],
+                            'idTask' => $task->entityToArray()['id']
+                        ];
+                    }
+                } else {
+                    $array['member'][$key] = $value;
                 }
+
             }
         }
 
         return $array;
+
     }
 
 }

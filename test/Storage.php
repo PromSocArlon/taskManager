@@ -1,7 +1,6 @@
 <?php
 define('__ROOT__', dirname(dirname(__FILE__)));
 
-echo __ROOT__;
 require_once __ROOT__ . '/application/models/Entity/Task.php';
 require_once __ROOT__ . '/application/models/DAO/TaskDAO.php';
 require_once __ROOT__ . '/application/models/DAO/MemberDAO.php';
@@ -10,19 +9,84 @@ require_once __ROOT__ . '/application/models/Entity/Member.php';
 
 // Phil, test sauvegarde generique.
 
+$memberDAO = new MemberDAO('mysql');
+$taskDAO = new TaskDAO('mysql');
+
+$member = new Member();
+$member->setId(2);
+$member->setLogin('test');
+$member->setPassword('test');
+$member->setMail('test@mail.com');
+$member->setTeamLeader('testLeader');
+//$member->setTask();
+$member->setTeam(3);
+
+$task = new Task();
+$task->setId(1);
+$task->setName('42');
+$task->setPriority(42);
+$task->setDescription('task test');
+$task->setDay('monday');
+$task->addStatus(0, 'test insertion');
+
+$subtask = new Task();
+$subtask->setId(2);
+$subtask->setName('test');
+$subtask->setPriority(127);
+$subtask->setDescription('task test');
+$subtask->setDay('monday');
+
+$task->addSubTask($subtask);
+
+$subtask2 = new Task();
+$subtask2->setId(3);
+$subtask2->setName('test3');
+$subtask2->setPriority(127);
+$subtask2->setDescription('task test');
+$subtask2->setDay('monday');
+
+$task->addSubTask($subtask2);
+
+$taskRead = new Task();
+$taskRead->setId(1);
+
+//$taskDAO->create($task);
+
+//var_dump($task);
+
+$taskArray[] = $task;
+$taskArray[] = $subtask;
+$taskArray[] = $subtask2;
+$member->setTask($taskArray);
+
+//$memberDAO->create($member);
+var_dump($taskDAO->read($taskRead));
+
+//var_dump($member);
+
+//$arrayTest = $memberDAO->create($member);
+//$arrayTest = $memberDAO->read();
+
+//var_dump($arrayTest);
+
 /*
 $taskDAO = new TaskDAO('mysql');
 */
+/*
+$taskDAO = new TaskDAO('mysql');
 
-$memberDAO = new MemberDAO('mysql');
+$task = new Task();
+$task->setName('Test');
+$task->setDay('monday');
 
-$member = new Member();
-$member->setLogin('test0');
+$taskRead = new Task();
+$taskRead->setId(6);
+$taskRead->setName('rdgdgdgtfhfthdt');
 
-$memberDAO->create($member);
+//$taskDAO->create($task);
 
-
-
+$taskDAO->update($taskRead);
+*/
 //$task0 = new Task('');
 //$task0->setName('testAlbin');
 //$task0->setPriority(1);

@@ -1,31 +1,34 @@
 <?php
 
-
-//require_once 'application/core/Storage/StorageFactory.php';
-
 class TaskDAO extends app\core\DAO
 {
 
-    protected function objectToArray($arguments)
+    /**
+     * @param Task $object
+     * @return mixed
+     */
+    protected function objectToArray($object)
     {
         $array['task'] = [];
 
-        if (!empty($arguments) and count($arguments) >= 2) {
-            $newTaskArray = (array)$arguments[0];
-            $newDayKey = (new app\models\Week)->getDayIndex($arguments[1]);
+        if ($object != null) {
+            $TaskArray = $object->entityToArray();
 
-            foreach ($newTaskArray as $key => $value) {
-                $array['task'][0]['new'][str_replace('Task', '', $key)] = $value;
-            }
-            $array['task'][0]['new']['day'] = $newDayKey + 1;
+            foreach ($TaskArray as $key => $value) {
 
-            if (count($arguments) > 2) {
-                $oldTaskArray = (array)$arguments[2];
-                $oldDayKey = (new app\models\Week)->getDayIndex($arguments[3]);
-                foreach ($oldTaskArray as $key => $value) {
-                    $array['task'][0]['old'][str_replace('Task', '', $key)] = $value;
+                if ($key == 'day' and !empty($value)) {
+                    $array['task']['day'] = (new Week)->getDayIndex($value) + 1;
+                } elseif (is_array($value)) {
+                    foreach ($value as $subObject) {
+                        $array['task']['interSubTask'][] = [
+                            'idTask' => $TaskArray['id'],
+                            'idSubTask' => $subObject->entityToArray()['id']
+                        ];
+                    }
+                } else {
+                    $array['task'][$key] = $value;
                 }
-                $array['task'][0]['old']['day'] = $oldDayKey + 1;
+
             }
         }
 
