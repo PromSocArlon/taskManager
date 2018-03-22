@@ -36,6 +36,30 @@ class TeamController extends Controller
         }
     }
 
+    public function create()
+    {
+        try {
+            $this->initializeModel();
+            $this->storage = $this->model('teamDAO');
+            $this->storage->delete($this->team, $this->request->getParameter('id'));
+            $this->generateView();
+        } catch (Exception $ex) {
+            handleError($ex);
+        }
+    }
+
+    public function viewTeamMembers()
+    {
+        try {
+            $this->initializeModel();
+            $this->storage = $this->model('teamDAO');
+            $this->storage->delete($this->team, $this->request->getParameter('id'));
+            $this->generateView();
+        } catch (Exception $ex) {
+            handleError($ex);
+        }
+    }
+
     public function delete()
     {
         try {
