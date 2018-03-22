@@ -24,3 +24,5 @@
 #Visual Paradigm
 *.vpp.bak*
 *.vpp.lck
+
+vendor/
