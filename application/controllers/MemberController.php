@@ -23,7 +23,6 @@ class MemberController extends app\core\Controller
     {
 
         $this->member = $this->model('member');
-       // $this->member->setid($idFromEdite);
         $this->member->setMail($_POST['mail']);
         $this->member->setTeam($_POST['team']);
         $this->member->setLogin($_POST['login']);
@@ -38,11 +37,22 @@ class MemberController extends app\core\Controller
         $this->generateView();
     }
 
+    public function update1(){
+        $this->generateView();
+
+    }
+
     public function update()
     {
-        $data[0]="test";
-       //recuperation de la ligne editer sous forme de tableau et la transmettre à la vue
-        $this->generateView($data);
+        $this->member = $this->model('member');
+        $this->storage = $this->model('MemberDAO');
+        $this->member->setId($_GET['id']);
+        $this->member->setMail("test@test.test");
+        $this->member->setTeam("1");
+        $this->member->setLogin("test");
+        $this->member->setPassword("test");
+        $this->storage->getMember($this->member);
+        $this->generateView();
     }
 	
 	public function read()

@@ -1,4 +1,4 @@
-
+<?php   include(__DIR__ . '\..\_shared\header.php');?>
 <div class="backgroundColor">
     <form method="POST" action="?controller=member&action=save">
         <div class="form-group">

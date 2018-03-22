@@ -11,8 +11,9 @@ class MemberDAO extends app\core\DAO
     /*-------------------------------
     * Retourne un utilisateur d'id = $id
     -------------------------------*/
-    public function getMember($id){
+    public function getMember($member){
 
+    $this->connection->update1($member);
     }
 
     protected function objectToArray($arguments)

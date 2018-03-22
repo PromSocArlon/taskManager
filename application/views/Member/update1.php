@@ -1,8 +1,9 @@
 <?php
 include(__DIR__ . '\..\_shared\header.php');
+$data[0]='test';
 ?>
 <div class="backgroundColor">
-    <form method="POST" action="?controller=member&action=save">
+    <form method="POST" action="?controller=member&action=updateMember">
         <div class="form-group">
             <label for="InputEmail1">Email address</label>
             <input type="email" name = "mail"  value="<?php echo $data[0]?>">

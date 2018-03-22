@@ -40,6 +40,7 @@ abstract class DAO
         return false;
     }
 
+
     public function update()
     {
         $array = $this->objectToArray(func_get_args());
@@ -49,6 +50,7 @@ abstract class DAO
         }
         return false;
     }
+
 
     public function delete()
     {

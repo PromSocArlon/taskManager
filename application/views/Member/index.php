@@ -18,7 +18,7 @@ include(__DIR__ . '\..\_shared\header.php');
     </thead>
     <?php
         foreach ($members as $member) {
-            $profilePath = '?controller=member&action=profil&id=' . $member['id'];
+            $profilePath = '?controller=member&action=update1&id=' . $member['id'];
             echo '<tr>';
             foreach ($member as $property) {
                 echo '<td>' . $property . '</td>';
