@@ -76,9 +76,6 @@ class StorageMysql extends Storage
             $sql .= "INSERT INTO tbl_" . $table . " (" . $field . ") VALUES (" . $value . ");" . $subSql;
 
         }
-
-        var_dump($sql);
-
         $request = $this->query($sql);
 
         if ($request->errorInfo()[0] != "00000") {

@@ -111,6 +111,11 @@ class TaskController extends Controller
     {
         $this->storage = $this->model('taskDAO');
         $tasks = $this->storage->read();
+
+        // if there is no tasks in the database
+        if ($tasks == false) {
+            $tasks = array();
+        }
         $this->generateView($tasks);
     }
 

@@ -37,6 +37,11 @@ include 'application\views\_shared\header.php';
             </thead>
             <tbody>
                 <?php
+                    if (empty($data)) {
+                        echo '<tr>';
+                            echo '<th><p><i>No tasks created yet.</i></p></th>';
+                        echo '</tr>';
+                    }
                     foreach ($data as $task) {
                         echo '<tr>';
                             echo '<th>' . $task['id'] . '</th>';
