@@ -1,8 +1,8 @@
 <?php
 
-namespace TasMan;
+// namespace TasMan;
 
-require_once 'application/models/Storage/Storage.php';
+require_once 'application/core/Storage/Storage.php';
 
 class StorageFile extends Storage
 {

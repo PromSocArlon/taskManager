@@ -1,6 +1,6 @@
 <?php
 
-namespace TasMan;
+// namespace TasMan;
 
 abstract class Storage
 {

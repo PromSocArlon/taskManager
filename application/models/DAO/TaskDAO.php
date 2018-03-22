@@ -1,6 +1,6 @@
 <?php
 
-namespace TasMan;
+// namespace TasMan;
 
 require_once 'application/models/Entity/Week.php';
 require_once 'application/models/Entity/Task.php';

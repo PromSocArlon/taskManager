@@ -7,7 +7,7 @@
  * Time: 01:58
  */
 
-namespace TasMan;
+// namespace TasMan;
  
 require_once 'application/core/Controller.php';
 

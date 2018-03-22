@@ -1,6 +1,6 @@
 <?php
 
-namespace TasMan;
+// namespace TasMan;
 
 require_once 'application/core/Storage/Storage.php';
 
