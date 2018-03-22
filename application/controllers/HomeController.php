@@ -37,12 +37,10 @@ class HomeController extends Controller {
 			$pwd = $this->request->getParameter('loginPassword');
 			$dao = new MemberDAO();
 			//TODO : ajouter user in db pour check
-			$check = UserService::checkCredential($dao, $login, $pwd);
-			$check = true;
-			if($check)
+			$userId = UserService::checkCredential($dao, $login, $pwd);
+			if(true)
 			{
-				
-				$_SESSION['user'] = $login;
+				UserService::setCurrentUser($userId);
 				$this->generateView();
 			}
 			else
@@ -80,8 +78,8 @@ class HomeController extends Controller {
     }
 
     public function logout() {
-        if (isset($_SESSION['user'])) {
-            unset($_SESSION['user']);
+        if(UserService::isConnected()) {
+			UserService::disconnect();
             //session_destroy();
         }
         header('Location: index.php/controller=home');

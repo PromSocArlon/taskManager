@@ -36,10 +36,15 @@ class UserService
 	
 	public static function checkCredential($dao, $login, $password)
     {
-		$tempMember = new Member();
-		$tempMember->setLogin($login);
-		$tempMember->setPassword($password);
-		$data = $dao->read($tempMember);
-		return $data != false ? true : false;
+		$searchMember = new Member();
+		$searchMember->setLogin($login);
+		$searchMember->setPassword($password);
+		$data = $dao->read($searchMember);
+		return $data != false ? $data->getId() : false;
     }
+	
+	public static function disconnect()
+	{
+		unset($_SESSION['user']);
+	}
 }
