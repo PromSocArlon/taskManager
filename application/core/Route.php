@@ -1,24 +1,25 @@
 <?php
+namespace app\core;
 
-require_once 'View.php';
-require_once 'Controller.php';
-require_once 'Request.php';
-
-
-class Route {
+class Route
+{
+    private $request;
 
     /**
      *  Analyse the URL and perform the action given by a specific controller
      */
-    public function routeQuery() : void {
+    public function routeQuery(): void
+    {
         try {
-            $request= new request(array_merge($_GET, $_POST));
-            $controller = $this->getNewController($request);
-            $action = $this->getNewAction($request);
+            $this->request = new request(array_merge($_GET, $_POST));
+            unset($_GET);
+            unset($_POST);
+
+            $controller = $this->getNewController();
+            $action = $this->getNewAction();
             $controller->executeAction($action);
-        }
-        catch (Exception $ex) {
-            $this->handleError($ex);
+        } catch (\Exception $ex) {
+            handleError($ex);
         }
     }
 
@@ -26,31 +27,22 @@ class Route {
      * Give the controller wanted by a request
      * @param request $request request that create the controller
      * @return Controller the wanted controller
-     * @throws Exception if controller doesn't exist
+     * @throws \Exception if controller doesn't exist
      */
-    private function getNewController(request $request) : Controller {
+    private function getNewController(): Controller
+    {
         $controllerValue = "home";
-        if ($request->existParameter('controller')) {
-            $controllerValue = $request->getParameter('controller');
-            $controllerValue = strtolower($controllerValue);
+        if ($this->request->existParameter("controller")) {
+            $controllerValue = strtolower($this->request->getParameter("controller"));
         }
-        $classController = $controllerValue . "Controller";
+        $classController = '\\app\\controllers\\' . $controllerValue . "Controller";
 
-        $fileController= "application/controllers/" . $classController . ".php";
-
-        if (file_exists($fileController)) {
-            /** @var string $fileController */
-            require($fileController);
-
-            $controller = new $classController();
-             if (isset($request) && $controller instanceof Controller) {
-                $controller->setRequest($request);
-             }
-             return $controller;
+        $controller = new $classController();
+        if (isset($this->request) && $controller instanceof Controller) {
+            $controller->setRequest($this->request);
         }
-        else {
-            throw new Exception("File '$fileController' not found.");
-        }
+        return $controller;
+
     }
 
     /**
@@ -58,26 +50,15 @@ class Route {
      * @param request $request
      * @return string the type of action to perform
      */
-    private function getNewAction(request $request) : string {
+    private function getNewAction(): string
+    {
         $action = "index";
         try {
-            $action = $request->getParameter('action');
-        }
-        catch (Exception $e) {
-            $action ="index";
-        }
-        finally {
+            $action = $this->request->getParameter("action");
+        } catch (\Exception $e) {
+            $action = "index";
+        } finally {
             return $action;
         }
     }
-
-    /**
-     * Handle any error.
-     * @param Exception $exception the error that must be handled
-     */
-    private function handleError(Exception $exception) : void {
-        $view = new View('template');
-        $view->generate(array('msgError'=> $exception->getMessage()));
-    }
-
 }

@@ -1,6 +1,6 @@
-
+<?php   include(__DIR__ . '\..\_shared\header.php');?>
 <div class="backgroundColor">
-    <form method="POST" action="?controller=home&action=check">
+    <form method="POST" action="?controller=member&action=save">
         <div class="form-group">
             <label for="InputEmail1">Email address</label>
             <input type="email" name = "mail" placeholder="Enter mail">

@@ -1,0 +1,14 @@
+CREATE TABLE tbl_task_team
+(
+  id         INT AUTO_INCREMENT
+    PRIMARY KEY,
+  fk_task_id SMALLINT(6) NOT NULL,
+  fk_team_id SMALLINT(6) NOT NULL
+)
+  ENGINE = MyISAM;
+
+CREATE INDEX tbl_task_team_tbl_tasks_id_fk
+  ON tbl_task_team (fk_task_id);
+
+CREATE INDEX tbl_task_team_tbl_team_id_fk
+  ON tbl_task_team (fk_team_id);

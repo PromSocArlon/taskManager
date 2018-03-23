@@ -1,9 +1,5 @@
 <?php
-
-// namespace TasMan;
-
-require_once 'application/core/Storage/StorageMysql.php';
-
+namespace app\core\Storage;
 class StorageFactory
 {
     public static function getStorage($type)
@@ -18,10 +14,10 @@ class StorageFactory
                     $storage = new StorageMysql();
                     break;
                 default:
-                    throw new Exception("\"" . $type . "\" is not a valid type of database.");
+                    throw new \Exception("\"" . $type . "\" is not a valid type of database.");
             }
             return $storage;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
     }

@@ -1,17 +1,10 @@
 <?php
+namespace app\controllers;
 
-/**
- * Created by PhpStorm.
- * User: Chris
- * Date: 30-01-18
- * Time: 01:58
- */
+use app\models\DAO\TaskDAO;
+use app\models\Entity\Task;
 
-// namespace TasMan;
- 
-require_once 'application/core/Controller.php';
-
-class TaskController extends Controller
+class TaskController extends \app\core\Controller
 {
     private $task;
     private $storage;
@@ -19,7 +12,16 @@ class TaskController extends Controller
     //$storage doit etre = 'file' ou 'mysql'
     public function __construct(/*$storageType*/)
     {
-
+        $perms = [
+            'index' => ['public' => true, 'connect' => true],
+            'create' => ['public' => true, 'connect' => true],
+            'read' => ['public' => true, 'connect' => true],
+            'update' => ['public' => true, 'connect' => true],
+            'delete' => ['public' => true, 'connect' => true],
+            'save' => ['public' => true, 'connect' => true],
+            'edit' => ['public' => true, 'connect' => true], //TODO:public doit être false mais pour l'instant true
+        ];
+        $this->setPermissions($perms);
     }
 
     public function create()
@@ -31,34 +33,32 @@ class TaskController extends Controller
     {
         try
         {
-            $this->task = $this->model('task');
+            $this->task = new Task();
             $this->task->setID($this->request->getParameter('id'));
-            $this->storage = $this->model('taskDAO');
+            $this->storage = new TaskDAO();
             $this->task = $this->storage->read($this->task);
+            $this->generateView($this->task);
         }
-        catch(Exception $ex)
+        catch(\Exception $ex)
         {
-            $this->task = [];
-            $this->task['Exception'] = $ex;
+            handleError($ex);
         }
-        $this->generateView($this->task);
     }
-    
+
     public function read()
     {
         try
         {
-            $this->task = $this->model('task');
+            $this->task = new Task();
             $this->task->setID($this->request->getParameter('id'));
-            $this->storage = $this->model('taskDAO');
+            $this->storage = new TaskDAO();
             $this->task = $this->storage->read($this->task);
+            $this->generateView($this->task);
         }
-        catch(Exception $ex)
+        catch(\Exception $ex)
         {
-            $this->task = [];
-            $this->task['Exception'] = $ex;
+            handleError($ex);
         }
-        $this->generateView($this->task);
     }
 
     public function update()
@@ -66,13 +66,13 @@ class TaskController extends Controller
         try
         {
             $this->initializeModel();
-            $this->storage = $this->model('taskDAO');
+            $this->storage = new TaskDAO();
             $this->storage->update($this->task);
             $this->generateView();
         }
-        catch(Exception $ex)
+        catch(\Exception $ex)
         {
-            $this->generateView(['Exception' => $ex]);
+            handleError($ex);
         }
     }
 
@@ -80,15 +80,15 @@ class TaskController extends Controller
     {
         try
         {
-            $this->task = $this->model('task');
+            $this->task = new Task();
             $this->task->setID($this->request->getParameter('id'));
-            $this->storage = $this->model('taskDAO');
+            $this->storage = new TaskDAO();
             $this->storage->delete($this->task);
             $this->generateView();
         }
-        catch(Exception $ex)
+        catch(\Exception $ex)
         {
-            $this->generateView(['Exception' => $ex]);
+            handleError($ex);
         }
     }
 
@@ -97,42 +97,48 @@ class TaskController extends Controller
         try
         {
             $this->initializeModel();
-            $this->storage = $this->model('taskDAO');
+            $this->storage = new TaskDAO();
             $this->storage->create($this->task);
             $this->generateView();
         }
-        catch(Exception $ex)
+        catch(\Exception $ex)
         {
-            $this->generateView(['Exception' => $ex]);
+            handleError($ex);
         }
     }
 
     public function index()
     {
-        $this->storage = $this->model('taskDAO');
-        $tasks = $this->storage->read();
+        try
+        {
+            $this->storage = new TaskDAO();
+            $tasks = $this->storage->read();
 
-        // if there is no tasks in the database
-        if ($tasks == false) {
-            $tasks = array();
+            // if there is no tasks in the database
+            if ($tasks == false) {
+                $tasks = array();
+            }
+            $this->generateView($tasks);
         }
-        $this->generateView($tasks);
+        catch(\Exception $ex)
+        {
+            handleError($ex);
+        }
     }
 
     public function initializeModel()
     {
         try
         {
-            $this->task = $this->model('task');
+            $this->task = new Task();
             $this->task->setID($this->request->getParameter('id'));
             $this->task->setName($this->request->getParameter('name'));
             $this->task->setPriority($this->request->getParameter('priority'));
             $this->task->setDescription($this->request->getParameter('description'));
-            $this->task->setDay($this->request->getParameter('day'));
             //$this->task->addStatus(0, '0');
             //$this->task->addSubTask(0);
         }
-        catch(Exception $ex)
+        catch(\Exception $ex)
         {
             throw $ex;
         }

@@ -1,9 +1,5 @@
 <?php
-
-// namespace TasMan;
-
-require_once 'application/core/Storage/Storage.php';
-
+namespace app\core\Storage;
 class StorageFile extends Storage
 {
     protected $type = 'file';

@@ -1,13 +1,14 @@
 <?php
+namespace app\models\DAO;
 
-// namespace TasMan;
-
-require_once 'application/models/Entity/Member.php';
-require_once 'application/models/DAO/DAO.php';
-require_once 'application/core/Storage/StorageFactory.php';
-
-class MemberDAO extends DAO
+class MemberDAO extends \app\core\DAO
 {
+    /*-------------------------------
+    * Retourne un utilisateur d'id = $id
+    -------------------------------*/
+    public function getMember($member){
+        $this->connection->update1($member);
+    }
 
     /**
      * @param Member $object

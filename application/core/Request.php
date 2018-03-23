@@ -1,5 +1,5 @@
 <?php
-
+namespace app\core;
 class Request {
     private $parameters;
 
@@ -10,14 +10,13 @@ class Request {
     /**
      * @param $parameterName
      * @return string parameter's value
-     * @throws Exception if parameter doesn't exist
+     * @throws \Exception if parameter doesn't exist
      */
     public function getParameter(string $parameterName) : string{
         if ($this->existParameter($parameterName)){
             return $this->parameters[$parameterName];
-        }
-        else {
-            throw new Exception("Missing parameter '$parameterName'.");
+        } else {
+            throw new \Exception("Missing parameter '$parameterName'.");
         }
     }
 

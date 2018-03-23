@@ -1,4 +1,5 @@
 <?php
+namespace app\models\Entity;
 
 abstract class Entity {
 

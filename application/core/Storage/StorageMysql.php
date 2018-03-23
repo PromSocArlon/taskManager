@@ -1,8 +1,7 @@
 <?php
+namespace app\core\Storage;
 
-// namespace TasMan;
-
-require_once 'application/core/Storage/Storage.php';
+use app\models\Entity\Member;
 
 class StorageMysql extends Storage
 {
@@ -12,7 +11,7 @@ class StorageMysql extends Storage
     {
         $config = parse_ini_file('application/core/config.ini');
         try {
-            $this->connection = new PDO(
+            $this->connection = new \PDO(
                 $this->type .
                 ":host=" . $config['mysqlHost'] .
                 ";port=" . $config['mysqlPort'] .
@@ -21,7 +20,7 @@ class StorageMysql extends Storage
                 $config['mysqlPassword']
             );
             $this->connection->errorInfo();
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
             die();
         }
@@ -126,13 +125,35 @@ class StorageMysql extends Storage
             return false;
         }
 
-        $result = $request->fetch(PDO::FETCH_ASSOC);
+        $result = $request->fetch(\PDO::FETCH_ASSOC);
         // remove reserved id for database
         unset($result['id' . ucfirst($table)]);
 
         return $result;
     }
 
+    public function update1(Member $member){
+
+        $sql='';
+        $id = $member->getId();
+        $mail=$member->getMail();
+        $login=$member->getLogin();
+        $password= $member->getPassword();
+        $team=$member->getTeam();
+
+        $sql= sprintf("update tbl_member set mail='%s',login='%s',password='%s' ,team='%s' where id = %s",$mail,$login,$password,$team,$id);
+
+
+        $request = $this->query($sql);
+
+        if ($request->errorInfo()[0] != "00000") {
+            var_dump($request->errorInfo());
+            return false;
+        }
+
+        return true;
+
+    }
     public function update(array $data)
     {
         $sql = "";
@@ -213,7 +234,7 @@ class StorageMysql extends Storage
             $request = $this->connection->prepare($sql);
             $request->execute();
             return $request;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             echo "Error !: " . $e->getMessage() . PHP_EOL;
         }
     }

@@ -1,13 +1,8 @@
 <?php
+namespace app\models\Entity;
 
-require_once 'application/models/Entity/Status.php';
-require_once 'application/models/Entity/Entity.php';
-
-/**
- * Class Task
- */
 class Task extends Entity {
-	
+
     private $name;
     private $priority;
     private $description;

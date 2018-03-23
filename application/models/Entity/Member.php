@@ -1,6 +1,5 @@
 <?php
-
-require_once 'application/models/Entity/Entity.php';
+namespace app\models\Entity;
 
 class Member extends Entity {
 
@@ -8,7 +7,6 @@ class Member extends Entity {
     private $password;
     private $mail;
     private $teamLeader;
-    private $task=[];
     private $team;
 
 
@@ -44,7 +42,7 @@ class Member extends Entity {
     {
         $this->team = $team;
     }
-    
+
     public function setLogin($new_login) {
         $this->login = $new_login;
     }

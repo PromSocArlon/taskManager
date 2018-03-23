@@ -1,13 +1,7 @@
 <?php
+namespace app\models\DAO;
 
-// namespace TasMan;
-
-require_once 'application/models/Entity/Week.php';
-require_once 'application/models/Entity/Task.php';
-require_once 'application/models/DAO/DAO.php';
-require_once 'application/core/Storage/StorageFactory.php';
-
-class TaskDAO extends DAO
+class TaskDAO extends \app\core\DAO
 {
 
     /**
@@ -24,7 +18,7 @@ class TaskDAO extends DAO
             foreach ($TaskArray as $key => $value) {
 
                 if ($key == 'day' and !empty($value)) {
-                    $array['task']['day'] = (new Week)->getDayIndex($value) + 1;
+                    $array['task']['day'] =  1;
                 } elseif (is_array($value)) {
                     foreach ($value as $subObject) {
                         $array['task']['interSubTask'][] = [

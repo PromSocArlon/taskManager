@@ -1,10 +1,11 @@
 <?php
-
-// namespace TasMan;
-
-require_once 'application/core/Storage/StorageFactory.php';
-require_once 'application/core/Storage/StorageMysql.php';
-require_once 'application/core/Storage/StorageFile.php';
+/**
+ * Created by PhpStorm.
+ * User: philippedaniel
+ * Date: 16/02/2018
+ * Time: 22:01
+ */
+namespace app\core;
 
 abstract class DAO
 {
@@ -19,7 +20,7 @@ abstract class DAO
      */
     public function __construct($type = 'mysql')
     {
-        $this->connection = StorageFactory::getStorage($type);
+        $this->connection = Storage\StorageFactory::getStorage($type);
     }
 
     /**

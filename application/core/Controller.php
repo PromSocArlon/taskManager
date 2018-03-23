@@ -1,8 +1,5 @@
 <?php
-
-require_once 'Request.php';
-require_once 'View.php';
-
+namespace app\core;
 
 abstract class Controller {
 
@@ -11,8 +8,13 @@ abstract class Controller {
      * @var request $request
      */
     protected $request;
+	/**
+	 * @var [][] $permissions
+	 */
+	private $permissions;
 
     public abstract function index();
+
     public abstract function initializeModel();
 
     /**
@@ -28,47 +30,70 @@ abstract class Controller {
     /**
      * Execute the given action
      * @param string $action the action to perform
-     * @throws Exception if action not defined
+     * @throws \Exception if action not defined
      */
     public function executeAction(string $action) : void {
-        if (method_exists($this, $action)) {
+
+        if (method_exists($this, $action) && $this->isAllowed($action)) {
             $this->action = $action;
             $this->{$this->action}();
-        }
-        else {
+        } else {
             $classController = get_class($this);
-            throw new Exception("Action '$action' not defined in the class $classController");
+            throw new \Exception("Action '$action' not defined in the class $classController");
         }
     }
 
     /**
      * Generate the view with a given data set
      * @param array $data the data set to be added to the generation
+     * @param string $action
      */
-    protected function generateView(array $data = array()) : void {
+    protected function generateView($data = array(), $action = null)
+    {
+        $actionView = $this->action;
+        if ($action != null) {
+            $actionView = $action;
+        }
         $classController = get_class($this);
         $controller = str_replace("Controller", "", $classController);
-        $view = new View($this->action, $controller);
+
+        $view = new view($actionView, $controller);
         $view->generate($data);
     }
 
+    protected function redirect($controller, $action = null)
+    {
+        header("taskManager/" . $controller . "/" . $action);
+    }
 
     /**
-     * Give an instance of the given class.
-     * @param string $model the wanted model object
-     * @return object the object of the wanted model.
-     * @throws Exception if class not found
+     * Set the permission for the controller
+     * @param array $t_perm the array of permission for the controller
+     * @throws \Exception if $t_perm not set
      */
-    public function model(string $model){
-        $modelFile = strpos($model, "DAO") !== false ? 'application/models/DAO/' . $model . '.php' : 'application/models/Entity/' . $model . '.php' ;
-        if (file_exists($modelFile)) {
-            require_once($modelFile);
-            //TODO: ajout support pour DAO du type de storage (file ou mysql) pour le moment DAO est par défaut sur mysql
-            return new $model();
-        } else {
-            throw new Exception("File '".$modelFile."' not found.");
+    protected function setPermissions(array $t_perm) : void
+	{
+		if ($t_perm!=null) {
+            $this->permissions = $t_perm;
         }
+	    else {
+		    throw new \Exception("Permission not set !");
+        }
+	}
 
-    }
+	/**
+	 * check the permission for the given $action
+	 * @param string $action the name of the action
+	 * @return bool the permission of the action
+	 */
+	public function isAllowed($action)
+	{
+//		if(UserService::isConnected())
+//			return $this->permissions[$action]['connect'];
+//		else
+//			return $this->permissions[$action]['public'];
+
+		return \app\core\UserService::isConnected() ? $this->permissions[$action]['connect'] : $this->permissions[$action]['public'];
+	}
 
 }

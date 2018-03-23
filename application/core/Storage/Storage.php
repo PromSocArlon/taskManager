@@ -1,7 +1,5 @@
 <?php
-
-// namespace TasMan;
-
+namespace app\core\Storage;
 abstract class Storage
 {
     protected $connection;
