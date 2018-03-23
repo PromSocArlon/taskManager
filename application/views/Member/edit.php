@@ -1,21 +1,21 @@
 <?php
-include(__DIR__ . '\..\_shared\header.php');
-$data[0]='test';
+//include(__DIR__ . '\..\_shared\header.php');
 ?>
+
 <div class="backgroundColor">
-    <form method="POST" action="?controller=member&action=updateMember">
+    <form method="POST" action="?controller=member&action=update&id=<?php echo $data['id'] ?>">
         <div class="form-group">
             <label for="InputEmail1">Email address</label>
-            <input type="email" name = "mail"  value="<?php echo $data[0]?>">
+            <input type="email" name = "mail"  value="<?php echo $data['mail'] ?>  " required >
             <small >We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
             <label>Team</label>
-            <input type="text" name="team"  value = "<?php echo $data[0]?>" required >
+            <input type="text" name="team"  value = "<?php echo $data['team']?>" required >
         </div>
         <div class="form-group">
             <label for="login">Login :</label>
-            <input type="text" name="login" id="login" value="<?php echo $data[0]?>" required >
+            <input type="text" name="login" id="login" value="<?php echo $data['login']?>" required >
         </div>
         <div class="form-group">
             <label for="password">Password</label>
@@ -29,6 +29,6 @@ $data[0]='test';
         I agree
     </label>
 </div>
-<button type="submit"  class="btn btn-primary">register</button>
+<button type="submit"  class="btn btn-primary">update</button>
 </form>
 </div>

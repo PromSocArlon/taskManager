@@ -1,6 +1,9 @@
 <?php
 namespace app\controllers;
 
+use app\models\DAO\MemberDAO;
+use app\models\Entity\Member;
+
 class MemberController extends \app\core\Controller
 {
     private $member;
@@ -20,48 +23,84 @@ class MemberController extends \app\core\Controller
         $members = $this->storage->read();
         $this->generateView($members);
     }
-
-
-    public  function initializeModel()
+    public function read()
     {
+        try
+        {
+            $this->member = $this->model('member');
+            $this->member->setID($this->request->getParameter('id'));
+            $this->storage = new MemberDAO();
+            $this->member = $this->storage->read($this->member);
+        }
+        catch(\Exception $ex)
+        {
+            $this->member = [];
+            $this->member['Exception'] = $ex;
+        }
+        $this->generateView($this->member);
+    }
+    public function edit()
+    {
+        try
+        {
+            $this->member = $this->model('member');
+            $this->member->setID($this->request->getParameter('id'));
+            $this->storage = new MemberDAO();
+            $this->member = $this->storage->read($this->member);
+        }
+        catch(\Exception $ex)
+        {
+            $this->member = [];
+            $this->member['Exception'] = $ex;
+        }
+        $this->generateView($this->member);
+    }
 
-        $this->member = $this->model('member');
-        $this->member->setMail($_POST['mail']);
-        $this->member->setTeam($_POST['team']);
-        $this->member->setLogin($_POST['login']);
-        $this->member->setPassword($_POST['password']);
+        public function initializeModel()
+    {
+        try
+        {
+
+            $this->member = $this->model('member');
+            $this->member->setID($this->request->getParameter('id'));
+            $this->member->setLogin($this->request->getParameter('login'));
+            $this->member->setPassword($this->request->getParameter('password'));
+            $this->member->setMail($this->request->getParameter('mail'));
+
+        }
+        catch(\Exception $ex)
+        {
+            throw $ex;
+        }
     }
 
     public function save()
     {
         $this->initializeModel();
-        $this->storage = $this->model('MemberDAO');
+        $this->storage = new MemberDAO();
         $this->storage->create($this->member);
         $this->generateView();
     }
 
-    public function update1(){
-        $this->generateView();
-
-    }
-
-    public function update()
+        public function update()
     {
-        $this->member = $this->model('member');
-        $this->storage = $this->model('MemberDAO');
-        $this->member->setId($_GET['id']);
-        $this->member->setMail("test@test.test");
-        $this->member->setTeam("1");
-        $this->member->setLogin("test");
-        $this->member->setPassword("test");
-        $this->storage->getMember($this->member);
-        $this->generateView();
+        try
+        {
+            $this->initializeModel();
+            //$this->member->setID($this->request->getParameter('id'));
+            $this->storage = new MemberDAO();
+            $this->storage->update($this->member);
+            $this->generateView();
+        }
+        catch(\Exception $ex)
+        {
+            $this->generateView(['Exception' => $ex]);
+        }
     }
+
+
 	
-	public function read()
-    {
-        return $this->member;
-    }
+
 
 	public function delete()
     {

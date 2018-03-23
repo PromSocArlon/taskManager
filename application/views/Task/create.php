@@ -7,7 +7,6 @@
  */
 
 include 'application\views\_shared\header.php';
-
 ?>
     <h1>Task</h1>
     <hr>
