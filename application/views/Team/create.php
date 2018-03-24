@@ -1,37 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jeremy Laurensis
- * Date: 20-03-18
- * Time: 13:58
- */
-
-
-require_once '../../controllers/TeamController.php';
-require_once '../../core/bootstrapTheme.php'
-?>
-
-
-<?php
-//----------------------------------------------------------------------------------------------------
+/*//----------------------------------------------------------------------------------------------------
 // pour tester le remplissage des combobox à partir de la DB -> à supprimer lorsque DAO implenté
-require ('DB_connexion.php');
-$sth=$connection->query('select Username, ID_User from Users');
+require('DB_connexion.php');
+$sth = $connection->query('select Username, ID_User from Users');
 $result = $sth->fetchAll();
 //echo "Nombre de records : " .$sth->rowCount();
 //print_r($result);
 //---------------------------------------------------------------------------------------------------
-?>
+*/ ?>
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>Create a Team</title>
-    <?php echo getBootstrapTag(); ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-</head>
-<body>
 <div class="border border-secondary rounded w-50 h-85 mx-auto mt-5 p-4">
     <div id="team" class="container w-10">
         <div class="row">
@@ -42,27 +19,26 @@ $result = $sth->fetchAll();
                         <label for="teamName">Team name : </label>
                         <input type="text" name="teamName" class="form-control" placeholder="Enter team name"/>
                     </div>
-                    <label for="TeamLeaderSelection">Please select the teamleader  :</label><br>
+                    <label for="TeamLeaderSelection">Please select the teamleader :</label><br>
                     <select name="TeamLeaderSelection" size="1">
-                     <?php
+                        <?php
                         foreach ($result as $row) {
-                        echo '<option value="'.$row[Username].'">'.$row[Username].'</option>';
+                            echo '<option value="' . $row[Username] . '">' . $row[Username] . '</option>';
                         }
-                     ?>
+                        ?>
                     </select>
 
                     <br> </br>
 
-                    <form role='form' action='?TeamController&action=create' method='post'>
+                    <form role='form' action='?controller=Team&action=create' method='post'>
                         <input type="submit" value="Create Team" name="createNewTeam" class="btn btn-sm btn-secondary"/>
-                        <input type="button" name="Cancel Team Creation" value="Cancel Creation" onClick="location.href='index.php'" class="btn btn-sm btn-secondary"/>
+                        <input type="button" name="Cancel Team Creation" value="Cancel Creation"
+                               onClick="location.href='index.php'" class="btn btn-sm btn-secondary"/>
                         <br> </br>
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-</body>
-</html>
+

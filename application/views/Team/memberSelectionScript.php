@@ -20,9 +20,9 @@ if ($teamName <> "") {
     if (count($results) > 0) {
         ?>
         <select name="members" name="members" size="5" class="form-control mb-3">
-                <?php foreach ($results as $rs) { ?>
-                    <option value="<?php echo $rs[0]; ?>"><?php echo $rs[1]; ?></option>
-                <?php } ?>
+            <?php foreach ($results as $rs) { ?>
+                <option value="<?php echo $rs[0]; ?>"><?php echo $rs[1]; ?></option>
+            <?php } ?>
         </select>
         <?php
     }

@@ -8,8 +8,8 @@
 
 
 try {
-    $connection= new PDO('mysql:host=127.0.0.1;dbname=TaskManagerTEAM4','root','');
-    $connection->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    $connection = new PDO('mysql:host=127.0.0.1;dbname=TaskManagerTEAM4', 'root', '');
+    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     print "Error!: " . $e->getMessage() . "<br/>";
     die();

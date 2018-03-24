@@ -1,5 +1,7 @@
 <?php
+
 namespace app\core;
+
 
 class Route
 {
@@ -42,7 +44,6 @@ class Route
             $controller->setRequest($this->request);
         }
         return $controller;
-
     }
 
     /**
