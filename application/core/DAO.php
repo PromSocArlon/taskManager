@@ -5,6 +5,7 @@
  * Date: 16/02/2018
  * Time: 22:01
  */
+
 namespace app\core;
 
 abstract class DAO
@@ -47,7 +48,7 @@ abstract class DAO
      * @param null $object
      * @return bool|mixed
      */
-    public function read($object = NULL)
+    public function read($object = null)
     {
         $array = $this->objectToArray($object);
 
@@ -84,5 +85,15 @@ abstract class DAO
             return true;
         }
         return false;
+    }
+
+    /**
+     * @param String $table
+     * @return int
+     */
+    public function getLastId(String $table)
+    {
+        $array = $this->connection->getLastId($table);
+        return $array['id'];
     }
 }

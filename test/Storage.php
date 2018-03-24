@@ -29,6 +29,7 @@ $task->setDescription('task test');
 $task->setDay('monday');
 $task->addStatus(0, 'test insertion');
 
+/*
 $subtask = new Task();
 $subtask->setId(2);
 $subtask->setName('test');
