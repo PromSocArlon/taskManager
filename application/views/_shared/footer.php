@@ -1,5 +1,7 @@
-<footer class="container">
-    <p> IEPSA 2017-2018</p>
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted">IEPSA 2017-2018</span>
+    </div>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
