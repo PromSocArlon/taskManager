@@ -31,6 +31,7 @@ class TeamDAO extends \app\core\DAO
                         }*/
             $array['team']['name'] = $object->getName();
             $array['team']['leader'] = $object->getLeader();
+            $array['team']['id'] = $object->getID();
         }
         return $array;
     }

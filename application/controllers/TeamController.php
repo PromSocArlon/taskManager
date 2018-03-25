@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\DAO\TeamDAO;
+use app\models\entity\team;
 use function app\core\handleError;
 
 class TeamController extends \app\core\Controller
@@ -17,6 +18,7 @@ class TeamController extends \app\core\Controller
             'save' => ['public' => true, 'connect' => true],
             'create' => ['public' => true, 'connect' => true],
             'viewTeamMembers' => ['public' => true, 'connect' => true],
+            'read' => ['public' => true, 'connect' => true],
             'delete' => ['public' => true, 'connect' => true],
             'update' => ['public' => true, 'connect' => true],
         ];
@@ -49,7 +51,7 @@ class TeamController extends \app\core\Controller
     {
         try {
             $this->team = $this->model('team');
-            $this->team->setName($this->request->getParameter('teamName'));
+            $this->team->setName($this->request->getParameter('Name'));
         } catch (\Exception $ex) {
             throw $ex;
         }
@@ -72,6 +74,18 @@ class TeamController extends \app\core\Controller
             $this->initializeModel();
             $this->storage->delete($this->team, $this->request->getParameter('id'));
             $this->generateView();
+        } catch (\Exception $ex) {
+            handleError($ex);
+        }
+    }
+
+    public function read()
+    {
+        try {
+            $this->team = new team;
+            $this->team->setID($this->request->getParameter('id'));
+            $this->team = $this->storage->read($this->team);
+            $this->generateView($this->team);
         } catch (\Exception $ex) {
             handleError($ex);
         }
