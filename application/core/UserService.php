@@ -14,7 +14,7 @@ class UserService
      * @return Member copie de session['user'] / null si aucune
      * @throws \Exception if session['user'] doesn't exist
      */
-    public static function getCurrentUser() : ?Member
+    public static function getCurrentUser()
     {
 		return isset($_SESSION['user']) ? ($temp = $_SESSION['user']) : null;
     }
@@ -32,6 +32,11 @@ class UserService
 		$data = $dao->read($searchMember);
 		return $data != false ? $data->getId() : false;
     }
+	
+	public static function setCurrentUser($id)
+	{
+		$_SESSION['user'] = $id;
+	}
 	
 	public static function disconnect()
 	{

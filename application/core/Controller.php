@@ -84,10 +84,10 @@ abstract class Controller {
      * @param array $t_perm the array of permission for the controller
      * @throws \Exception if $t_perm not set
      */
-    protected function setPermissions(array $t_perm) : void
+    protected function setPermissions(array $permissions) : void
 	{
-		if ($t_perm!=null) {
-            $this->permissions = $t_perm;
+		if ($permissions!=null) {
+            $this->permissions = $permissions;
         }
 	    else {
 		    throw new \Exception("Permission not set !");
