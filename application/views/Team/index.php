@@ -5,9 +5,10 @@
         </div>
         <div class="bs-component">
             <table class="table table-hover">
-                <thead>
+                <caption>List of teams</caption>
+                <thead class="thead">
                 <tr>
-                    <th scope="col">Id</th>
+                    <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Leader</th>
                     <th scope="col">Membres</th>
@@ -17,7 +18,6 @@
                 </thead>
                 <tbody>
                 <?php
-
                 foreach ($data as $team) {
                     echo "<tr>";
                     $link = "?controller=Team&action=read&id=" . $team['id'];
@@ -27,7 +27,7 @@
                     echo '<td><span class="badge badge-primary badge-pill">0</span></td>';
                     echo '<td><span class="badge badge-primary badge-pill">0</span></td>';
                     $link = "?controller=Team&action=delete&id=" . $team['id'];
-                    echo "<td><a class='btn btn-outline-danger' role='button' href='$link'>Delete</a></td>";
+                    echo "<td><a class='btn btn-outline-danger btn-sm' role='button' href='$link'>Delete</a></td>";
                     echo '</tr>';
                 }
                 ?>

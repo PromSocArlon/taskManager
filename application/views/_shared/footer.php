@@ -1,6 +1,6 @@
 <footer class="footer">
     <div class="container">
-        <span class="text-muted">IEPSA 2017-2018</span>
+        <span class="text-muted credit fixed-bottom">IEPSA 2017-2018</span>
     </div>
 </footer>
 

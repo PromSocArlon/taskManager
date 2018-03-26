@@ -4,7 +4,9 @@
     <main role="main">
         <div class="container">
             <div class="row align-items-center">
-                <?= $content ?>
+                <div class="col-sm-12">
+                    <?= $content ?>
+                </div>
             </div>
         </div>
     </main>
