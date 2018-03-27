@@ -98,6 +98,10 @@ class TaskController extends \app\core\Controller
         {
             $this->initializeModel();
             $this->storage = new TaskDAO();
+
+            // get last id add 1 and insert in object task
+            $this->task->setID($this->storage->getLastId('task') + 1);
+
             $this->storage->create($this->task);
             $this->generateView();
         }

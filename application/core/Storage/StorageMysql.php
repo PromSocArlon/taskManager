@@ -228,6 +228,24 @@ class StorageMysql extends Storage
         return true;
     }
 
+    public function getLastId(string $table)
+    {
+        $sql = "SELECT id FROM tbl_" . $table . " ORDER BY id DESC LIMIT 1;";
+
+        $request = $this->query($sql);
+
+        if ($request->errorInfo()[0] != "00000") {
+            var_dump($request->errorInfo());
+            return false;
+        }
+
+        $result = $request->fetch(\PDO::FETCH_ASSOC);
+        // remove reserved id for database
+        unset($result['id' . ucfirst($table)]);
+
+        return $result;
+    }
+
     public function query($sql)
     {
         try {
