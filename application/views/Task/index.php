@@ -5,7 +5,6 @@
  * Date: 22-02-18
  * Time: 23:17
  */
-include 'application\views\_shared\header.php';
 ?>
 
 <h1>Task</h1>
@@ -57,8 +56,4 @@ include 'application\views\_shared\header.php';
         </table>
     </div>
 </div>
-
-<?php
-
-include 'application\views\_shared\footer.php';
 

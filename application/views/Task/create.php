@@ -16,22 +16,7 @@ include 'application\views\_shared\header.php';
 <br>
 
 <form method="POST" action="?controller=task&action=save">
-
-    <div class="form-group">
-        <label for="taskId">Number:</label>
-        <input type="text" class="form-control" placeholder="Task Number" name="id" required>
-    </div>
-    <div class="form-group">
-        <label for="day">Select the day:</label>
-        <br>
-        <input type="radio" name="day" value="Monday" checked> Monday<br>
-        <input type="radio" name="day" value="Tuesday"> Tuesday<br>
-        <input type="radio" name="day" value="Wednesday"> Wednesday<br>
-        <input type="radio" name="day" value="Thursday"> Thursday<br>
-        <input type="radio" name="day" value="Friday"> Friday<br>
-        <input type="radio" name="day" value="Saturday"> Saturday<br>
-        <input type="radio" name="day" value="Sunday"> Sunday<br>
-    </div>
+    <input type="text" hidden name="id" value="0">
     <div class="form-group">
         <label for="taskName">Name:</label>
         <input type="text" class="form-control" placeholder="Name" name="name" required>

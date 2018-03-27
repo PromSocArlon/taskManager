@@ -97,17 +97,21 @@ class TaskController extends \app\core\Controller
         try
         {
             $this->initializeModel();
+
             $this->storage = new TaskDAO();
 
             // get last id add 1 and insert in object task
             $this->task->setID($this->storage->getLastId('task') + 1);
+
+            print_r($this->task);
 
             $this->storage->create($this->task);
             $this->generateView();
         }
         catch(\Exception $ex)
         {
-            handleError($ex);
+            print_r($ex);
+            // handleError($ex);
         }
     }
 
@@ -139,6 +143,8 @@ class TaskController extends \app\core\Controller
             $this->task->setName($this->request->getParameter('name'));
             $this->task->setPriority($this->request->getParameter('priority'));
             $this->task->setDescription($this->request->getParameter('description'));
+
+            print_r($this->task);
             //$this->task->addStatus(0, '0');
             //$this->task->addSubTask(0);
         }
