@@ -13,8 +13,8 @@ require_once '../../core/bootstrapTheme.php'
 <?php
 //----------------------------------------------------------------------------------------------------
 // pour tester le remplissage des combobox à partir de la DB -> à supprimer lorsque DAO implenté
-require ('DB_connexion.php');
-$sth=$connection->query('select Teamname, ID_Team from Team');
+require('DB_connexion.php');
+$sth = $connection->query('select Teamname, ID_Team from Team');
 $result = $sth->fetchAll();
 //echo "Nombre de records : " .$sth->rowCount();
 //print_r($result);
@@ -38,18 +38,20 @@ $result = $sth->fetchAll();
                 <div class="card-body" style="text-align: center;">
                     <label for="TeamToDelete">Select the team to delete :</label><br>
                     <select name="TeamToDelete" size="1">
-                     <?php
+                        <?php
                         foreach ($result as $row) {
-                        echo '<option value="'.$row[Teamname].'">'.$row[Teamname].'</option>';
+                            echo '<option value="' . $row[Teamname] . '">' . $row[Teamname] . '</option>';
                         }
-                     ?>
+                        ?>
                     </select>
 
                     <br> </br>
 
                     <form role='form' action='?TeamController&action=delete' method='post'>
-                        <input type="submit" value="Delete the selected Team" name="deleteSelectedTeam" class="btn btn-sm btn-secondary"/>
-                        <input type="button" name="Cancel Team Creation" value="Cancel Deletion" onClick="location.href='index.php'" class="btn btn-sm btn-secondary"/>
+                        <input type="submit" value="Delete the selected Team" name="deleteSelectedTeam"
+                               class="btn btn-sm btn-secondary"/>
+                        <input type="button" name="Cancel Team Creation" value="Cancel Deletion"
+                               onClick="location.href='index.php'" class="btn btn-sm btn-secondary"/>
                         <br> </br>
                     </form>
 

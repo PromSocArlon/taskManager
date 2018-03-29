@@ -15,8 +15,8 @@ require_once '../../core/bootstrapTheme.php'
 // pour tester le remplissage des combobox à partir de la DB -> à supprimer lorsque DAO implenté
 //$connection= new PDO('mysql:host=127.0.0.1;dbname=TaskManagerTEAM4','root','');
 //$connection->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-require ('DB_connexion.php');
-$sth1=$connection->query('select TeamName, ID_Team, ID_Team_Leader from Team');
+require('DB_connexion.php');
+$sth1 = $connection->query('select TeamName, ID_Team, ID_Team_Leader from Team');
 $result1 = $sth1->fetchAll();
 ?>
 
@@ -35,7 +35,7 @@ $result1 = $sth1->fetchAll();
                     url: "memberSelectionScript.php",
                     data: "teamNameSelected=" + teamNameSelected,
                     cache: false,
-                    success: function(html) {
+                    success: function (html) {
                         $("#output1").html(html);
                     }
                 });
@@ -60,7 +60,7 @@ $result1 = $sth1->fetchAll();
                     <select name="TeamSelection" size="1" id='cb1' onChange="showMember(this)">
                         <?php
                         foreach ($result1 as $row1) {
-                            echo '<option value="'.$row1[TeamName].'">'.$row1[TeamName].'</option>';
+                            echo '<option value="' . $row1[TeamName] . '">' . $row1[TeamName] . '</option>';
                         }
                         ?>
                     </select>
@@ -68,15 +68,17 @@ $result1 = $sth1->fetchAll();
                     <br> </br>
 
 
-
                     <div id="teamMembers" class="form-group container h-50 card bg-light mb-3">
                         <tr>
-                            <td align="center" height="50"><div id="output1"></div> </td>
+                            <td align="center" height="50">
+                                <div id="output1"></div>
+                            </td>
                         </tr>
                     </div>
 
                     <form role="form" action="index.php" method="post">
-                        <input type="submit" value="Return to team index" name="TeamManagement" class="btn btn-sm btn-secondary"/>
+                        <input type="submit" value="Return to team index" name="TeamManagement"
+                               class="btn btn-sm btn-secondary"/>
                         <br> </br>
                     </form>
                 </div>
