@@ -93,7 +93,7 @@ class MemberController extends \app\core\Controller
         $this->generateView();
     }
 
-        public function update()
+    public function update()
     {
         try
         {

@@ -24,7 +24,7 @@ class TeamController extends \app\core\Controller
         ];
         try {
             $this->setPermissions($perms);
-            $this->storage = new TeamDAO;
+            $this->storage = new TeamDAO();
         } catch (\Exception $ex) {
             handleError($ex);
         }
@@ -33,7 +33,7 @@ class TeamController extends \app\core\Controller
     public function index()
     {
         $teams = $this->storage->read();
-        $this->generateView($teams);
+        $this->generateView(['teams' => $teams]);
     }
 
     public function save()
@@ -50,7 +50,7 @@ class TeamController extends \app\core\Controller
     public function initializeModel()
     {
         try {
-            $this->team = $this->model('team');
+            $this->team = new Team();
             $this->team->setName($this->request->getParameter('Name'));
         } catch (\Exception $ex) {
             throw $ex;

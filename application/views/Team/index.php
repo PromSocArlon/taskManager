@@ -18,7 +18,7 @@
                 </thead>
                 <tbody>
                 <?php
-                foreach ($data as $team) {
+                foreach ($data['teams'] as $team) {
                     echo "<tr>";
                     $link = "?controller=Team&action=read&id=" . $team['id'];
                     echo "<td><a href='$link'>" . $team['id'] . "</a></td>";
