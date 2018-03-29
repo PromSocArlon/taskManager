@@ -2,5 +2,5 @@
     <p>Login succesfull!</p>
 
 
-    <a href="index.php?controller=user&action=index">Continue !</a>
+    <a href="index.php?controller=member&action=index">Continue !</a>
 </div>

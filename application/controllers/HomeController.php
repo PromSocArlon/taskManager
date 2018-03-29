@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 
-use app\core\UserService;
+use app\core\MemberService;
 use app\models\DAO\MemberDAO;
 
 class HomeController extends \app\core\Controller {
@@ -57,10 +57,10 @@ class HomeController extends \app\core\Controller {
             $pwd = $this->request->getParameter('loginPassword');
             $dao = new MemberDAO();
             //TODO : ajouter user in db pour check
-            $userId = UserService::checkCredential($dao, $login, $pwd);
+            $userId = MemberService::checkCredential($dao, $login, $pwd);
             if(true)
             {
-                UserService::setCurrentUser($userId);
+                MemberService::setCurrentUser($userId);
                 $this->generateView();
             }
             else
@@ -88,8 +88,8 @@ class HomeController extends \app\core\Controller {
     }
 
     public function logout() {
-        if(UserService::isConnected()) {
-			UserService::disconnect();
+        if(MemberService::isConnected()) {
+			MemberService::disconnect();
             //session_destroy();
         }
         header('Location: index.php/controller=home');

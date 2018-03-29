@@ -42,4 +42,12 @@ class UserService
 	{
 		unset($_SESSION['user']);
 	}
+	
+	public static function getById(MemberDao $dao, $memberId) ?Member
+	{
+		$searchMember = new Member();
+		$searchMember->setId($memberId);
+		$data = $dao->read($searchMember);
+		return $data != false ? $data : null;
+	}
 }
