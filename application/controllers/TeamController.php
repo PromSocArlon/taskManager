@@ -61,13 +61,15 @@ class TeamController extends \app\core\Controller
     {
         try {
             $this->initializeModel();
-            $this->storage->delete($this->team, $this->request->getParameter('id'));
+            $this->storage->create($this->team, $this->request->getParameter('id'));
             $this->generateView();
         } catch (\Exception $ex) {
             handleError($ex);
         }
     }
 
+// function viewTeamMembers - useless ?
+	/*
     public function viewTeamMembers()
     {
         try {
@@ -78,12 +80,12 @@ class TeamController extends \app\core\Controller
             handleError($ex);
         }
     }
-
+	*/
     public function read()
     {
         try {
             $this->team = new team;
-            $this->team->setID($this->request->getParameter('id'));
+            $this->team->setID($this->request->getParameter('id')); // "read" instead of "setID" ?
             $this->team = $this->storage->read($this->team);
             $this->generateView($this->team);
         } catch (\Exception $ex) {
