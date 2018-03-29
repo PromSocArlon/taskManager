@@ -33,7 +33,7 @@ class HomeController extends \app\core\Controller {
                     $member->setPassword($this->request->getParameter('loginPassword'));
 
                     $_SESSION['user'] = serialize($member);
-                    header('Location: index.php?controller=user&action=index');
+                    header('Location: index.php?controller=member&action=index');
                 }
                 catch (\Exception $exception) {
                     echo 'Parameter Problem';
