@@ -10,6 +10,13 @@ class MemberController extends \app\core\Controller
     {
         $perms = [
             'index' => ['public' => true, 'connect' => true],
+			'initializeModel' => ['public' => true, 'connect' => true],
+			'save' => ['public' => true, 'connect' => true],
+			'update1' => ['public' => true, 'connect' => true],
+			'update' => ['public' => true, 'connect' => true],
+			'read' => ['public' => true, 'connect' => true],
+			'delete' => ['public' => true, 'connect' => true],
+			'profil' => ['public' => true, 'connect' => true]
         ];
         $this->setPermissions($perms);
     }
