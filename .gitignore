@@ -24,3 +24,7 @@
 #Visual Paradigm
 *.vpp.bak*
 *.vpp.lck
+
+#Composer
+vendor/
+composer.phar

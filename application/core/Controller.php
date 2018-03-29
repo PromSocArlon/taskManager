@@ -70,23 +70,6 @@ abstract class Controller {
     }
 
     /**
-     * Give an instance of the given class.
-     * @param string $model the wanted model object
-     * @return object the object of the wanted model.
-     * @throws \Exception if class not found
-     */
-    public function model(string $model){
-
-
-        $className = '\\app\\models\\DAO\\' . $model;
-       // $className = '\\app\\models\\Entity\\' . $model;
-            return new $className();
-
-}
-
-
-
-    /**
      * Set the permission for the controller
      * @param array $t_perm the array of permission for the controller
      * @throws \Exception if $t_perm not set

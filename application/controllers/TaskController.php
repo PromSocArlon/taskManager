@@ -2,6 +2,7 @@
 namespace app\controllers;
 
 use app\models\DAO\TaskDAO;
+use app\models\Entity\Task;
 
 class TaskController extends \app\core\Controller
 {
@@ -14,10 +15,11 @@ class TaskController extends \app\core\Controller
         $perms = [
             'index' => ['public' => true, 'connect' => true],
             'create' => ['public' => true, 'connect' => true],
+            'read' => ['public' => true, 'connect' => true],
+            'update' => ['public' => true, 'connect' => true],
             'delete' => ['public' => true, 'connect' => true],
             'save' => ['public' => true, 'connect' => true],
-			'initializeModel' => ['public' => true, 'connect' => true], //TODO:public doit être false mais pour l'instant true
-            'deleteTest' => ['public' => true, 'connect' => true] //vs de Sami, inclus par Cédric tmp. dans les actions.
+            'edit' => ['public' => true, 'connect' => true], //TODO:public doit être false mais pour l'instant true
         ];
         $this->setPermissions($perms);
     }
@@ -31,34 +33,32 @@ class TaskController extends \app\core\Controller
     {
         try
         {
-            $this->task = $this->model('task');
+            $this->task = new Task();
             $this->task->setID($this->request->getParameter('id'));
             $this->storage = new TaskDAO();
             $this->task = $this->storage->read($this->task);
+            $this->generateView($this->task);
         }
         catch(\Exception $ex)
         {
-            $this->task = [];
-            $this->task['Exception'] = $ex;
+            handleError($ex);
         }
-        $this->generateView($this->task);
     }
 
     public function read()
     {
         try
         {
-            $this->task = $this->model('task');
+            $this->task = new Task();
             $this->task->setID($this->request->getParameter('id'));
             $this->storage = new TaskDAO();
             $this->task = $this->storage->read($this->task);
+            $this->generateView($this->task);
         }
         catch(\Exception $ex)
         {
-            $this->task = [];
-            $this->task['Exception'] = $ex;
+            handleError($ex);
         }
-        $this->generateView($this->task);
     }
 
     public function update()
@@ -72,7 +72,7 @@ class TaskController extends \app\core\Controller
         }
         catch(\Exception $ex)
         {
-            $this->generateView(['Exception' => $ex]);
+            handleError($ex);
         }
     }
 
@@ -80,7 +80,7 @@ class TaskController extends \app\core\Controller
     {
         try
         {
-            $this->task = $this->model('task');
+            $this->task = new Task();
             $this->task->setID($this->request->getParameter('id'));
             $this->storage = new TaskDAO();
             $this->storage->delete($this->task);
@@ -88,7 +88,7 @@ class TaskController extends \app\core\Controller
         }
         catch(\Exception $ex)
         {
-            $this->generateView(['Exception' => $ex]);
+            handleError($ex);
         }
     }
 
@@ -97,38 +97,54 @@ class TaskController extends \app\core\Controller
         try
         {
             $this->initializeModel();
+
             $this->storage = new TaskDAO();
+
+            // get last id add 1 and insert in object task
+            $this->task->setID($this->storage->getLastId('task') + 1);
+
+            print_r($this->task);
+
             $this->storage->create($this->task);
             $this->generateView();
         }
         catch(\Exception $ex)
         {
-            $this->generateView(['Exception' => $ex]);
+            print_r($ex);
+            // handleError($ex);
         }
     }
 
     public function index()
     {
-        $this->storage = new TaskDAO();
-        $tasks = $this->storage->read();
+        try
+        {
+            $this->storage = new TaskDAO();
+            $tasks = $this->storage->read();
 
-        // if there is no tasks in the database
-        if ($tasks == false) {
-            $tasks = array();
+            // if there is no tasks in the database
+            if ($tasks == false) {
+                $tasks = array();
+            }
+            $this->generateView($tasks);
         }
-        $this->generateView($tasks);
+        catch(\Exception $ex)
+        {
+            handleError($ex);
+        }
     }
 
     public function initializeModel()
     {
         try
         {
-            $this->task = $this->model('task');
+            $this->task = new Task();
             $this->task->setID($this->request->getParameter('id'));
             $this->task->setName($this->request->getParameter('name'));
             $this->task->setPriority($this->request->getParameter('priority'));
             $this->task->setDescription($this->request->getParameter('description'));
-            $this->task->setDay($this->request->getParameter('day'));
+
+            print_r($this->task);
             //$this->task->addStatus(0, '0');
             //$this->task->addSubTask(0);
         }
