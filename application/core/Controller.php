@@ -106,7 +106,7 @@ abstract class Controller {
 //		else
 //			return $this->permissions[$action]['public'];
 
-		return \app\core\UserService::isConnected() ? $this->permissions[$action]['connect'] : $this->permissions[$action]['public'];
+		return \app\core\MemberService::isConnected() ? $this->permissions[$action]['connect'] : $this->permissions[$action]['public'];
 	}
 
 }

@@ -43,7 +43,7 @@ class UserService
 		unset($_SESSION['user']);
 	}
 	
-	public static function getById(MemberDao $dao, $memberId) ?Member
+	public static function getById(MemberDao $dao, $memberId)
 	{
 		$searchMember = new Member();
 		$searchMember->setId($memberId);
