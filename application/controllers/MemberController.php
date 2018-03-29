@@ -1,6 +1,9 @@
 <?php
 namespace app\controllers;
 
+use app\models\DAO\MemberDAO;
+use app\models\Entity\Member;
+
 class MemberController extends \app\core\Controller
 {
     private $member;
@@ -23,9 +26,14 @@ class MemberController extends \app\core\Controller
 
     public function index()
     {
-        $this->storage = $this->model('MemberDAO');
-        $members = $this->storage->read();
-        $this->generateView($members);
+		//appel de model necessite que controller.php connaisse tous les dao et entity possibles
+		//temporairement desactive a discuter mais ca creait des erreurs
+        //$this->storage = $this->model('MemberDAO');
+		$this->storage = new MemberDAO();
+		//actuellement renvoie false cree donc une erreur dans generateView
+        //$members = $this->storage->read();
+        //$this->generateView($members);
+		$this->generateView();
     }
 
 
