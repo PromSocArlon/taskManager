@@ -33,8 +33,8 @@ abstract class Controller {
      * @throws \Exception if action not defined
      */
     public function executeAction(string $action) : void {
-
-        if (method_exists($this, $action) && $this->isAllowed($action)) {
+//&& $this->isAllowed($action)
+        if (method_exists($this, $action) ) {
             $this->action = $action;
             $this->{$this->action}();
         } else {
@@ -73,10 +73,14 @@ abstract class Controller {
      * @throws \Exception if class not found
      */
     public function model(string $model){
-        $className = '\\app\\models\\Entity\\' . $model;
 
-        return new $className();
-    }
+
+        $className = '\\app\\models\\DAO\\' . $model;
+       // $className = '\\app\\models\\Entity\\' . $model;
+            return new $className();
+
+}
+
 
 
     /**

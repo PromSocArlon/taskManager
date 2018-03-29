@@ -132,28 +132,6 @@ class StorageMysql extends Storage
         return $result;
     }
 
-    public function update1(Member $member){
-
-        $sql='';
-        $id = $member->getId();
-        $mail=$member->getMail();
-        $login=$member->getLogin();
-        $password= $member->getPassword();
-        $team=$member->getTeam();
-
-        $sql= sprintf("update tbl_member set mail='%s',login='%s',password='%s' ,team='%s' where id = %s",$mail,$login,$password,$team,$id);
-
-
-        $request = $this->query($sql);
-
-        if ($request->errorInfo()[0] != "00000") {
-            var_dump($request->errorInfo());
-            return false;
-        }
-
-        return true;
-
-    }
     public function update(array $data)
     {
         $sql = "";

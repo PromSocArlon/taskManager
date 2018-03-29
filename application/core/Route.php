@@ -19,7 +19,8 @@ class Route
             $action = $this->getNewAction();
             $controller->executeAction($action);
         } catch (\Exception $ex) {
-            handleError($ex);
+           // handleError($ex);
+            echo 'prob';
         }
     }
 
