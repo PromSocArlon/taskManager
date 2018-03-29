@@ -6,7 +6,7 @@ use app\models\Entity\Member;
 
 require_once 'functions.php';
 
-class UserService
+class MemberService
 {
     /**
      * Give a copy of the User from the Session params
