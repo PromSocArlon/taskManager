@@ -26,7 +26,7 @@
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
                         <a class="dropdown-item" href="?controller=team&action=index">Index</a>
                         <a class="dropdown-item" href="?controller=team&action=create">Create</a>
-                        <a class="dropdown-item" href="?controller=team&action=delete">Delete</a>
+                        <!--                        <a class="dropdown-item" href="?controller=team&action=delete">Delete</a>-->
                     </div>
                 </li>
                 <li class="nav-item dropdown">
