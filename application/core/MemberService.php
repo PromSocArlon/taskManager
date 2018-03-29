@@ -9,19 +9,19 @@ require_once 'functions.php';
 class MemberService
 {
     /**
-     * Give a copy of the User from the Session params
+     * Give a copy of the UserId from the Session params
      * @param  : none
-     * @return Member copie de session['user'] / null si aucune
-     * @throws \Exception if session['user'] doesn't exist
+     * @return String copie de session['id'] / null si aucune
+     * @throws \Exception if session['id'] doesn't exist
      */
     public static function getCurrentUser()
     {
-		return isset($_SESSION['user']) ? ($temp = $_SESSION['user']) : null;
+		return isset($_SESSION['id']) ? ($temp = $_SESSION['id']) : null;
     }
 	
 	public static function isConnected()
 	{
-		return isset($_SESSION['user']);
+		return isset($_SESSION['id']);
 	}
 	
 	public static function checkCredential(MemberDAO $dao, $login, $password)
@@ -35,15 +35,15 @@ class MemberService
 	
 	public static function setCurrentUser($id)
 	{
-		$_SESSION['user'] = $id;
+		$_SESSION['id'] = $id;
 	}
 	
 	public static function disconnect()
 	{
-		unset($_SESSION['user']);
+		unset($_SESSION['id']);
 	}
 	
-	public static function getById(MemberDao $dao, $memberId) ?Member
+	public static function getById(MemberDao $dao, $memberId)
 	{
 		$searchMember = new Member();
 		$searchMember->setId($memberId);
