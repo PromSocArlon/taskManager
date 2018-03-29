@@ -51,28 +51,20 @@ class HomeController extends \app\core\Controller {
 
     public function logConnect()
     {
-        try
+        $login = $this->request->getParameter('loginID');
+        $pwd = $this->request->getParameter('loginPassword');
+        $dao = new MemberDAO();
+        //TODO : ajouter user in db pour check
+        $userId = MemberService::checkCredential($dao, $login, $pwd);
+        if(true)
         {
-            $login = $this->request->getParameter('loginID');
-            $pwd = $this->request->getParameter('loginPassword');
-            $dao = new MemberDAO();
-            //TODO : ajouter user in db pour check
-            $userId = MemberService::checkCredential($dao, $login, $pwd);
-            if(true)
-            {
-                MemberService::setCurrentUser($userId);
-                $this->generateView();
-            }
-            else
-            {
-                echo 'Mauvaise combinaison login/password' . PHP_EOL;
-                header('Location: index.php?controller=home&action=login');
-            }
+            MemberService::setCurrentUser($userId);
+            $this->generateView();
         }
-        catch (\Exception $e)
+        else
         {
-            echo 'error';
-            $e->getMessage();
+            echo 'Mauvaise combinaison login/password' . PHP_EOL;
+            header('Location: index.php?controller=home&action=login');
         }
     }
 

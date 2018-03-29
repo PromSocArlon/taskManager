@@ -33,10 +33,13 @@ abstract class Controller {
      * @throws \Exception if action not defined
      */
     public function executeAction(string $action) : void {
-//&& $this->isAllowed($action)
         if (method_exists($this, $action) ) {
-            $this->action = $action;
-            $this->{$this->action}();
+            if($this->isAllowed($action)) {
+                $this->action = $action;
+                $this->{$this->action}();
+            } else {
+                throw new \HttpException("Access denied", 401);
+            }
         } else {
             $classController = get_class($this);
             throw new \Exception("Action '$action' not defined in the class $classController");
@@ -103,14 +106,11 @@ abstract class Controller {
 	 * @param string $action the name of the action
 	 * @return bool the permission of the action
 	 */
-	public function isAllowed($action)
-	{
-//		if(UserService::isConnected())
-//			return $this->permissions[$action]['connect'];
-//		else
-//			return $this->permissions[$action]['public'];
-
-		return \app\core\MemberService::isConnected() ? $this->permissions[$action]['connect'] : $this->permissions[$action]['public'];
-	}
+    public function isAllowed($action)
+    {
+        return \app\core\MemberService::isConnected() ?
+            $this->permissions[$action]['connect'] :
+            $this->permissions[$action]['public'];
+    }
 
 }

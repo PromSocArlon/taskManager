@@ -30,7 +30,7 @@ class MemberService
 		$searchMember->setLogin($login);
 		$searchMember->setPassword($password);
 		$data = $dao->read($searchMember);
-		return $data != false ? $data->getId() : false;
+		return $data != false ? $data['id'] : false;
     }
 	
 	public static function setCurrentUser($id)

@@ -19,7 +19,7 @@ class MemberController extends \app\core\Controller
 			'update' => ['public' => true, 'connect' => true],
 			'read' => ['public' => true, 'connect' => true],
 			'delete' => ['public' => true, 'connect' => true],
-			'profil' => ['public' => true, 'connect' => true]
+			'profil' => ['public' => false, 'connect' => true]
         ];
         $this->setPermissions($perms);
     }
@@ -28,12 +28,11 @@ class MemberController extends \app\core\Controller
     {
 		//appel de model necessite que controller.php connaisse tous les dao et entity possibles
 		//temporairement desactive a discuter mais ca creait des erreurs
-        //$this->storage = $this->model('MemberDAO');
+        $this->storage = $this->model('MemberDAO');
 		$this->storage = new MemberDAO();
 		//actuellement renvoie false cree donc une erreur dans generateView
-        //$members = $this->storage->read();
-        //$this->generateView($members);
-		$this->generateView();
+        $members = $this->storage->read();
+        $this->generateView($members);
     }
     public function read()
     {
@@ -122,7 +121,7 @@ class MemberController extends \app\core\Controller
     public function profil()
     {
         $this->storage = new MemberDAO();
-        $myMember = $this->storage->getMember($_GET['id']);
+        $myMember = $this->storage->getMember(\app\core\MemberService::getCurrentUser());
         $this->generateView(["member" => $myMember]);
     }
 }

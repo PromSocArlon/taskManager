@@ -1,6 +1,8 @@
 <?php
 namespace app\models\DAO;
 
+use app\models\Entity\Member;
+
 class MemberDAO extends \app\core\DAO
 {
     /*-------------------------------
