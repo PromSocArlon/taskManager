@@ -99,8 +99,6 @@ class MemberController extends \app\core\Controller
     }
 
 
-	
-
 
 	public function delete()
     {
@@ -109,9 +107,10 @@ class MemberController extends \app\core\Controller
         $this->storage->delete($this->member);
     }
 
-    public function profil(){
-        $this->storage = $this->model('MemberDAO');
+    public function profil()
+    {
+        $this->storage = new MemberDAO();
         $myMember = $this->storage->getMember($_GET['id']);
-        $this->generateView($myMember);
+        $this->generateView(["member" => $myMember]);
     }
 }
