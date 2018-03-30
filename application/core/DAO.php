@@ -54,10 +54,7 @@ abstract class DAO
 
         $result = $this->connection->read($array);
 
-        if (!empty($result)) {
-            return $result;
-        }
-        return false;
+        return $result;
     }
 
     /**

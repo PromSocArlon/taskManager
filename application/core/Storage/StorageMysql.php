@@ -122,7 +122,7 @@ class StorageMysql extends Storage
 
         if ($request->errorInfo()[0] != "00000") {
             var_dump($request->errorInfo());
-            return false;
+            return [];
         }
 
         $result = $request->fetch(\PDO::FETCH_ASSOC);
