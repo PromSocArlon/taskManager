@@ -42,5 +42,4 @@ class Team extends Entity
     {
         return get_object_vars($this);
     }
-
 }

@@ -14,24 +14,12 @@ class TeamDAO extends \app\core\DAO
         $array['team'] = [];
 
         if (!empty($object)) {
+            $teamArray = $object->entityToArray();
 
-            /*            $teamArray = (array)$arguments[0];
+            $array['team']['id'] = $teamArray['id'];
+            $array['team']['name'] = $teamArray['name'];
+            $array['team']['leader'] = $teamArray['leader'];
 
-                        foreach ($teamArray as $key => $value) {
-                            $prop = trim(strtolower(str_replace('Team', '', $key)));
-                            if ($prop == 'id') {
-                                if (!is_null($value)) {
-                                    $array['team'][0]['new'][$prop] = $value;
-                                }
-                            } elseif ($prop == 'leader' and !is_null($value)) {
-                                $array['team'][0]['new'][$prop] = $value['id'];
-                            } elseif ($prop == 'name') {
-                                $array['team'][0]['new'][$prop] = $value;
-                            }
-                        }*/
-            $array['team']['name'] = $object->getName();
-            $array['team']['leader'] = $object->getLeader();
-            $array['team']['id'] = $object->getID();
         }
         return $array;
     }
