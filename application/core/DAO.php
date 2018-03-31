@@ -37,11 +37,7 @@ abstract class DAO
     public function create($object)
     {
         $array = $this->objectToArray($object);
-
-        if ($this->connection->create($array)) {
-            return true;
-        }
-        return false;
+        return $this->connection->create($array);
     }
 
     /**
@@ -51,13 +47,7 @@ abstract class DAO
     public function read($object = null)
     {
         $array = $this->objectToArray($object);
-
-        $result = $this->connection->read($array);
-
-        if (!empty($result)) {
-            return $result;
-        }
-        return false;
+        return $this->connection->read($array);
     }
 
     /**
@@ -67,11 +57,7 @@ abstract class DAO
     public function update($object)
     {
         $array = $this->objectToArray($object);
-
-        if ($this->connection->update($array)) {
-            return true;
-        }
-        return false;
+        return $this->connection->update($array);
     }
 
     /**
@@ -81,10 +67,7 @@ abstract class DAO
     public function delete($object)
     {
         $array = $this->objectToArray($object);
-        if ($this->connection->delete($array)) {
-            return true;
-        }
-        return false;
+        return $this->connection->delete($array);
     }
 
     /**

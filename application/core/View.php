@@ -1,7 +1,9 @@
 <?php
+
 namespace app\core;
 
-class View {
+class View
+{
     private $file;
     private $title;
 
@@ -14,6 +16,11 @@ class View {
         $this->file = $file . $action . ".php";
     }
 
+    public function getControllerName($fullControllerName)
+    {
+        $temp = explode('\\', $fullControllerName);
+        return end($temp);
+    }
 
     /**
      * Generate the wanted view
@@ -21,14 +28,10 @@ class View {
      */
     public function generate(array $data): void
     {
-        try {
-            $content = $this->generateFile($this->file, $data);
-            $root = "taskManager";
-            $view = $this->generateFile('application/views/template.php', array('title' => $this->title, 'content' => $content, 'root' => $root));
-            echo $view;
-        } catch (\Exception $ex) {
-            handleError($ex);
-        }
+        $content = $this->generateFile($this->file, $data);
+        $root = "taskManager";
+        echo $this->generateFile('application/views/template.php',
+            array('title' => $this->title, 'content' => $content, 'root' => $root));
     }
 
     /**
@@ -49,10 +52,9 @@ class View {
         }
     }
 
-    public function getControllerName($fullControllerName){
-        $temp = explode('\\', $fullControllerName);
-        return end($temp);
+    private function clean($value)
+    {
+        return htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false);
     }
-
 
 }
