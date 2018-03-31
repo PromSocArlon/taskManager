@@ -27,7 +27,7 @@
                     echo '<td><span class="badge badge-primary badge-pill">0</span></td>';
                     echo '<td><span class="badge badge-primary badge-pill">0</span></td>';
                     $link = "?controller=Team&action=delete&id=" . $team['id'];
-                    echo "<td><a class='btn btn-outline-danger btn-sm disabled' role='button' href='$link'>Delete</a></td>";
+                    echo "<td><a class='btn btn-outline-danger btn-sm' role='button' href='$link'>Delete</a></td>";
                     echo '</tr>';
                 }
                 ?>

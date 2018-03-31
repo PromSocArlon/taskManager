@@ -1,11 +1,12 @@
 
     <h1>Team</h1>
-    <hr>
-    <h3>Team <?php echo $data['id']?></h3>
     <br>
-    <p><b>Name:</b> <?php echo $data['name'] ?></p>
+
+    <h3>Team <?= $this->clean($data['team']->getID()) ?></h3>
     <br>
-    <p><b>Leader:</b> <?php echo $data['leader'] ?></p>
+    <p><b>Name:</b> <?= $this->clean($data['team']->getName()) ?></p>
+    <br>
+    <p><b>Leader:</b> <?= $this->clean($data['team']->getLeader()) ?></p>
     <br>
 
     <!--    **********************************-->
@@ -38,5 +39,7 @@
 <!--        </tbody>-->
     <!--    </table>-->
 
-    <a href="?controller=team&action=edit&id=<?php echo $data['id'] ?>" class="btn btn-primary disabled">Edit</a>
-    <a href="?controller=team&action=delete&id=<?php echo $data['id'] ?>" class="btn btn-danger disabled">Delete</a>
+    <a href="?controller=team&action=edit&id=<?php echo $this->clean($data['team']->getID()) ?>"
+       class="btn btn-primary ">Edit</a>
+    <a href="?controller=team&action=delete&id=<?php echo $this->clean($data['team']->getID()) ?>"
+       class="btn btn-danger ">Delete</a>
