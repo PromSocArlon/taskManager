@@ -11,7 +11,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Leader</th>
-                    <th scope="col">Membres</th>
+                    <th scope="col">Members</th>
                     <th scope="col">Tasks</th>
                     <th scope="col"></th>
                 </tr>
@@ -24,8 +24,10 @@
                     echo "<td><a href='$link'>" . $team['id'] . "</a></td>";
                     echo '<td>' . $team['name'] . '</td>';
                     echo '<td>' . $team['leader'] . '</td>';
-                    echo '<td><span class="badge badge-primary badge-pill">0</span></td>';
-                    echo '<td><span class="badge badge-primary badge-pill">0</span></td>';
+                    $members=$data['counts'][$team['id']]['Members']['nbMembers'];
+                    echo "<td><span class='badge badge-primary badge-pill'> $members  </span></td>";
+                    $nbTasks=$data['counts'][$team['id']]['Tasks']['nbTasks'];
+                    echo "<td><span class='badge badge-primary badge-pill'>  $nbTasks   </span></td>";
                     $link = "?controller=Team&action=delete&id=" . $team['id'];
                     echo "<td><a class='btn btn-outline-danger btn-sm' role='button' href='$link'>Delete</a></td>";
                     echo '</tr>';

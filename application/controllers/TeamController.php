@@ -28,7 +28,13 @@ class TeamController extends \app\core\Controller
     public function index()
     {
         $teams = $this->storage->read();
-        $this->generateView(['teams' => $teams]);
+        $counts=[];
+        foreach ( $teams as $team)
+        {
+            $counts[$team['id']]['Members']=$this->storage->GetCountOfMembersFromTeam($team['id']);
+            $counts[$team['id']]['Tasks']=$this->storage->GetCountOfTasksFromTeam($team['id']);
+        }
+        $this->generateView(['teams' => $teams,'counts'=> $counts]);
     }
 
     public function save()
@@ -61,9 +67,13 @@ class TeamController extends \app\core\Controller
     {
         $this->initializeModel();
         $result = $this->storage->read($this->model);
+        $members= $this->storage->GetAllMembersFromTeam($this->model);
+        $tasks=$this->storage->GetAllTasksFromTeam($this->model);
         if ($result != false) {
             $this->arrayToObject($result);
-            $this->generateView(['team' => $this->model]);
+            $this->generateView(['team' => $this->model,
+                                'members' => $members,
+                                'tasks'=> $tasks]);
         } else {
             throw  new \Exception("Team doesn't exist.");
         }
