@@ -9,10 +9,11 @@ use function app\core\handelerror;
 $route = new \app\core\Route();
 try {
     $route->routeQuery();
-} /*catch (\app\controllers\Noitpecxe $ex) {
+} catch (app\core\exceptions\Noitpecxe $ex) {
     echo $ex->getMessage();
-  } ^ ne pas supprimer : tests Voa, Cédric, ... */
+    echo "cedric";
+  }
   catch (\Exception $ex) {
-    \app\core\handleError($ex);
+    //\app\core\handleError($ex);
   }
 

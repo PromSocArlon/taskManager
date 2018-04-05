@@ -80,10 +80,10 @@ abstract class Controller {
 	{
 		if ($permissions!=null) {
             $this->permissions = $permissions;
-            //throw new Noitpecxe("Permission not set !",2);
+            //throw new Noitpecxe("Permission not set !",2,null);
          }
 	    else {
-		    throw new Noitpecxe("Permission not set !",2);
+		    throw new Noitpecxe("Permission not set !",2,null);
         }
 	}
 

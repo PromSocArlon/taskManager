@@ -12,7 +12,7 @@ class Route
      */
     public function routeQuery(): void
     {
-        try {
+        //try {
             $this->request = new request(array_merge($_GET, $_POST));
             unset($_GET);
             unset($_POST);
@@ -20,10 +20,11 @@ class Route
             $controller = $this->getNewController();
             $action = $this->getNewAction();
             $controller->executeAction($action);
-        } catch (\Exception $ex) {
+        //}
+        /*catch (\Exception $ex) {
            // handleError($ex);
             echo 'prob';
-        }
+        }*/
     }
 
     /**
