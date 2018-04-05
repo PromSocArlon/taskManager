@@ -25,13 +25,13 @@ class TeamDAO extends \app\core\DAO
         return $array;
     }
 
-    public function  GetCountOfMembersFromTeam(int $teamId){
+    public function  getCountOfMembersFromTeam(int $teamId){
         $sql="SELECT COUNT(fk_member_id)as nbMembers FROM tbl_member_team WHERE tbl_member_team.fk_team_id=". $teamId . ";" ;
         $request=$this->connection->query($sql);
         return $request->fetch(\PDO::FETCH_ASSOC);
     }
 
-    public function GetAllMembersFromTeam(Entity\Team $team)
+    public function getAllMembersFromTeam(Entity\Team $team)
     {
         $sql ="SELECT tbl_member.* FROM tbl_member_team INNER JOIN tbl_member on tbl_member_team.fk_member_id= tbl_member.id where fk_team_id= " .$team->getID() . ";";
         $result=$this->connection->Query($sql);
@@ -44,22 +44,22 @@ class TeamDAO extends \app\core\DAO
         }
         return $members;
     }
-    public function AddMemberToTeam( Entity\Team $team, int $memberId)   {
+    public function addMemberToTeam( Entity\Team $team, int $memberId)   {
         //TODO TO IMPLEMENT
     }
     public function RemoveMemberFromTeam(Entity\Team $team,int $memberId)  {
         //TODO TO IMPLEMENT
     }
 
-    public function  GetCountOfTasksFromTeam(int $teamId){
+    public function  getCountOfTasksFromTeam(int $teamId){
         $sql="SELECT COUNT(fk_task_id) as nbTasks FROM tbl_task_team WHERE tbl_task_team.fk_team_id=". $teamId . ";" ;
         $request=$this->connection->query($sql);
         return $request->fetch(\PDO::FETCH_ASSOC);
     }
 
-    public function GetAllTasksFromTeam(Entity\Team $team)
+    public function getAllTasksFromTeam(Entity\Team $team)
     {
-        $sql="SELECT tbl_tasks.* FROM tbl_task_team INNER JOIN tbl_tasks on tbl_task_team.fk_task_id = tbl_tasks.id where tbl_task_team.fk_team_id= " .$team->getID() . ";";
+        $sql="SELECT tbl_task.id,tbl_task.name,tbl_task.priority,tbl_task.description,tbl_task.status,tbl_task.subtasks,tbl_day.name as day FROM tbl_task_team INNER JOIN tbl_task on tbl_task_team.fk_task_id = tbl_task.id JOIN tbl_day on tbl_task.day = tbl_day.id where tbl_task_team.fk_team_id= " .$team->getID() . ";";
         $result=$this->connection->query($sql);
         $tasks=[];
         while ($row=$result->fetch(\PDO::FETCH_ASSOC)){
@@ -74,10 +74,10 @@ class TeamDAO extends \app\core\DAO
         return $tasks;
     }
 
-    public function AddTaskToTeam (Entity\Team $team ,int $taskId)  {
+    public function addTaskToTeam (Entity\Team $team ,int $taskId)  {
         //TODO TO IMPLEMENT
     }
-    public function RemoveTaskFromTeam(Entity\Team $team,int $taskId)  {
+    public function removeTaskFromTeam(Entity\Team $team,int $taskId)  {
         //TODO TO IMPLEMENT
     }
 

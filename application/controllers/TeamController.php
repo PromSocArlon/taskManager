@@ -31,8 +31,8 @@ class TeamController extends \app\core\Controller
         $counts=[];
         foreach ( $teams as $team)
         {
-            $counts[$team['id']]['Members']=$this->storage->GetCountOfMembersFromTeam($team['id']);
-            $counts[$team['id']]['Tasks']=$this->storage->GetCountOfTasksFromTeam($team['id']);
+            $counts[$team['id']]['Members']=$this->storage->getCountOfMembersFromTeam($team['id']);
+            $counts[$team['id']]['Tasks']=$this->storage->getCountOfTasksFromTeam($team['id']);
         }
         $this->generateView(['teams' => $teams,'counts'=> $counts]);
     }
@@ -67,8 +67,8 @@ class TeamController extends \app\core\Controller
     {
         $this->initializeModel();
         $result = $this->storage->read($this->model);
-        $members= $this->storage->GetAllMembersFromTeam($this->model);
-        $tasks=$this->storage->GetAllTasksFromTeam($this->model);
+        $members= $this->storage->getAllMembersFromTeam($this->model);
+        $tasks=$this->storage->getAllTasksFromTeam($this->model);
         if ($result != false) {
             $this->arrayToObject($result);
             $this->generateView(['team' => $this->model,
