@@ -28,7 +28,9 @@ class MemberController extends \app\core\Controller
     {
 		//appel de model necessite que controller.php connaisse tous les dao et entity possibles
 		//temporairement desactive a discuter mais ca creait des erreurs
-        $this->storage = $this->model('MemberDAO');
+
+        $this->storage = new app\models\Entity\Member();
+        //$this->storage = $this->model('MemberDAO');
 		$this->storage = new MemberDAO();
 		//actuellement renvoie false cree donc une erreur dans generateView
         $members = $this->storage->read();

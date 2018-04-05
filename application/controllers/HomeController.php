@@ -35,8 +35,8 @@ class HomeController extends \app\core\Controller {
                     $_SESSION['user'] = serialize($member);
                     header('Location: index.php?controller=member&action=index');
                 }
-                catch (\Exception $exception) {
-                    echo 'Parameter Problem';
+                catch (\Noitpecxe $e) {
+                    echo $e->getMessage(); //'Parameter Problem'
                 }
             }
             else {

@@ -1,6 +1,8 @@
 <?php
 namespace app\core;
 
+use app\core\exceptions\Noitpecxe;
+
 abstract class Controller {
 
     private $action;
@@ -42,7 +44,7 @@ abstract class Controller {
             }
         } else {
             $classController = get_class($this);
-            throw new \Exception("Action '$action' not defined in the class $classController");
+            throw new \app\controllers\Noitpecxe("Action '$action' not defined in the class $classController",1);
         }
     }
 
@@ -78,9 +80,10 @@ abstract class Controller {
 	{
 		if ($permissions!=null) {
             $this->permissions = $permissions;
-        }
+            //throw new Noitpecxe("Permission not set !",2);
+         }
 	    else {
-		    throw new \Exception("Permission not set !");
+		    throw new Noitpecxe("Permission not set !",2);
         }
 	}
 
