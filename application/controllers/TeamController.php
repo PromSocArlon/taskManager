@@ -67,13 +67,15 @@ class TeamController extends \app\core\Controller
     {
         $this->initializeModel();
         $result = $this->storage->read($this->model);
-        $members= $this->storage->getAllMembersFromTeam($this->model);
-        $tasks=$this->storage->getAllTasksFromTeam($this->model);
+        $members = $this->storage->getAllMembersFromTeam($this->model);
+        $tasks = $this->storage->getAllTasksFromTeam($this->model);
         if ($result != false) {
             $this->arrayToObject($result);
-            $this->generateView(['team' => $this->model,
-                                'members' => $members,
-                                'tasks'=> $tasks]);
+            $this->generateView([
+                'team' => $this->model,
+                'members' => $members,
+                'tasks' => $tasks
+            ]);
         } else {
             throw  new \Exception("Team doesn't exist.");
         }
@@ -105,6 +107,8 @@ class TeamController extends \app\core\Controller
         if ($result != false) {
             $this->arrayToObject($result);
             $this->storage->delete($this->model);
+            $this->storage->removeAllMembersFromTeam($result);
+            $this->storage->removeAllTasksFromTeam($result);
             $this->generateView(array('name' => $this->model));
         } else {
             throw  new \Exception("Team doesn't exist.");
