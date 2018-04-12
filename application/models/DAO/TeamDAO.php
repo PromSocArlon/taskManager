@@ -16,7 +16,8 @@ class TeamDAO extends \app\core\DAO
                 FROM tbl_member_team 
                 WHERE tbl_member_team.fk_team_id=" . $teamId . ";";
         $request = $this->connection->query($sql);
-        return $request->fetch(\PDO::FETCH_ASSOC);
+        $result=$request->fetch(\PDO::FETCH_ASSOC);
+        return intval($result['nbMembers']);
     }
 
     /**
@@ -81,7 +82,8 @@ class TeamDAO extends \app\core\DAO
                 FROM tbl_task_team 
                 WHERE tbl_task_team.fk_team_id=" . $teamId . ";";
         $request = $this->connection->query($sql);
-        return $request->fetch(\PDO::FETCH_ASSOC);
+        $result=$request->fetch(\PDO::FETCH_ASSOC);
+        return intval($result['nbTasks']);
     }
 
     /**

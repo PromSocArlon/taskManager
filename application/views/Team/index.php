@@ -24,9 +24,9 @@
                     echo "<td><a href='$link'>" . $team['id'] . "</a></td>";
                     echo '<td>' . $team['name'] . '</td>';
                     echo '<td>' . $team['leader'] . '</td>';
-                    $members=$data['counts'][$team['id']]['Members']['nbMembers'];
+                    $members=$data['counts'][$team['id']]['Members'];
                     echo "<td><span class='badge badge-primary badge-pill'> $members  </span></td>";
-                    $nbTasks=$data['counts'][$team['id']]['Tasks']['nbTasks'];
+                    $nbTasks=$data['counts'][$team['id']]['Tasks'];
                     echo "<td><span class='badge badge-primary badge-pill'>  $nbTasks   </span></td>";
                     $link = "?controller=Team&action=delete&id=" . $team['id'];
                     echo "<td><a class='btn btn-outline-danger btn-sm' role='button' href='$link'>Delete</a></td>";
