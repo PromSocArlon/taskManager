@@ -45,7 +45,7 @@ class View {
             require($filePath);
             return ob_get_clean();
         } else {
-            throw new \Exception("File '$filePath' not found");
+            throw new \RuntimeException("File '$filePath' not found",500);
         }
     }
 

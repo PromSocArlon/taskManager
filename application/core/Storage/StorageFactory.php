@@ -14,7 +14,7 @@ class StorageFactory
                     $storage = new StorageMysql();
                     break;
                 default:
-                    throw new \Exception("\"" . $type . "\" is not a valid type of database.");
+                    throw new \RuntimeException("\"" . $type . "\" is not a valid type of database.",500);
             }
             return $storage;
         } catch (\Exception $e) {

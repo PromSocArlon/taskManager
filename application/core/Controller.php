@@ -1,7 +1,9 @@
 <?php
 namespace app\core;
 
+use app\core\exceptions\ActionNotDefinedException;
 use app\core\exceptions\Noitpecxe;
+use app\core\exceptions\UnauthorizedException;
 
 abstract class Controller {
 
@@ -40,11 +42,10 @@ abstract class Controller {
                 $this->action = $action;
                 $this->{$this->action}();
             } else {
-                throw new \HttpException("Access denied", 401);
+                throw new UnauthorizedException("Access denied !");
             }
         } else {
-            $classController = get_class($this);
-            throw new \app\controllers\Noitpecxe("Action '$action' not defined in the class $classController",1);
+            throw new ActionNotDefinedException("Action ".$action." not defined !");
         }
     }
 
@@ -73,17 +74,16 @@ abstract class Controller {
 
     /**
      * Set the permission for the controller
-     * @param array $t_perm the array of permission for the controller
+     * @param array $permissions the array of permission for the controller
      * @throws \Exception if $t_perm not set
      */
     protected function setPermissions(array $permissions) : void
 	{
 		if ($permissions!=null) {
             $this->permissions = $permissions;
-            //throw new Noitpecxe("Permission not set !",2,null);
          }
 	    else {
-		    throw new Noitpecxe("Permission not set !",2,null);
+		    throw new \RuntimeException("Permission setting problem !",500);
         }
 	}
 

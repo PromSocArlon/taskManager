@@ -21,7 +21,7 @@ class TaskTeamDAO extends \app\core\DAO
                         $array['member_team'][0]['new']['fk_team_id'] = $value;
                         break;
                     default:
-                        throw new  Exception("Unhandled property");
+                        throw new \InvalidArgumentException("Unhandled property");
                 }
             }
         }
