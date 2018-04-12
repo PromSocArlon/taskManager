@@ -16,7 +16,7 @@ class TeamDAO extends \app\core\DAO
                 FROM tbl_member_team 
                 WHERE tbl_member_team.fk_team_id=" . $teamId . ";";
         $request = $this->connection->query($sql);
-        $result=$request->fetch(\PDO::FETCH_ASSOC);
+        $result = $request->fetch(\PDO::FETCH_ASSOC);
         return intval($result['nbMembers']);
     }
 
@@ -44,32 +44,51 @@ class TeamDAO extends \app\core\DAO
      * @param Entity\Team $team
      * @param int $memberId
      * @return bool
+     * @throws \Exception
      */
     public function addMemberToTeam(Entity\Team $team, int $memberId): bool
     {
         $sql = "INSERT INTO tbl_member_team (fk_member_id, fk_team_id) 
                 VALUES (" . $memberId . "," . $team->getID() . ");";
-        return $this->connection->query($sql);
+        $request = $this->connection->query($sql);
+        if ($request->errorInfo()[0] != "00000") {
+            throw new \Exception($request->errorInfo());
+        }
+        return true;
     }
 
     /**
      * @param Entity\Team $team
      * @param int $memberId
      * @return bool
+     * @throws \Exception
      */
     public function removeMemberFromTeam(Entity\Team $team, int $memberId): bool
     {
         $sql = "DELETE FROM tbl_member_team 
                 WHERE fk_team_id = " . $team->getID() . " 
                 AND fk_member_id =" . $memberId . ";";
-        return $this->connection->query($sql);
+        $request = $this->connection->query($sql);
+        if ($request->errorInfo()[0] != "00000") {
+            throw new \Exception($request->errorInfo());
+        }
+        return true;
     }
 
+    /**
+     * @param Entity\Team $team
+     * @return bool
+     * @throws \Exception
+     */
     public function removeAllMembersFromTeam(Entity\Team $team): bool
     {
         $sql = "DELETE FROM tbl_member_team 
                 WHERE fk_team_id = " . $team->getID() . ";";
-        return $this->connection->query($sql);
+        $request = $this->connection->query($sql);
+        if ($request->errorInfo()[0] != "00000") {
+            throw new \Exception($request->errorInfo());
+        }
+        return true;
     }
 
     /**
@@ -82,7 +101,7 @@ class TeamDAO extends \app\core\DAO
                 FROM tbl_task_team 
                 WHERE tbl_task_team.fk_team_id=" . $teamId . ";";
         $request = $this->connection->query($sql);
-        $result=$request->fetch(\PDO::FETCH_ASSOC);
+        $result = $request->fetch(\PDO::FETCH_ASSOC);
         return intval($result['nbTasks']);
     }
 
@@ -116,36 +135,51 @@ class TeamDAO extends \app\core\DAO
      * @param Entity\Team $team
      * @param int $taskId
      * @return bool
+     * @throws \Exception
      */
     public function addTaskToTeam(Entity\Team $team, int $taskId): bool
     {
         $sql = "INSERT INTO tbl_task_team (fk_task_id, fk_team_id) 
                 VALUES (" . $taskId . "," . $team->getID() . ");";
-        return $this->connection->query($sql);
+        $request = $this->connection->query($sql);
+        if ($request->errorInfo()[0] != "00000") {
+            throw new \Exception($request->errorInfo());
+        }
+        return true;
     }
 
     /**
      * @param Entity\Team $team
      * @param int $taskId
      * @return bool
+     * @throws \Exception
      */
     public function removeTaskFromTeam(Entity\Team $team, int $taskId): bool
     {
         $sql = "DELETE FROM tbl_task_team 
                 WHERE fk_team_id = " . $team->getID() . " 
                 AND fk_task_id =" . $taskId . ";";
-        return $this->connection->query($sql);
+        $request = $this->connection->query($sql);
+        if ($request->errorInfo()[0] != "00000") {
+            throw new \Exception($request->errorInfo());
+        }
+        return true;
     }
 
     /**
      * @param Entity\Team $team
      * @return bool
+     * @throws \Exception
      */
     public function removeAllTasksFromTeam(Entity\Team $team): bool
     {
         $sql = "DELETE FROM tbl_task_team 
                 WHERE fk_team_id = " . $team->getID() . ";";
-        return $this->connection->query($sql);
+        $request = $this->connection->query($sql);
+        if ($request->errorInfo()[0] != "00000") {
+            throw new \Exception($request->errorInfo());
+        }
+        return true;
     }
 
     /**
