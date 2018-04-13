@@ -27,7 +27,7 @@ CREATE TABLE tbl_task (
   subtasks    TINYINT,
   day         TINYINT,
   PRIMARY KEY (id),
-  KEY day (day)
+  FOREIGN KEY day (day) REFERENCES tbl_day (id)
 )
   ENGINE = INNODB;
 
@@ -54,10 +54,12 @@ CREATE TABLE tbl_team (
   ENGINE = INNODB;
 
 
-CREATE TABLE tbl_interTaskMember (
+CREATE TABLE tbl_task_member (
   idTask   SMALLINT(6) NOT NULL,
   idMember SMALLINT(6) NOT NULL,
-  PRIMARY KEY (idTask, idMember)
+  PRIMARY KEY (idTask, idMember),
+  FOREIGN KEY day (idTask) REFERENCES tbl_task (id),
+  FOREIGN KEY day (idMember) REFERENCES tbl_member (id)
 )
   ENGINE = INNODB;
 
@@ -73,6 +75,16 @@ IDENTIFIED BY 'taskManager';
 FLUSH PRIVILEGES;
 
 # Default data set
+INSERT INTO `tbl_day`
+VALUES
+  (1, 'monday'),
+  (2, 'tuesday'),
+  (3, 'wednesday'),
+  (4, 'thursday'),
+  (5, 'friday'),
+  (6, 'saturday'),
+  (7, 'sunday');
+
 INSERT INTO `tbl_task`
 VALUES
   (1, 6, 'Dormir', 1, NULL, NULL, NULL, 1),
@@ -81,3 +93,21 @@ VALUES
   (4, 3, 'Faire le menage', 1, NULL, NULL, NULL, 7),
   (5, 2, 'Test', 127, NULL, NULL, NULL, 7),
   (6, 1, '42', 42, NULL, NULL, NULL, 7);
+
+INSERT INTO `tbl_member`
+VALUES
+  (1, 6, 'mail1@mail.com', 'login1', 1, 1, ''),
+  (2, 5, 'mail2@mail.com', 'login2', 1, 1, ''),
+  (3, 4, 'mail3@mail.com', 'login3', 1, 2, ''),
+  (4, 3, 'mail4@mail.com', 'login4', 1, 5, ''),
+  (5, 2, 'mail5@mail.com', 'login5', 1, 2, ''),
+  (6, 1, 'mail6@mail.com', 'login6', 1, 2, '');
+
+INSERT INTO `tbl_task_member`
+VALUES
+  (1, 1),
+  (2, 1),
+  (3, 1),
+  (4, 2),
+  (5, 3),
+  (6, 4);

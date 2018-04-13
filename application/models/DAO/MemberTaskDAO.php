@@ -1,7 +1,9 @@
 <?php
+
 namespace app\models\DAO;
 
-class TaskTeamDAO extends \app\core\DAO
+
+class MemberTaskDAO
 {
     /**
      * @param array $object
