@@ -9,7 +9,7 @@ class TaskTeamDAO extends \app\core\DAO
      */
     protected function objectToArray($object)
     {
-        $array['task'] = [];
+        $array['task_team'] = [];
 
         if ($object != null) {
             $TaskArray = $object->entityToArray();
@@ -17,10 +17,10 @@ class TaskTeamDAO extends \app\core\DAO
             foreach ($TaskArray as $key => $value) {
 
                 if ($key == 'day' and !empty($value)) {
-                    $array['task']['day'] = 1;
+                    $array['task_team']['day'] = 1;
                 } elseif (is_array($value)) {
                     foreach ($value as $subObject) {
-                        $array['task']['interSubTask'][] = [
+                        $array['task_team']['interSubTask'][] = [
                             'idTask' => $TaskArray['id'],
                             'idSubTask' => $subObject->entityToArray()['id']
                         ];

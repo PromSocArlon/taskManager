@@ -10,7 +10,7 @@ USE taskManager;
 -- Table creation
 --
 CREATE TABLE tbl_day (
-  id   TINYINT NOT NULL UNIQUE AUTO_INCREMENT,
+  id   TINYINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
   name VARCHAR(10),
   PRIMARY KEY (id)
 )
@@ -18,14 +18,13 @@ CREATE TABLE tbl_day (
 
 
 CREATE TABLE tbl_task (
-  idTask      SMALLINT NOT NULL UNIQUE AUTO_INCREMENT,
-  id          SMALLINT,
+  idTask      SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+  id          SMALLINT UNSIGNED,
   name        VARCHAR(100),
   priority    TINYINT,
   description TEXT,
   status      VARCHAR(20),
-  subtasks    TINYINT,
-  day         TINYINT,
+  day         TINYINT UNSIGNED,
   PRIMARY KEY (id),
   FOREIGN KEY day (day) REFERENCES tbl_day (id)
 )
@@ -33,8 +32,8 @@ CREATE TABLE tbl_task (
 
 
 CREATE TABLE tbl_member (
-  idMember   SMALLINT(6) NOT NULL UNIQUE AUTO_INCREMENT,
-  id         SMALLINT,
+  idMember   SMALLINT(6) UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+  id         SMALLINT UNSIGNED,
   mail       VARCHAR(100),
   login      VARCHAR(100),
   teamleader BOOLEAN,
@@ -47,19 +46,28 @@ CREATE TABLE tbl_member (
 
 
 CREATE TABLE tbl_team (
-  id   SMALLINT(6) NOT NULL AUTO_INCREMENT,
+  id   SMALLINT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
   name VARCHAR(100),
   PRIMARY KEY (id)
 )
   ENGINE = INNODB;
 
 
-CREATE TABLE tbl_task_member (
-  idTask   SMALLINT(6) NOT NULL,
-  idMember SMALLINT(6) NOT NULL,
-  PRIMARY KEY (idTask, idMember),
+CREATE TABLE tbl_member_task (
+  idMember SMALLINT(6) UNSIGNED NOT NULL,
+  idTask   SMALLINT(6) UNSIGNED NOT NULL,
+  PRIMARY KEY (idMember, idTask),
+  FOREIGN KEY day (idMember) REFERENCES tbl_member (id),
+  FOREIGN KEY day (idTask) REFERENCES tbl_task (id)
+)
+  ENGINE = INNODB;
+
+CREATE TABLE tbl_task_team (
+  idTask   SMALLINT(6) UNSIGNED NOT NULL,
+  idTeam SMALLINT(6) UNSIGNED NOT NULL,
+  PRIMARY KEY (idTask, idTeam),
   FOREIGN KEY day (idTask) REFERENCES tbl_task (id),
-  FOREIGN KEY day (idMember) REFERENCES tbl_member (id)
+  FOREIGN KEY day (idTeam) REFERENCES tbl_team (id)
 )
   ENGINE = INNODB;
 
@@ -87,12 +95,12 @@ VALUES
 
 INSERT INTO `tbl_task`
 VALUES
-  (1, 6, 'Dormir', 1, NULL, NULL, NULL, 1),
-  (2, 5, 'Gogo', 1, NULL, NULL, NULL, 1),
-  (3, 4, 'Manger', 1, NULL, NULL, NULL, 5),
-  (4, 3, 'Faire le menage', 1, NULL, NULL, NULL, 7),
-  (5, 2, 'Test', 127, NULL, NULL, NULL, 7),
-  (6, 1, '42', 42, NULL, NULL, NULL, 7);
+  (1, 6, 'Dormir', 1, NULL, NULL, 1),
+  (2, 5, 'Gogo', 1, NULL, NULL, 1),
+  (3, 4, 'Manger', 1, NULL, NULL, 5),
+  (4, 3, 'Faire le menage', 1, NULL, NULL, 7),
+  (5, 2, 'Test', 127, NULL, NULL, 7),
+  (6, 1, '42', 42, NULL, NULL, 7);
 
 INSERT INTO `tbl_member`
 VALUES
@@ -103,11 +111,28 @@ VALUES
   (5, 2, 'mail5@mail.com', 'login5', 1, 2, ''),
   (6, 1, 'mail6@mail.com', 'login6', 1, 2, '');
 
-INSERT INTO `tbl_task_member`
+INSERT INTO `tbl_team`
+VALUES
+  (1, 'Team 1'),
+  (2, 'Team 2'),
+  (3, 'Team 3'),
+  (4, 'Team 4'),
+  (5, 'Team 5');
+
+INSERT INTO `tbl_member_task`
+VALUES
+  (1, 1),
+  (1, 2),
+  (1, 3),
+  (2, 4),
+  (3, 5),
+  (4, 6);
+
+INSERT INTO `tbl_task_team`
 VALUES
   (1, 1),
   (2, 1),
-  (3, 1),
-  (4, 2),
-  (5, 3),
-  (6, 4);
+  (3, 3),
+  (4, 4),
+  (5, 5),
+  (6, 5);
