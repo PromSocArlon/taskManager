@@ -6,10 +6,9 @@ class Task extends Entity {
     private $name;
     private $priority;
     private $description;
-    private $day;
     private $status;
-    public $taskTeam; // reference vers entité taskteam
-    public $memberTask; // reference vers entité membertask
+    private $team = []; // reference vers entité taskteam
+    private $member = []; // reference vers entité membertask
 
     public function __construct() {
 

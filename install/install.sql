@@ -9,24 +9,13 @@ USE taskManager;
 --
 -- Table creation
 --
-CREATE TABLE tbl_day (
-  id   TINYINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
-  name VARCHAR(10),
-  PRIMARY KEY (id)
-)
-  ENGINE = INNODB;
-
-
 CREATE TABLE tbl_task (
-  idTask      SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
-  id          SMALLINT UNSIGNED,
+  id          SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
   name        VARCHAR(100),
   priority    TINYINT,
   description TEXT,
   status      VARCHAR(20),
-  day         TINYINT UNSIGNED,
-  PRIMARY KEY (id),
-  FOREIGN KEY day (day) REFERENCES tbl_day (id)
+  PRIMARY KEY (id)
 )
   ENGINE = INNODB;
 
@@ -83,24 +72,14 @@ IDENTIFIED BY 'taskManager';
 FLUSH PRIVILEGES;
 
 # Default data set
-INSERT INTO `tbl_day`
-VALUES
-  (1, 'monday'),
-  (2, 'tuesday'),
-  (3, 'wednesday'),
-  (4, 'thursday'),
-  (5, 'friday'),
-  (6, 'saturday'),
-  (7, 'sunday');
-
 INSERT INTO `tbl_task`
 VALUES
-  (1, 6, 'Dormir', 1, NULL, NULL, 1),
-  (2, 5, 'Gogo', 1, NULL, NULL, 1),
-  (3, 4, 'Manger', 1, NULL, NULL, 5),
-  (4, 3, 'Faire le menage', 1, NULL, NULL, 7),
-  (5, 2, 'Test', 127, NULL, NULL, 7),
-  (6, 1, '42', 42, NULL, NULL, 7);
+  (1, 'Dormir', 1, NULL, NULL),
+  (2, 'Gogo', 1, NULL, NULL),
+  (3, 'Manger', 1, NULL, NULL),
+  (4, 'Faire le menage', 1, NULL, NULL),
+  (5, 'Test', 127, NULL, NULL),
+  (6, '42', 42, NULL, NULL);
 
 INSERT INTO `tbl_member`
 VALUES
