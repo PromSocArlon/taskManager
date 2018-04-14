@@ -3,6 +3,7 @@ namespace app\models\Entity;
 
 class Member extends Entity {
 
+    public $id;
     private $login;
     private $password;
     private $mail;

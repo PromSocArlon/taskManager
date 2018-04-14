@@ -22,15 +22,11 @@ class MemberController extends \app\core\Controller
 			'profil' => ['public' => false, 'connect' => true]
         ];
         $this->setPermissions($perms);
+        $this->storage = new MemberDAO();
     }
 
     public function index()
     {
-		//appel de model necessite que controller.php connaisse tous les dao et entity possibles
-		//temporairement desactive a discuter mais ca creait des erreurs
-        $this->storage = $this->model('MemberDAO');
-		$this->storage = new MemberDAO();
-		//actuellement renvoie false cree donc une erreur dans generateView
         $members = $this->storage->read();
         $this->generateView($members);
     }
@@ -38,9 +34,8 @@ class MemberController extends \app\core\Controller
     {
         try
         {
-            $this->member = $this->model('member');
+            $this->member = new member();
             $this->member->setID($this->request->getParameter('id'));
-            $this->storage = new MemberDAO();
             $this->member = $this->storage->read($this->member);
         }
         catch(\Exception $ex)
