@@ -1,94 +1,83 @@
-/*Final*/
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
---
--- Host: 127.0.0.1    Database: taskmanager
--- ------------------------------------------------------
--- Server version	5.6.15-log
+SET AUTOCOMMIT = 0;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT = @@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS = @@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION = @@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE = @@TIME_ZONE */;
-/*!40103 SET TIME_ZONE = '+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0 */;
-/*!40101 SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES = @@SQL_NOTES, SQL_NOTES = 0 */;
+START TRANSACTION;
 
---
--- Table structure for table `tbl_days`
---
+DROP DATABASE IF EXISTS `taskmanager`;
+CREATE DATABASE IF NOT EXISTS `taskmanager`
+  DEFAULT CHARACTER SET utf8
+  COLLATE utf8_general_ci;
 
-DROP TABLE IF EXISTS `tbl_days`;
-/*!40101 SET @saved_cs_client = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tbl_days` (
+CREATE USER IF NOT EXISTS 'taskManager'@'localhost'
+  IDENTIFIED BY 'taskManager';
+GRANT ALL PRIVILEGES ON `taskManager`.* TO 'taskManager'@'localhost';
+USE taskmanager;
+DROP TABLE IF EXISTS `tbl_day`;
+CREATE TABLE IF NOT EXISTS `tbl_day` (
   `id`   TINYINT(4) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(10)         DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`)
+  PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB
   AUTO_INCREMENT = 8
   DEFAULT CHARSET = utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `tbl_days`
---
-
-LOCK TABLES `tbl_days` WRITE;
-/*!40000 ALTER TABLE `tbl_days`
-  DISABLE KEYS */;
-INSERT INTO `tbl_days`
+INSERT INTO `tbl_day` (`id`, `name`)
 VALUES (1, 'monday'), (2, 'tuesday'), (3, 'wednesday'), (4, 'thursday'), (5, 'friday'), (6, 'saturday'), (7, 'sunday');
-/*!40000 ALTER TABLE `tbl_days`
-  ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `tbl_member`
---
-
-DROP TABLE IF EXISTS `tbl_member`;
-/*!40101 SET @saved_cs_client = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-
-CREATE TABLE `tbl_member` (
+DROP TABLE IF EXISTS
+`tbl_member`;
+CREATE TABLE IF NOT EXISTS `tbl_member` (
   `id`         SMALLINT(6) NOT NULL AUTO_INCREMENT,
   `mail`       VARCHAR(100)         DEFAULT NULL,
   `login`      VARCHAR(100)         DEFAULT NULL,
-  `teamleader` BOOLEAN              DEFAULT NULL,
+  `teamleader` TINYINT(1)           DEFAULT NULL,
   `idTeam`     SMALLINT(6)          DEFAULT NULL,
   `password`   VARCHAR(50)          DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `idTeam` (`idTeam`),
-  CONSTRAINT `tbl_member_ibfk_1` FOREIGN KEY (`idTeam`) REFERENCES `tbl_team` (`id`)
+  KEY `idTeam`(`idTeam`)
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 6
+  DEFAULT CHARSET = utf8;
+
+INSERT INTO `tbl_member` (
+  `id`,
+  `mail`,
+  `login`,
+  `teamleader`,
+  `idTeam`,
+  `password`
+)
+VALUES (1, NULL, 'alain', NULL, 4, NULL), (2, NULL, 'maxime', NULL, 4, NULL), (
+  3,
+  NULL,
+  'valentin',
+  NULL,
+  4,
+  NULL
+), (4, NULL, 'jeremy', NULL, 4, NULL), (5, NULL, 'adrien', NULL, 4, NULL),
+
+(6, NULL, 'sebastien', NULL, 5, NULL),
+(7, NULL, 'sami', NULL, 5, NULL),
+(8, NULL, 'maxence', NULL, 5, NULL),
+(9, NULL, 'alan', NULL, 5, NULL),
+(10, NULL, 'Edwin ', NULL, 5, NULL);
+
+DROP TABLE IF EXISTS
+`tbl_member_team`;
+CREATE TABLE IF NOT EXISTS `tbl_member_team` (
+  `fk_member_id` SMALLINT(6) NOT NULL,
+  `fk_team_id`   SMALLINT(6) NOT NULL,
+  KEY `tbl_member_team_fk_team_id_fk_member_id_index`(`fk_team_id`, `fk_member_id`),
+  KEY `tbl_member_team_tbl_member_id_fk`(`fk_member_id`)
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tbl_member`
---
-
-LOCK TABLES `tbl_member` WRITE;
-/*!40000 ALTER TABLE `tbl_member`
-  DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_member`
-  ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tbl_tasks`
---
-
-DROP TABLE IF EXISTS `tbl_tasks`;
-/*!40101 SET @saved_cs_client = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tbl_tasks` (
+INSERT INTO `tbl_member_team` (`fk_member_id`, `fk_team_id`)
+VALUES (1, 4), (2, 4), (3, 4), (4, 4), (5, 4);
+DROP TABLE IF EXISTS
+`tbl_task`;
+CREATE TABLE IF NOT EXISTS `tbl_task` (
   `id`          SMALLINT(6) NOT NULL AUTO_INCREMENT,
   `name`        VARCHAR(100)         DEFAULT NULL,
   `priority`    TINYINT(4)           DEFAULT NULL,
@@ -97,86 +86,128 @@ CREATE TABLE `tbl_tasks` (
   `subtasks`    TINYINT(4)           DEFAULT NULL,
   `day`         TINYINT(4)           DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`),
-  KEY `day` (`day`),
-  CONSTRAINT `tbl_tasks_ibfk_1` FOREIGN KEY (`day`) REFERENCES `tbl_days` (`id`)
+  UNIQUE KEY `id`(`id`),
+  KEY `day`(`day`)
 )
   ENGINE = InnoDB
   AUTO_INCREMENT = 7
   DEFAULT CHARSET = utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+INSERT INTO `tbl_task` (
+  `id`,
+  `name`,
+  `priority`,
+  `description`,
+  `status`,
+  `subtasks`,
+  `day`
+)
+VALUES (
+  1,
+  'Dormir',
+  1,
+  NULL,
+  NULL,
+  NULL,
+  1
+), (
+  2,
+  'Gogo',
+  1,
+  NULL,
+  NULL,
+  NULL,
+  1
+), (
+  3,
+  'Manger',
+  1,
+  NULL,
+  NULL,
+  NULL,
+  5
+), (
+  4,
+  'Faire le menage',
+  1,
+  NULL,
+  NULL,
+  NULL,
+  7
+), (
+  5,
+  'Test42',
+  42,
+  NULL,
+  NULL,
+  NULL,
+  7
+), (
+  6,
+  'Testsync',
+  127,
+  NULL,
+  NULL,
+  NULL,
+  7
+);
+DROP TABLE IF EXISTS
+`tbl_task_team`;
+CREATE TABLE IF NOT EXISTS `tbl_task_team` (
+  `fk_task_id` SMALLINT(6) NOT NULL,
+  `fk_team_id` SMALLINT(6) NOT NULL,
+  UNIQUE KEY `tbl_task_team_fk_task_id_fk_team_id_pk`(`fk_team_id`, `fk_task_id`),
+  KEY `tbl_task_team_tbl_task_id_fk`(`fk_task_id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+INSERT INTO `tbl_task_team` (`fk_task_id`, `fk_team_id`)
+VALUES (1, 4), (2, 4), (6, 4);
 
---
--- Dumping data for table `tbl_tasks`
---
+DROP TABLE IF EXISTS
+`tbl_task_member`;
+CREATE TABLE IF NOT EXISTS `tbl_task_member` (
+  `fk_task_id` SMALLINT(6) NOT NULL,
+  `fk_member_id` SMALLINT(6) NOT NULL,
+  UNIQUE KEY `tbl_task_member_fk_task_id_fk_member_id_pk`(`fk_member_id`, `fk_task_id`),
+  KEY `tbl_task_member_tbl_task_id_fk`(`fk_task_id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+INSERT INTO `tbl_task_member` (`fk_task_id`, `fk_member_id`)
+VALUES (1, 6),(2, 7),(3, 8),(4,9),(5,10);
 
-LOCK TABLES `tbl_tasks` WRITE;
-/*!40000 ALTER TABLE `tbl_tasks`
-  DISABLE KEYS */;
-INSERT INTO `tbl_tasks` VALUES (1, 'Dormir', 1, NULL, NULL, NULL, 1), (2, 'Gogo', 1, NULL, NULL, NULL, 1),
-  (3, 'Manger', 1, NULL, NULL, NULL, 5), (4, 'Faire le menage', 1, NULL, NULL, NULL, 7),
-  (5, 'Test42', 42, NULL, NULL, NULL, 7), (6, 'Testsync', 127, NULL, NULL, NULL, 7);
-/*!40000 ALTER TABLE `tbl_tasks`
-  ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tbl_team`
---
-
-DROP TABLE IF EXISTS `tbl_team`;
-/*!40101 SET @saved_cs_client = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tbl_team` (
-  `id`   SMALLINT(6) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100)         DEFAULT NULL,
-  PRIMARY KEY (`id`)
+DROP TABLE IF EXISTS
+`tbl_team`;
+CREATE TABLE IF NOT EXISTS `tbl_team` (
+  `id`     SMALLINT(6) NOT NULL AUTO_INCREMENT,
+  `name`   VARCHAR(100)         DEFAULT NULL,
+  `leader` SMALLINT(6)          DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tbl_team_tbl_member_id_fk`(`leader`)
 )
   ENGINE = InnoDB
   AUTO_INCREMENT = 6
   DEFAULT CHARSET = utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tbl_team`
---
-
-LOCK TABLES `tbl_team` WRITE;
-/*!40000 ALTER TABLE `tbl_team`
-  DISABLE KEYS */;
-INSERT INTO `tbl_team` VALUES (1, 'team1'), (2, 'team2'), (3, 'team3'), (4, 'team4'), (5, 'team5');
-/*!40000 ALTER TABLE `tbl_team`
-  ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-DROP TABLE IF EXISTS `tbl_interTaskMember`;
-/*!40101 SET @saved_cs_client = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tbl_interTaskMember` (
-  `idTask`   SMALLINT(6) NOT NULL,
-  `idMember` SMALLINT(6) NOT NULL,
-  PRIMARY KEY (`idTask`, `idMember`)
-)
-  ENGINE = InnoDB
-  AUTO_INCREMENT = 6
-  DEFAULT CHARSET = utf8;
-
---
--- Dumping events for database 'taskmanager'
---
-
---
--- Dumping routines for database 'taskmanager'
---
-/*!40103 SET TIME_ZONE = @OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE = @OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS = @OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
-
--- Dump completed on 2018-02-28 17:01:51
+INSERT INTO `tbl_team` (`id`, `name`, `leader`)
+VALUES (1, 'team1', NULL), (2, 'team2', NULL), (3, 'team3', NULL), (4, 'team4', NULL), (5, 'team5', NULL);
+ALTER TABLE
+`tbl_member_team`
+  ADD CONSTRAINT `tbl_member_team_tbl_member_id_fk` FOREIGN KEY (`fk_member_id`) REFERENCES `tbl_member` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbl_member_team_tbl_team_id_fk` FOREIGN KEY (`fk_team_id`) REFERENCES `tbl_team` (`id`);
+ALTER TABLE
+`tbl_task`
+  ADD CONSTRAINT `tbl_task_ibfk_1` FOREIGN KEY (`day`) REFERENCES `tbl_day` (`id`);
+ALTER TABLE
+`tbl_task_team`
+  ADD CONSTRAINT `tbl_task_team_tbl_task_id_fk` FOREIGN KEY (`fk_task_id`) REFERENCES `tbl_task` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbl_task_team_tbl_team_id_fk` FOREIGN KEY (`fk_team_id`) REFERENCES `tbl_team` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+ALTER TABLE
+`tbl_team`
+  ADD CONSTRAINT `tbl_team_tbl_member_id_fk` FOREIGN KEY (`leader`) REFERENCES `tbl_member` (`id`);
+COMMIT;

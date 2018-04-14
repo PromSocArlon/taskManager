@@ -7,7 +7,7 @@ include 'application\views\_shared\header.php';
     <br>
     <p><b>Login:</b> <?php echo $data['login'] ?></p>
     <p><b>Mail:</b> <?php echo $data['mail'] ?></p>
-    <p><b>Team:</b> <?php echo $data['team'] ?></p>
+    <p><b>Team:</b> <?php echo $data['idTeam'] ?></p>
 
     <br>
 
