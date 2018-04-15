@@ -11,7 +11,10 @@ class ErrorController extends \app\core\Controller
 
     public function __construct()
     {
-
+            $perms = [
+                'index' => ['public' => true, 'connect' => true]
+            ];
+            $this->setPermissions($perms);
     }
 
     public function index()
@@ -23,8 +26,8 @@ class ErrorController extends \app\core\Controller
     {
         try
         {
-            $view = new View('error');
-            $view = new View('error'+$code);
+            $view = new View('index');
+            $view = new View('index'+$code);
             $view->generate(null);
             return true;
         } catch (\Exception $ex)
