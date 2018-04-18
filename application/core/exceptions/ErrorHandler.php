@@ -12,7 +12,7 @@ namespace app\core\exceptions;
 use app\controllers\ErrorController;
 
 class ErrorHandler {
-    public static function handleError(\Error $ex) : void {
+    public static function handleError(\Throwable $ex) : void {
             switch (true) {
                 case $ex instanceof \HttpRequestException : $code = 400;
                     break;
