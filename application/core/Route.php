@@ -3,12 +3,15 @@
 namespace app\core;
 
 
+use Exception;
+
 class Route
 {
     private $request;
 
     /**
      *  Analyse the URL and perform the action given by a specific controller
+     * @throws Exception if request can't be read properly
      */
     public function routeQuery(): void
     {
@@ -31,7 +34,7 @@ class Route
      * Give the controller wanted by a request
      * @param request $request request that create the controller
      * @return Controller the wanted controller
-     * @throws \Exception if controller doesn't exist
+     * @throws Exception if controller doesn't exist
      */
     private function getNewController(): Controller
     {

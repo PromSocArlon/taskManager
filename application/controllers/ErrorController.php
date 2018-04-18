@@ -1,11 +1,9 @@
 <?php
 
 namespace app\controllers;
-use app\core\exceptions;
 
-class ErrorController extends \app\core\Controller
+class ErrorController extends Controller
 {
-    private $id;
     private $message;
     public function __construct()
     {
@@ -17,20 +15,11 @@ class ErrorController extends \app\core\Controller
     }
     public function index()
     {
-        $this->generateView();
+        $this->generateView(['Code'=>500]);
     }
-    public function displayError(/*$code*/) : bool
+    public function displayError(int $code)
     {
-        try
-        {
-            throw new \app\core\exceptions\ActionNotDefinedException("Cedric",400,null);
-            //$view->generate(null);
-            return true;
-        } catch (\app\core\exceptions\ActionNotDefinedException $ex)
-        {
-            $this->generateView(['Exception' => $ex]);//+"&code="+$ex->getCode());
-            return false;
-        }
+        $this->generateView(['Code' => $code]);
     }
     public function initializeModel()
     {

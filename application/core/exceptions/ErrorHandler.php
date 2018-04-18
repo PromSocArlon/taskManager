@@ -9,12 +9,10 @@
 namespace app\core\exceptions;
 
 
-use app\core\Controller;
+use app\controllers\ErrorController;
 
 class ErrorHandler {
-    public static function handleError(\Exception $ex) : void {
-            $code = -1;
-
+    public static function handleError(\Error $ex) : void {
             switch (true) {
                 case $ex instanceof \HttpRequestException : $code = 400;
                     break;
@@ -30,8 +28,11 @@ class ErrorHandler {
                 case $ex instanceof \InvalidArgumentException :
                 case $ex instanceof \RuntimeException : $code = 500;
                     break;
-                default: $code = -1;
+                default: $code = 500;
                     break;
             }
+
+            $errorController = new ErrorController();
+            $errorController->displayError($code) ;
     }
 }
