@@ -2,7 +2,7 @@
 session_start();
 require_once __DIR__.'/vendor/autoload.php';
 
-use function app\core\handelerror;
+use function app\core\handleError;
 
 //require_once 'application/core/Route.php';
 
@@ -12,4 +12,3 @@ try {
 } catch (\Exception $ex) {
     \app\core\handleError($ex);
 }
-

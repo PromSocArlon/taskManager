@@ -59,6 +59,7 @@ class TaskDAO extends \app\core\DAO
                 if ($subArray['name'] != NULL) $task->setName($subArray['name']);
                 if ($subArray['priority'] != NULL) $task->setPriority($subArray['priority']);
                 if ($subArray['description'] != NULL) $task->setDescription($subArray['description']);
+                if ($subArray['status'] != NULL) $task->setStatus($subArray['status']);
                 $result['task'][] = $task;
 
             }
