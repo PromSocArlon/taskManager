@@ -7,34 +7,33 @@
  */
 
 namespace app\core\exceptions;
-
-
-use app\controllers\ErrorController;
+use app\controllers\ExceptionController;
 
 class ErrorHandler {
     public static function handleError(\Throwable $ex) : void {
-        $errorController = new ErrorController();
+        $errorController = new ExceptionController();
         switch (true) {
             case $ex instanceof \HttpRequestException :
-                $errorController->error400();
+                header('Location: index.php?controller=exception&action=error400');
                 break;
             case $ex instanceof UnauthorizedException :
-                $errorController->error401();
+                header('Location: index.php?controller=exception&action=error401');
                 break;
             case $ex instanceof ControllerNotDefinedException :
             case $ex instanceof ActionNotDefinedException :
-                $errorController->error403();
+                header('Location: index.php?controller=exception&action=error403');
                 break;
             case $ex instanceof \HttpException:
-                $errorController->error404();
+                header('Location: index.php?controller=exception&action=error404');
                 break;
             case $ex instanceof \HttpUrlException :
-                $errorController->error408(); //Si time-out !
+                header('Location: index.php?controller=exception&action=error408'); //Si time-out !
                 break;
             case $ex instanceof \InvalidArgumentException :
             case $ex instanceof \RuntimeException :
             case $ex instanceof \Error:
-                $errorController->error500();
+            case $ex instanceof \Exception:
+                header('Location: index.php?controller=exception&action=error500');
                 break;
             default:
                 $errorController->error500();
