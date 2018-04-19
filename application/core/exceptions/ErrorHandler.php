@@ -16,27 +16,28 @@ class ErrorHandler {
         $errorController = new ErrorController();
         switch (true) {
             case $ex instanceof \HttpRequestException :
-                $code = 400;
+                $errorController->error400();
                 break;
             case $ex instanceof UnauthorizedException :
-                $code = 401;
+                $errorController->error401();
                 break;
             case $ex instanceof ControllerNotDefinedException :
             case $ex instanceof ActionNotDefinedException :
-                $code = 403;
+                $errorController->error403();
                 break;
             case $ex instanceof \HttpException:
-                $code = 404;
+                $errorController->error404();
                 break;
             case $ex instanceof \HttpUrlException :
-                $code = 408; //Si time-out !
+                $errorController->error408(); //Si time-out !
                 break;
             case $ex instanceof \InvalidArgumentException :
             case $ex instanceof \RuntimeException :
-                $code = 500;
+            case $ex instanceof \Error:
+                $errorController->error500();
                 break;
             default:
-                $code = 500;
+                $errorController->error500();
                 break;
         }
     }
