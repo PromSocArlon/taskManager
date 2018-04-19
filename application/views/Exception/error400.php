@@ -2,7 +2,7 @@
 	<p>Error 400!</p>
 	<div class ="row">
 		<div class="col-sm">
-			<img src="400.jpg" alt="error400">
+			<img src="application\views\Exception\400.jpg" alt="error400">
 		</div>
 		<div class="col-sm">
 			Bad request

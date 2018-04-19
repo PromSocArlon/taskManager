@@ -2,7 +2,7 @@
 	<p>Error 401!</p>
 	<div class ="row">
 		<div class="col-sm">
-			<img src="401.jpg" alt="error401">
+			<img src="application\views\Exception\401.jpg" alt="error401">
 		</div>
 		<div class="col-sm">
 			Unauthorized access
