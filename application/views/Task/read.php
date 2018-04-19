@@ -13,6 +13,7 @@
 <p><b>Name:</b> <?php echo $data['name'] ?></p>
 <p><b>Priority:</b> <?php echo $data['priority'] ?></p>
 <p><b>Description:</b> <?php echo $data['description'] ?></p>
+<p><b>Status:</b> <?php echo $data['status'] ?></p>
 
 <br>
 

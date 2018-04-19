@@ -30,6 +30,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Priority</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Edit</th>
                     <th scope="col">View</th>
                 </tr>
@@ -47,6 +48,7 @@
                             echo '<th>' . $task['name'] . '</th>';
                             echo '<th>' . $task['priority'] . '</th>';
                             echo '<th>' . $task['description'] . '</th>';
+                            echo '<th>' . $task['status'] . '</th>';
                             echo '<th>' . '<a href="?controller=task&action=edit&id=' . $task['id'] . ' " class="btn btn-primary">Edit</a>' . '</th>';
                             echo '<th>' . '<a href="?controller=task&action=read&id=' . $task['id'] . ' " class="btn btn-secondary">View</a>' . '</th>';
                         echo '</tr>';

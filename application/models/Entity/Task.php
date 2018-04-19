@@ -3,12 +3,17 @@ namespace app\models\Entity;
 
 class Task extends Entity {
 
+    const PENDING = 0;
+    const PLANNED = 1;
+    const IN_PROGRESS = 2;
+    const COMPLETED = 3;
+
     private $name;
     private $priority;
     private $description;
-    private $day;
-    private $status;
-    private $subtasks;
+    private $status;        // reference to entity status
+    private $team = [];     // reference to entity team
+    private $member = [];   // reference to entity member
 
     public function __construct() {
 
@@ -163,6 +168,28 @@ class Task extends Entity {
 			return null;
 		}
 	}
+    /*
+	public function setStatus(Status $st) : void {
+        $this->status = $st;
+    }*/
+
+    public function setStatus(int $st) : void {
+
+
+        $tabStatus = ["Pending","Planned","In Progress","Completed"];
+
+        switch ($st) {
+            case Task::PENDING:
+            case Task::PLANNED:
+            case Task::IN_PROGRESS:
+            case Task::COMPLETED:
+                $this->status = $tabStatus[$st];
+                break;
+            default:
+                $this->status = "Pending";
+                break;
+        }
+    }
 
     public function entityToArray() {
         return get_object_vars($this);

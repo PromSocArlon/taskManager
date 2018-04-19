@@ -31,6 +31,12 @@ abstract class DAO
     abstract protected function objectToArray($object);
 
     /**
+     * @param $array
+     * @return mixed
+     */
+    abstract protected function arrayToArrayOfObject($array);
+
+    /**
      * @param $object
      * @return bool
      */
@@ -54,10 +60,10 @@ abstract class DAO
 
         $result = $this->connection->read($array);
 
-        if (!empty($result)) {
-            return $result;
-        }
-        return false;
+        //TODO: To uncomment when supported in view
+        //$result = $this->arrayToArrayOfObject($result);
+
+        return $result;
     }
 
     /**

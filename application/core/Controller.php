@@ -3,6 +3,8 @@ namespace app\core;
 
 abstract class Controller {
 
+    protected $model;
+    protected $dao;
     private $action;
     /**
      * @var request $request
