@@ -34,8 +34,9 @@ CREATE TABLE tbl_member (
 
 
 CREATE TABLE tbl_team (
-  id   SMALLINT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
-  name VARCHAR(100),
+  id      SMALLINT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
+  name    VARCHAR(100),
+  leader  SMALLINT(6),
   PRIMARY KEY (id)
 )
   ENGINE = INNODB;
@@ -51,8 +52,8 @@ CREATE TABLE tbl_member_task (
   ENGINE = INNODB;
 
 CREATE TABLE tbl_task_team (
-  idTask   SMALLINT(6) UNSIGNED NOT NULL,
-  idTeam SMALLINT(6) UNSIGNED NOT NULL,
+  idTask  SMALLINT(6) UNSIGNED NOT NULL,
+  idTeam  SMALLINT(6) UNSIGNED NOT NULL,
   PRIMARY KEY (idTask, idTeam),
   FOREIGN KEY day (idTask) REFERENCES tbl_task (id),
   FOREIGN KEY day (idTeam) REFERENCES tbl_team (id)
