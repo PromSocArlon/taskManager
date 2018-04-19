@@ -47,7 +47,7 @@ class Route
             }
             return $controller;
         }
-        catch (\Throwable $ex) {
+        catch (\Exception | \Error $ex) {
             throw new ControllerNotDefinedException();
         }
 
