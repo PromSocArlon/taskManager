@@ -1,14 +1,11 @@
 <?php
 namespace app\controllers;
-
 use app\models\DAO\MemberDAO;
 use app\models\Entity\Member;
-
 class MemberController extends \app\core\Controller
 {
     private $member;
     private $storage;
-
     public function __construct()
     {
         $perms = [
@@ -24,7 +21,6 @@ class MemberController extends \app\core\Controller
         $this->setPermissions($perms);
         $this->storage = new MemberDAO();
     }
-
     public function index()
     {
         $members = $this->storage->read();
@@ -32,54 +28,23 @@ class MemberController extends \app\core\Controller
     }
     public function read()
     {
-        try
-        {
-            $this->member = new member();
-            $this->member->setID($this->request->getParameter('id'));
-            $this->member = $this->storage->read($this->member);
-        }
-        catch(\Exception $ex)
-        {
-            $this->member = [];
-            $this->member['Exception'] = $ex;
-        }
-        $this->generateView($this->member);
+        $this->member = new member;
+        $this->member->setID($this->request->getParameter('id'));
+        $this->member = $this->storage->read($this->member);
+		$this->generateView($this->member);
     }
     public function edit()
     {
-        try
-        {
-            $this->member = $this->model('member');
-            $this->member->setID($this->request->getParameter('id'));
-            $this->storage = new MemberDAO();
-            $this->member = $this->storage->read($this->member);
-        }
-        catch(\Exception $ex)
-        {
-            $this->member = [];
-            $this->member['Exception'] = $ex;
-        }
-        $this->generateView($this->member);
+	    $this->member = $this->model('member');
+        $this->member->setID($this->request->getParameter('id'));
+        $this->member = $this->storage->read($this->member);
+		$this->generateView($this->member);
     }
-
-        public function initializeModel()
+    public function initializeModel()
     {
-        try
-        {
-
-            $this->member = $this->model('member');
-            $this->member->setID($this->request->getParameter('id'));
-            $this->member->setLogin($this->request->getParameter('login'));
-            $this->member->setPassword($this->request->getParameter('password'));
-            $this->member->setMail($this->request->getParameter('mail'));
-
-        }
-        catch(\Exception $ex)
-        {
-            throw $ex;
-        }
+        $this->member = new Member();
+        $this->member->setName($this->request->getParameter('name'));
     }
-
     public function save()
     {
         $this->initializeModel();
@@ -87,32 +52,18 @@ class MemberController extends \app\core\Controller
         $this->storage->create($this->member);
         $this->generateView();
     }
-
     public function update()
     {
-        try
-        {
-            $this->initializeModel();
-            //$this->member->setID($this->request->getParameter('id'));
-            $this->storage = new MemberDAO();
-            $this->storage->update($this->member);
-            $this->generateView();
-        }
-        catch(\Exception $ex)
-        {
-            $this->generateView(['Exception' => $ex]);
-        }
+        $this->initializeModel();
+        $this->storage->update($this->member, $this->request->getParameter('id'));
+        $this->generateView();
     }
-
-
-
 	public function delete()
     {
         $this->initializeModel();
         $this->storage = $this->model('MemberDAO');
         $this->storage->delete($this->member);
     }
-
     public function profil()
     {
         $this->storage = new MemberDAO();
