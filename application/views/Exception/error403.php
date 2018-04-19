@@ -2,7 +2,7 @@
 	<p>Error 403!</p>
 	<div class ="row">
 		<div class="col-sm">
-			<img src="application\views\Exception\403.jpg" alt="error403">
+			<img src="application\views\Exception\403.png" alt="error403">
 		</div>
 		<div class="col-sm">
 			Forbidden access

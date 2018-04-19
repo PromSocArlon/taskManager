@@ -2,7 +2,7 @@
 	<p>Error 404!</p>
 	<div class ="row">
 		<div class="col-sm">
-			<img src="application\views\Exception\404.jpg" alt="error404">
+			<img src="application\views\Exception\404.png" alt="error404">
 		</div>
 		<div class="col-sm">
 			Not found!

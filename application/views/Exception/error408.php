@@ -2,7 +2,7 @@
 	<p>Error 408!</p>
 	<div class ="row">
 		<div class="col-sm">
-			<img src="application\views\Exception\408.jpg" alt="error408">
+			<img src="application\views\Exception\408.png" alt="error408">
 		</div>
 		<div class="col-sm">
 			Request time out try again
