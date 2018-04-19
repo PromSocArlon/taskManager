@@ -13,14 +13,15 @@ class ErrorHandler {
     public static function handleError(\Throwable $ex) : void {
         $errorController = new ExceptionController();
         switch (true) {
+            case $ex instanceof ActionNotDefinedException :
+            case $ex instanceof ControllerNotDefinedException :
             case $ex instanceof \HttpRequestException :
                 header('Location: index.php?controller=exception&action=error400');
                 break;
             case $ex instanceof UnauthorizedException :
                 header('Location: index.php?controller=exception&action=error401');
                 break;
-            case $ex instanceof ControllerNotDefinedException :
-            case $ex instanceof ActionNotDefinedException :
+            case $ex instanceof ForbiddenException :
                 header('Location: index.php?controller=exception&action=error403');
                 break;
             case $ex instanceof \HttpException:
