@@ -107,15 +107,15 @@ class TeamController extends \app\core\Controller
         if ($result != false) {
             $this->arrayToObject($result);
             $this->storage->delete($this->model);
-            $this->storage->removeAllMembersFromTeam($result);
-            $this->storage->removeAllTasksFromTeam($result);
+            $this->storage->removeAllMembersFromTeam($this->model);
+            $this->storage->removeAllTasksFromTeam($this->model);
             $this->generateView(array('name' => $this->model));
         } else {
             throw  new \Exception("Team doesn't exist.");
         }
     }
 
-    public function update()
+        public function update()
     {
         $this->initializeModel();
         $this->storage->update($this->model);

@@ -65,6 +65,7 @@ class TeamDAO extends \app\core\DAO
      */
     public function removeMemberFromTeam(Entity\Team $team, int $memberId): bool
     {
+
         $sql = "DELETE FROM tbl_member_team 
                 WHERE fk_team_id = " . $team->getID() . " 
                 AND fk_member_id =" . $memberId . ";";
@@ -82,8 +83,7 @@ class TeamDAO extends \app\core\DAO
      */
     public function removeAllMembersFromTeam(Entity\Team $team): bool
     {
-        $sql = "DELETE FROM tbl_member_team 
-                WHERE fk_team_id = " . $team->getID() . ";";
+        $sql = "DELETE FROM tbl_member_team WHERE fk_team_id = " . $team->getID() . ";";
         $request = $this->connection->query($sql);
         if ($request->errorInfo()[0] != "00000") {
             throw new \Exception($request->errorInfo());
