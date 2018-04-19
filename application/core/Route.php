@@ -3,6 +3,7 @@
 namespace app\core;
 
 
+use app\core\exceptions\ControllerNotDefinedException;
 use Exception;
 
 class Route
@@ -15,19 +16,14 @@ class Route
      */
     public function routeQuery(): void
     {
-        //try {
-            $this->request = new request(array_merge($_GET, $_POST));
-            unset($_GET);
-            unset($_POST);
+        $this->request = new request(array_merge($_GET, $_POST));
+        unset($_GET);
+        unset($_POST);
 
-            $controller = $this->getNewController();
-            $action = $this->getNewAction();
-            $controller->executeAction($action);
-        //}
-        /*catch (\Exception $ex) {
-           // handleError($ex);
-            echo 'prob';
-        }*/
+        $controller = $this->getNewController();
+        $action = $this->getNewAction();
+        $controller->executeAction($action);
+
     }
 
     /**
@@ -44,11 +40,17 @@ class Route
         }
         $classController = '\\app\\controllers\\' . $controllerValue . "Controller";
 
-        $controller = new $classController();
-        if (isset($this->request) && $controller instanceof Controller) {
-            $controller->setRequest($this->request);
+        try {
+            $controller = new $classController();
+            if (isset($this->request) && $controller instanceof Controller) {
+                $controller->setRequest($this->request);
+            }
+            return $controller;
         }
-        return $controller;
+        catch (\Exception | \Error $ex) {
+            throw new ControllerNotDefinedException();
+        }
+
     }
 
     /**
@@ -61,7 +63,7 @@ class Route
         $action = "index";
         try {
             $action = $this->request->getParameter("action");
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $action = "index";
         } finally {
             return $action;
