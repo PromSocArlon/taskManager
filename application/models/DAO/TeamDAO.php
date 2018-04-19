@@ -44,13 +44,11 @@ class TeamDAO extends \app\core\DAO
 
             foreach ($array as $subArray) {
 
-                //TODO: change for team object needed
-                //$task = new Task();
-                //if ($subArray['id'] != NULL) $task->setID($subArray['id']);
-                //if ($subArray['name'] != NULL) $task->setName($subArray['name']);
-                //if ($subArray['priority'] != NULL) $task->setPriority($subArray['priority']);
-                //if ($subArray['description'] != NULL) $task->setDescription($subArray['description']);
-                //$result['task'][] = $task;
+                $team = new Team();
+                if ($subArray['id'] != NULL) $team->setID($subArray['id']);
+                if ($subArray['name'] != NULL) $team->setName($subArray['name']);
+                if ($subArray['leader'] != NULL) $team->setLeader($subArray['leader']);
+                $result['task'][] = $team;
 
             }
 

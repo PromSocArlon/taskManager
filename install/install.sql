@@ -21,8 +21,7 @@ CREATE TABLE tbl_task (
 
 
 CREATE TABLE tbl_member (
-  idMember   SMALLINT(6) UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
-  id         SMALLINT UNSIGNED,
+  id         SMALLINT(6) UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
   mail       VARCHAR(100),
   login      VARCHAR(100),
   teamleader BOOLEAN,
