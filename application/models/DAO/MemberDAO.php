@@ -5,13 +5,18 @@ use app\models\Entity\Member;
 
 class MemberDAO extends \app\core\DAO
 {
+    public function getTasks($memberId) {
+        $tasks = [];
+
+
+
+        return $tasks;
+    }
     /*-------------------------------
     * Retourne un utilisateur d'id = $id
     -------------------------------*/
     public function getMember($id)
     {
-        //Sami:
-        //$this->connection->update1($member);
         $myMember = new Member();
         $myMember->id = $id;
         return $this->read($myMember);
@@ -29,18 +34,7 @@ class MemberDAO extends \app\core\DAO
             $MemberArray = $object->entityToArray();
 
             foreach ($MemberArray as $key => $value) {
-
-                if (is_array($value)) {
-                    foreach ($value as $task) {
-                        $array['member']['interTaskMember'][] = [
-                            'idMember' => $MemberArray['id'],
-                            'idTask' => $task->entityToArray()['id']
-                        ];
-                    }
-                } else {
-                    $array['member'][$key] = $value;
-                }
-
+                $array['member'][$key] = $value;
             }
         }
 

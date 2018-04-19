@@ -1,7 +1,14 @@
 <?php
 namespace app\core;
 
+use Doctrine\ORM\EntityManager;
+
 abstract class Controller {
+
+    /**
+     * @var EntityManager
+     */
+    protected $entityManager;
 
     private $action;
     /**
@@ -17,6 +24,9 @@ abstract class Controller {
 
     public abstract function initializeModel();
 
+    public function __construct($entityManager) {
+        $this->entityManager = $entityManager;
+    }
     /**
      * Set the the request attribute to the request parameter value
      * @param request $request request that called the controller

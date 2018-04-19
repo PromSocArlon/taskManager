@@ -6,8 +6,9 @@ use app\models\DAO\MemberDAO;
 
 class HomeController extends \app\core\Controller {
 
-	public function __construct()
+	public function __construct($entityManager)
 	{
+	    parent::__construct($entityManager);
 		$perms = [
 			'index' => ['public' => true, 'connect' => true],
 			'login' => ['public' => true, 'connect' => false],

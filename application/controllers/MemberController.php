@@ -9,8 +9,10 @@ class MemberController extends \app\core\Controller
     private $member;
     private $storage;
 
-    public function __construct()
+    public function __construct($entityManager)
     {
+        parent::__construct($entityManager);
+
         $perms = [
             'index' => ['public' => true, 'connect' => true],
 			'initializeModel' => ['public' => true, 'connect' => true],
@@ -26,12 +28,7 @@ class MemberController extends \app\core\Controller
 
     public function index()
     {
-		//appel de model necessite que controller.php connaisse tous les dao et entity possibles
-		//temporairement desactive a discuter mais ca creait des erreurs
-        $this->storage = $this->model('MemberDAO');
-		$this->storage = new MemberDAO();
-		//actuellement renvoie false cree donc une erreur dans generateView
-        $members = $this->storage->read();
+        $members = $this->entityManager->getRepository('Member')->findAll();
         $this->generateView($members);
     }
     public function read()

@@ -10,8 +10,9 @@ class TaskController extends \app\core\Controller
     private $storage;
 
     //$storage doit etre = 'file' ou 'mysql'
-    public function __construct(/*$storageType*/)
+    public function __construct($entityManager)
     {
+        parent::__construct($entityManager);
         $perms = [
             'index' => ['public' => true, 'connect' => true],
             'create' => ['public' => true, 'connect' => true],
