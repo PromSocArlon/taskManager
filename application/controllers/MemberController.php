@@ -2,7 +2,6 @@
 namespace app\controllers;
 
 use app\models\DAO\MemberDAO;
-use app\models\Entity\Member;
 
 class MemberController extends \app\core\Controller
 {
@@ -28,8 +27,9 @@ class MemberController extends \app\core\Controller
 
     public function index()
     {
-        $members = $this->entityManager->getRepository('Member')->findAll();
-        $this->generateView($members);
+        $members = $this->entityManager->getRepository('app\models\Entity\Member'); //problème resolu avec le passe du namespace
+       // $members = $repository('Member')->findAll();
+        $this->generateView($members = array()); //doit renvoyer un tableau à generate view à voir comment resoudre ça
     }
     public function read()
     {
