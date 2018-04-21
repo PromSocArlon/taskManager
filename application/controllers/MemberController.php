@@ -27,9 +27,10 @@ class MemberController extends \app\core\Controller
 
     public function index()
     {
-        $members = $this->entityManager->getRepository('app\models\Entity\Member'); //problème resolu avec le passe du namespace
-       // $members = $repository('Member')->findAll();
-        $this->generateView($members = array()); //doit renvoyer un tableau à generate view à voir comment resoudre ça.
+        $members = $this->entityManager->getRepository('app\models\Entity\Member')->findAll(); //problème resolu avec le passe du namespace
+
+        $this->generateView($members=array()); //doit renvoyer un tableau à generate view à voir comment resoudre ça.
+
     }
     public function read()
     {
