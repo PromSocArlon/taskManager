@@ -71,7 +71,7 @@ abstract class Controller {
         $controller = str_replace("Controller", "", $classController);
 
         $view = new view($actionView, $controller);
-        $view->generate($data);
+        $view->generate($data[0]);
     }
 
     protected function redirect($controller, $action = null)

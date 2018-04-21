@@ -5,7 +5,7 @@ use app\models\DAO\MemberDAO;
 
 class MemberController extends \app\core\Controller
 {
-    private $member;
+    private $member = array();
     private $storage;
 
     public function __construct($entityManager)
@@ -24,12 +24,24 @@ class MemberController extends \app\core\Controller
         ];
         $this->setPermissions($perms);
     }
-
+public function object_to_array()
+{
+    if (is_array($this) || is_object($this))
+    {
+        $result = array();
+        foreach ($this as $key => $value)
+        {
+            $resultat[$key] = $this -> $key;
+        }
+        return $result;
+    }
+    return $this;
+}
     public function index()
     {
-        $members = $this->entityManager->getRepository('app\models\Entity\Member')->findAll(); //problème resolu avec le passe du namespace
+       $this->member[] = $this->entityManager->getRepository('app\models\Entity\Member')->findAll(); //problème resolu avec le passe du namespace
 
-        $this->generateView($members=array()); //doit renvoyer un tableau à generate view à voir comment resoudre ça
+        $this->generateView($this->member); //doit renvoyer un tableau à generate view à voir comment resoudre ça
 
     }
     public function read()
