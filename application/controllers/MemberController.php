@@ -1,11 +1,10 @@
 <?php
 namespace app\controllers;
-
+use app\models;
 use app\models\DAO\MemberDAO;
-
 class MemberController extends \app\core\Controller
 {
-    private $member = array();
+    private $member;
     private $storage;
 
     public function __construct($entityManager)
@@ -27,8 +26,8 @@ class MemberController extends \app\core\Controller
 
     public function index()
     {
-       $this->member[] = $this->entityManager->getRepository('app\models\Entity\Member')->findAll(); //problème resolu avec le passe du namespace
-
+       $this->member [0] = $this->entityManager->getRepository('app\models\Entity\Member')->findAll(); //problème resolu avec le passe du namespace
+                            $this->entityManager->flush();
         $this->generateView($this->member); //doit renvoyer un tableau à generate view à voir comment resoudre ça
 
     }
@@ -37,9 +36,10 @@ class MemberController extends \app\core\Controller
         try
         {
             $this->member = $this->model('member');
-            $this->member->setID($this->request->getParameter('id'));
-            $this->storage = new MemberDAO();
-            $this->member = $this->storage->read($this->member);
+             $this->member->setID($this->request->getParameter('id'));
+            $this->member[] = $this->entityManager->find('app\models\Entity\Member',0);
+            //$this->storage = new MemberDAO();
+            //$this->member = $this->storage->read($this->member);
         }
         catch(\Exception $ex)
         {
