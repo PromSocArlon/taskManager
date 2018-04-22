@@ -26,16 +26,20 @@ class MemberDAO extends \app\core\DAO
      * @param Member $object
      * @return mixed
      */
-    protected function objectToArray($object)
+    public function  objectToArray($object)
     {
-        $array['member'] = [];
+
+        $array = [];
 
         if ($object != null) {
-            $MemberArray = $object->entityToArray();
 
-            foreach ($MemberArray as $key => $value) {
-                $array['member'][$key] = $value;
+            foreach ((array)$object as $key => $value) {
+
+              $key=substr($key,26,5);
+                $array[$key] = $value;
+
             }
+
         }
 
         return $array;

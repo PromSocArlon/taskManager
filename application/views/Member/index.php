@@ -10,7 +10,7 @@ include(__DIR__ . '\..\_shared\header.php');
     <thead>
         <tr>
             <?php
-           var_dump($data);
+           //var_dump($data);
             $members = $data;
             foreach ($members[0] as $key=>$value){
                 echo '<th scope="col">' . $key . '</th>';
