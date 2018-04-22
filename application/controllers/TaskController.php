@@ -38,16 +38,21 @@ class TaskController extends \app\core\Controller
 
     public function read()
     {
-        $this->model->setID($this->request->getParameter('id'));
-        $this->model = $this->dao->read($this->model);
-        $this->generateView($this->model);
+        $this->entityManager->find("task", (int)$this->request->getParameter('id'));
+
+        //$this->model->setID($this->request->getParameter('id'));
+        //$this->model = $this->dao->read($this->model);
+        //$this->generateView($this->model);
     }
 
     public function update()
     {
-        $this->initializeModel();
-        $this->dao->update($this->model);
-        $this->generateView();
+        $this->entityManager->find($this->model);
+        $this->entityManager->close();
+        $this->entityManager->flush();
+        //$this->initializeModel();
+        //$this->dao->update($this->model);
+        //$this->generateView();
     }
 
     public function delete()

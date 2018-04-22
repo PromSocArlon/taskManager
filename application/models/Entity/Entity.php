@@ -4,7 +4,12 @@ namespace app\models\Entity;
 abstract class Entity {
 
     //TODO: set to protected ?
-	public $id;
+    /**
+     * @id
+     * @Column(type="integer")
+     * @GeneratedValue
+     */
+	private $id;
 	
 	public function getID()
     {
