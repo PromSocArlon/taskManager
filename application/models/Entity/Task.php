@@ -14,13 +14,13 @@ class Task extends Entity
     const IN_PROGRESS = 2;
     const COMPLETED = 3;
 
-    /** @Column(length=100) * */
+    /** @Column(type="string", length=100) * */
     private $name;
     /** @Column(type="smallint") * */
     private $priority;
     /** @Column(type="text") * */
     private $description;
-    /** @Column(length=20) * */
+    /** @Column(type="string", length=20) * */
     private $status;
 
     public function __construct()
