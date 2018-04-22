@@ -16,6 +16,7 @@ include(__DIR__ . '\..\_shared\header.php');
                 foreach ($members[0] as $key => $value)
                 {
                     echo '<th scope="col">' . $key. '</th>';
+
                 }
 
          ?>
@@ -26,10 +27,11 @@ include(__DIR__ . '\..\_shared\header.php');
 
         foreach ($members as $member=>$value) {
 
-            $profilePath = '?controller=member&action=read&id='. $members[0][0];
+
             echo '<tr>';
             foreach ($value as $key1=>$value1) {
                 echo '<td>' . $value1 . '</td>';
+                $profilePath = '?controller=member&action=read&id='.$value[0];
             }
             echo '<td><a href=' . $profilePath . '>edit</a></td>';
             echo '</tr>';
