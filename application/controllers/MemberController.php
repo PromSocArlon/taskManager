@@ -26,8 +26,15 @@ class MemberController extends \app\core\Controller
 
     public function index()
     {
-       $this->member [0] = $this->entityManager->getRepository('app\models\Entity\Member')->findAll(); //problème resolu avec le passe du namespace
 
+       $this->member[]  = $this->entityManager->getRepository('app\models\Entity\Member')->findAll(); //problème resolu avec le passe du namespace
+        $this->toArray = new MemberDAO(); //juste pour faire appel à la methode objectToArray
+
+        $this->member[]= $this->toArray->objectToArray($this->member);//tansforme l'objet en key=>value
+        foreach ($this->member[0] as $key => $value)
+        {
+        $this->member[$key]= $this->toArray->objectToArray($value);;
+        }
         $this->generateView($this->member); //doit renvoyer un tableau à generate view à voir comment resoudre ça
 
     }
@@ -37,13 +44,9 @@ class MemberController extends \app\core\Controller
         {
             $this->member  = new Member();;
             $this->member->setID($this->request->getParameter('id'));
-
             $this->member = $this->entityManager->getRepository('app\models\Entity\Member')->find($this->request->getParameter('id'));
-
-           $this->toArray = new MemberDAO();
-
-            $this->member= $this->toArray->objectToArray($this->member);
-
+           $this->toArray = new MemberDAO(); //juste pour faire appel à la methode objectToArray
+            $this->member= $this->toArray->objectToArray($this->member);//tansforme l'objet en key=>value
 
         }
         catch(\Exception $ex)
