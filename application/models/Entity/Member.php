@@ -1,14 +1,29 @@
 <?php
+
 namespace app\models\Entity;
 
-class Member extends Entity {
-
+/**
+ * @Entity
+ * @Table(name="tbl_member")
+ **/
+class Member extends Entity
+{
+    /**
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue(strategy="AUTO")
+     */
+    public $id;
+    /** @Column(type="string") * */
     private $login;
+    /** @Column(type="string") * */
     private $password;
+    /** @Column(type="string") * */
     private $mail;
+    /** @Column(type="integer") * */
     private $teamLeader;
+    /** @Column(type="integer") * */
     private $team;
-
 
     /**
      * @param array $task
@@ -16,7 +31,6 @@ class Member extends Entity {
     public function setTask($task)
     {
         $this->task = $task;
-
     }
 
     /**
@@ -43,39 +57,43 @@ class Member extends Entity {
         $this->team = $team;
     }
 
-    public function setLogin($new_login) {
+    public function setLogin($new_login)
+    {
         $this->login = $new_login;
     }
-    public function getLogin() {
+
+    public function getLogin()
+    {
         return $this->login;
     }
 
-
-    public function setPassword($new_password) {
+    public function setPassword($new_password)
+    {
         $this->password = $new_password;
     }
-    public function getPassword() {
+
+    public function getPassword()
+    {
         return $this->password;
     }
 
-
-    public function setMail($new_mail) {
-        $this->mail= $new_mail;
+    public function setMail($new_mail)
+    {
+        $this->mail = $new_mail;
     }
-    public function getMail() {
+
+    public function getMail()
+    {
         return $this->mail;
     }
 
-
-    public function setTeamLeader($new_teamLeader) {
-        $this->teamLeader= $new_teamLeader;
+    public function setTeamLeader($new_teamLeader)
+    {
+        $this->teamLeader = $new_teamLeader;
     }
-    public function getTeamLeader() {
+
+    public function getTeamLeader()
+    {
         return $this->teamLeader;
     }
-
-    public function entityToArray() {
-        return get_object_vars($this);
-    }
-
 }

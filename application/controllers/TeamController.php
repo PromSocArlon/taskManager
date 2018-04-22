@@ -10,8 +10,9 @@ class TeamController extends \app\core\Controller
     private $team;
     private $storage;
 
-    public function __construct()
+    public function __construct($entityManager)
     {
+        parent::__construct($entityManager);
         $perms = [
             'index' => ['public' => true, 'connect' => true],
             'save' => ['public' => true, 'connect' => true],
