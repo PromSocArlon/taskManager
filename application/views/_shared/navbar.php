@@ -35,7 +35,7 @@
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
                         <a class="dropdown-item" href="?controller=member&action=index">Index</a>
                         <a class="dropdown-item" href="?controller=home&action=register">Register</a>
-                        <a class="dropdown-item" href="?controller=member&action=connexion">Connexion</a>
+                        <a class="dropdown-item" href="?controller=home&action=login">Connexion</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">

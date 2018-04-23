@@ -24,10 +24,10 @@
         </div>
         <div class="form-group">
             <legend>Your team:</legend>
-            <label for="radio"><?= $member['team']; ?></label>
+            <label for="radio"><?= $member['idTeam']; ?></label>
         </div>
-        <a href="?controller=home&action=home"><button> Return home</button></a>
-        <a href="?controller=home&action=edit"><button> Edit your profil</button></a>
+        <a href="?controller=member&action=edit&id=<?php echo $member['id'] ?>" class="btn btn-primary">Edit</a>
+        <a href="?controller=member&action=delete&id=<?php echo $member['id'] ?>" class="btn btn-danger">Delete</a>
     </form>
 </div>
 

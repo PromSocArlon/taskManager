@@ -22,7 +22,7 @@ class Member extends Entity
     /** @Column(type="integer") * */
     private $teamLeader;
     /** @Column(type="integer") * */
-    private $team;
+    private $idTeam;
 
     /**
      * @param array $task
@@ -45,7 +45,7 @@ class Member extends Entity
      */
     public function getTeam()
     {
-        return $this->team;
+        return $this->idTeam;
     }
 
     /**
@@ -53,7 +53,7 @@ class Member extends Entity
      */
     public function setTeam($team)
     {
-        $this->team = $team;
+        $this->idTeam = $team;
     }
 
     public function setLogin($new_login)
@@ -94,5 +94,10 @@ class Member extends Entity
     public function getTeamLeader()
     {
         return $this->teamLeader;
+    }
+
+    public function toArray()
+    {
+        return get_object_vars($this);
     }
 }
