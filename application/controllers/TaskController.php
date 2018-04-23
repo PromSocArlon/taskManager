@@ -1,4 +1,5 @@
 <?php
+
 namespace app\controllers;
 
 use app\models\DAO\TaskDAO;
@@ -38,7 +39,12 @@ class TaskController extends \app\core\Controller
 
     public function read()
     {
-        $this->entityManager->find("task", (int)$this->request->getParameter('id'));
+        $taskRepository = $this->entityManager->getRepository("app\models\Entity\Task");
+        $taskId = $this->request->getParameter('id');
+        $taskObject = $taskRepository->find($taskId);
+        $taskArray = $taskObject->entityToArray();
+        $taskArray['id'] = $taskId;
+        $this->generateView($this->generateView($taskArray));
 
         //$this->model->setID($this->request->getParameter('id'));
         //$this->model = $this->dao->read($this->model);
