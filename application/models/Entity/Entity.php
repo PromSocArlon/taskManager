@@ -16,7 +16,7 @@ abstract class Entity {
      * @Column(type="guid")
      * @GeneratedValue(strategy="UUID")
      */
-	private $id;
+	public $id;
 	
 	public function getID()
     {

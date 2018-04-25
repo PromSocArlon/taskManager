@@ -71,12 +71,10 @@ class TaskController extends \app\core\Controller
     public function save()
     {
         $this->initializeModel();
-        // get last id add 1 and insert in object task
-        $this->model->setID($this->dao->getLastId('task') + 1);
 
-        print_r($this->model);
+        $this->entityManager->persist($this->model);
+        $this->entityManager->flush();
 
-        $this->dao->create($this->model);
         $this->generateView();
     }
 
