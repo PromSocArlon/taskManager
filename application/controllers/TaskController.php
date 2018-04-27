@@ -98,7 +98,5 @@ class TaskController extends \app\core\Controller
         $this->model->setStatus($this->request->getParameter('status'));
 
         print_r($this->model);
-        //$this->task->addStatus(0, '0');
-        //$this->task->addSubTask(0);
     }
 }

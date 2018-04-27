@@ -12,9 +12,9 @@ abstract class Entity {
 
     //TODO: set to protected ?
     /**
-     * @id
-     * @Column(type="guid")
-     * @GeneratedValue(strategy="UUID")
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue(strategy="AUTO")
      */
 	public $id;
 	
