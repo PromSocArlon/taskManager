@@ -39,16 +39,11 @@ class TaskController extends \app\core\Controller
 
     public function read()
     {
-        $taskRepository = $this->entityManager->getRepository("app\models\Entity\Task");
         $taskId = $this->request->getParameter('id');
-        $taskObject = $taskRepository->find($taskId);
+        $taskObject = $this->entityManager->getRepository("app\models\Entity\Task")->find($taskId);
         $taskArray = $taskObject->entityToArray();
         $taskArray['id'] = $taskId;
-        $this->generateView($this->generateView($taskArray));
-
-        //$this->model->setID($this->request->getParameter('id'));
-        //$this->model = $this->dao->read($this->model);
-        //$this->generateView($this->model);
+        $this->generateView($taskArray);
     }
 
     public function update()
