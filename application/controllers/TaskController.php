@@ -64,7 +64,9 @@ class TaskController extends \app\core\Controller
     public function delete()
     {
         $this->model->setID($this->request->getParameter('id'));
-        $this->dao->delete($this->model);
+        $this->entityManager->remove($this->model);
+        $this->entityManager->flush();
+        //$this->dao->delete($this->model);
         $this->generateView();
     }
 
