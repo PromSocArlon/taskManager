@@ -32,9 +32,7 @@ class TaskController extends \app\core\Controller
 
     public function edit()
     {
-        $this->model->setID($this->request->getParameter('id'));
-        $this->model = $this->dao->read($this->model);
-        $this->generateView($this->model);
+		$this->read();
     }
 
     public function read()
@@ -48,12 +46,17 @@ class TaskController extends \app\core\Controller
 
     public function update()
     {
-        $this->entityManager->find($this->model);
-        $this->entityManager->close();
-        $this->entityManager->flush();
-        //$this->initializeModel();
-        //$this->dao->update($this->model);
-        //$this->generateView();
+		$taskId = $this->request->getParameter('id');
+        $taskObject = $this->entityManager->getRepository("app\models\Entity\Task")->find($taskId);	
+		
+		$taskObject->setID($this->request->getParameter('id'));
+        $taskObject->setName($this->request->getParameter('name'));
+        $taskObject->setPriority($this->request->getParameter('priority'));
+        $taskObject->setDescription($this->request->getParameter('description'));
+        $taskObject->setStatus($this->request->getParameter('status'));
+		
+		$this->entityManager->flush();
+        $this->generateView();
     }
 
     public function delete()
