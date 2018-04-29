@@ -5,7 +5,7 @@
 <br>
 <p><b>Name:</b> <?= $this->clean($data['team']->getName()) ?></p>
 <br>
-<p><b>Leader:</b> <?= $this->clean($data['team']->getLeader()) ?></p>
+<p><b>Leader:</b> <?= ( is_null($data['team']->getLeader())) ? '': $this->clean($data['team']->getLeader()->getLogin()) ?></p>
 <br>
 
 <table class="table table-hover">
@@ -18,18 +18,20 @@
     </thead>
     <tbody>
     <?php
-    if (empty($data['members'])) {
+    if ($data['team']->getMembers()->count()==0) {
         echo '<tr>';
         echo '<th><p><i>No members in this team.</i></p></th>';
         echo '</tr>';
+    }else {
+        foreach ($data['team']->getMembers() as $member) {
+            echo '<tr>';
+            echo '<th>' .  $this->clean($member->getId()) . '</th>';
+            echo '<th>' .  $this->clean($member->getLogin()) . '</th>';
+            echo '<th>' . (is_null($member->getMail())) ? " " : $this->clean($member->getMail())  . '</th>';
+            echo '</tr>';
+        }
     }
-    foreach ($data['members'] as $row) {
-        echo '<tr>';
-        echo '<th>' . $row['id'] . '</th>';
-        echo '<th>' . $row['login'] . '</th>';
-        echo '<th>' . $row['mail'] . '</th>';
-        echo '</tr>';
-    }
+
     ?>
     </tbody>
 </table>
@@ -48,22 +50,24 @@
     </thead>
     <tbody>
     <?php
-    if (empty($data['tasks'])) {
+    if ($data['team']->getTasks()->count()==0) {
         echo '<tr>';
         echo '<th><p><i>No tasks in this team.</i></p></th>';
         echo '</tr>';
+    }else {
+        foreach ($data['team']->getTasks() as $task) {
+            echo '<tr>';
+            echo '<th>' . $task->getId() . '</th>';
+            echo '<th>' . $task->getName() . '</th>';
+            echo '<th>' . $task->getPriority() . '</th>';
+            echo '<th>' . $task->getDescription() . '</th>';
+            echo '<th>  </th>';
+            echo '<th>  </th>';
+            echo '<th>  </th>';
+            echo '</tr>';
+        }
     }
-    foreach ($data['tasks'] as $row) {
-        echo '<tr>';
-        echo '<th>' . $row['id'] . '</th>';
-        echo '<th>' . $row['name'] . '</th>';
-        echo '<th>' . $row['priority'] . '</th>';
-        echo '<th>' . $row['description'] . '</th>';
-        echo '<th>' . $row['status'] . '</th>';
-        echo '<th>' . $row['subtasks'] . '</th>';
-        echo '<th>' . $row['day'] . '</th>';
-        echo '</tr>';
-    }
+
     ?>
     </tbody>
 </table>
