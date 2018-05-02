@@ -41,6 +41,7 @@ class TaskController extends \app\core\Controller
         $taskObject = $this->entityManager->getRepository("app\models\Entity\Task")->find($taskId);
         $taskArray = $taskObject->entityToArray();
         $taskArray['id'] = $taskId;
+
         $this->generateView($taskArray);
     }
 
@@ -80,8 +81,13 @@ class TaskController extends \app\core\Controller
 
     public function index()
     {
-        $tasks = $this->dao->read();
-
+        $tasks = [];
+        $taskObjects = $this->entityManager->getRepository("app\models\Entity\Task")->findAll();
+        foreach ($taskObjects as $taskObject)
+        {
+            $tasks[] = $taskObject->entityToArray();
+        }
+        
         // if there is no tasks in the database
         if ($tasks == false) {
             $tasks = array();
