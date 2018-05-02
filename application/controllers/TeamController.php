@@ -2,12 +2,10 @@
 
 namespace app\controllers;
 
-use app\models\DAO\TeamDAO;
 use app\models\entity\team;
 
 class TeamController extends \app\core\Controller
 {
-
     public function __construct($entityManager)
     {
         parent::__construct($entityManager);
@@ -21,80 +19,79 @@ class TeamController extends \app\core\Controller
             'update' => ['public' => true, 'connect' => true],
             'edit' => ['public' => true, 'connect' => true],
         ];
-            $this->setPermissions($perms);
-            $this->storage = new TeamDAO;
+        $this->setPermissions($perms);
     }
 
     public function index()
     {
-        $teams = $this->storage->read();
-        $counts=[];
-        foreach ( $teams as $team)
-        {
-            $counts[$team['id']]['Members']=$this->storage->getCountOfMembersFromTeam($team['id']);
-            $counts[$team['id']]['Tasks']=$this->storage->getCountOfTasksFromTeam($team['id']);
-        }
-        $this->generateView(['teams' => $teams,'counts'=> $counts]);
-    }
-
-    public function save()
-    {
-        $this->initializeModel();
-        $this->storage->create($this->model);
-        $this->generateView();
+        $teams = $this->entityManager->getRepository('app\models\entity\team')->findAll();
+        $this->generateView(['teams' => $teams]);
     }
 
     public function initializeModel()
     {
-        $this->model = new team;
-        if ($this->request->existParameter('id')) {
-            $this->model->setID($this->request->getParameter('id'));
-        }
         if ($this->request->existParameter('name')) {
             $this->model->setName($this->request->getParameter('name'));
         }
         if ($this->request->existParameter('leader')) {
-            $this->model->setLeader($this->request->getParameter('leader'));
+            $result = $this->entityManager->getRepository('app\models\entity\member')->find($this->request->getParameter('leader'));
+            $this->model->setLeader($result);
+        }
+        if ($this->request->existParameter('members')) {
+            $members = [];
+            foreach ($this->request->getParameter('members') as $row) {
+                $result = $this->entityManager->getRepository('app\models\entity\member')->find($row);
+                $members[] = $result;
+            }
+            $this->model->setMembers($members);
+        }
+        if ($this->request->existParameter('tasks')) {
+            $tasks = [];
+            foreach ($this->request->getParameter('tasks') as $row) {
+                $result = $this->entityManager->getRepository('app\models\entity\task')->find($row);
+                $tasks[] = $result;
+            }
+            $this->model->setTasks($tasks);
         }
     }
 
     public function create()
     {
-        $this->generateView();
+        $tasks = $this->entityManager->getRepository('app\models\entity\task')->findAll();
+        $members = $this->entityManager->getRepository('app\models\entity\member')->findAll();
+        $this->generateView([
+            'tasks' => $tasks,
+            'members' => $members
+        ]);
     }
 
     public function read()
     {
-        $this->initializeModel();
-        $result = $this->storage->read($this->model);
-        $members = $this->storage->getAllMembersFromTeam($this->model);
-        $tasks = $this->storage->getAllTasksFromTeam($this->model);
-        if ($result != false) {
-            $this->arrayToObject($result);
+        $result = $this->getTeamFromId();
+        $tasks = $this->entityManager->getRepository('app\models\entity\task')->findAll();
+        $members = $this->entityManager->getRepository('app\models\entity\member')->findAll();
+
+        if (!(is_null($result))) {
             $this->generateView([
-                'team' => $this->model,
-                'members' => $members,
-                'tasks' => $tasks
+                'team' => $result,
+                'tasks' => $tasks,
+                'members' => $members
             ]);
         } else {
             throw  new \Exception("Team doesn't exist.");
         }
     }
 
-    private function arrayToObject($array)
+    public function update()
     {
-        $this->model->setId($array['id']);
-        $this->model->setName($array['name']);
-        $this->model->setLeader($array['leader']);
-    }
+        $result = $this->getTeamFromId();
+        if (!is_null($result)) {
+            $this->model = $result;
+            $this->initializeModel();
 
-    public function edit()
-    {
-        $this->initializeModel();
-        $result = $this->storage->read($this->model);
-        if ($result != false) {
-            $this->arrayToObject($result);
-            $this->generateView(['team' => $this->model]);
+            $this->entityManager->persist($this->model);
+            $this->entityManager->flush();
+            $this->generateView();
         } else {
             throw  new \Exception("Team doesn't exist.");
         }
@@ -102,23 +99,49 @@ class TeamController extends \app\core\Controller
 
     public function delete()
     {
-        $this->initializeModel();
-        $result = $this->storage->read($this->model);
-        if ($result != false) {
-            $this->arrayToObject($result);
-            $this->storage->delete($this->model);
-            $this->storage->removeAllMembersFromTeam($this->model);
-            $this->storage->removeAllTasksFromTeam($this->model);
-            $this->generateView(array('name' => $this->model));
+        $result = $this->getTeamFromId();
+        if (!is_null($result)) {
+            $this->entityManager->remove($result);
+            $this->entityManager->flush($result);
+            $this->generateView(['team' => $result]);
         } else {
             throw  new \Exception("Team doesn't exist.");
         }
     }
 
-        public function update()
+    private function getTeamFromId()
     {
+        if (!$this->request->existParameter('id')) {
+            throw new \Exception('Invalid request');
+        }
+        return $this->entityManager->find(Team::class, $this->request->getParameter('id'));
+    }
+
+    public function save()
+    {
+        $this->model = new team();
         $this->initializeModel();
-        $this->storage->update($this->model);
+        $this->entityManager->persist(($this->model));
+        $this->entityManager->flush();
         $this->generateView();
     }
+
+    public function edit()
+    {
+        $result = $this->getTeamFromId();
+
+        $tasks = $this->entityManager->getRepository('app\models\entity\task')->findAll();
+        $members = $this->entityManager->getRepository('app\models\entity\member')->findAll();
+        if (!is_null($result)) {
+            $this->generateView([
+                'team' => $result,
+                'tasks' => $tasks,
+                'members' => $members
+            ]);
+        } else {
+            throw  new \Exception("Team doesn't exist.");
+        }
+    }
+
+
 }
