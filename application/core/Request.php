@@ -16,7 +16,7 @@ class Request
      * @return string parameter's value
      * @throws \Exception if parameter doesn't exist
      */
-    public function getParameter(string $parameterName): string
+    public function getParameter(string $parameterName)
     {
         if ($this->existParameter($parameterName)) {
             return $this->parameters[$parameterName];
