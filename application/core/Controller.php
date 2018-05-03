@@ -3,6 +3,9 @@
 namespace app\core;
 
 use Doctrine\ORM\EntityManager;
+use app\core\exceptions\ActionNotDefinedException;
+use app\core\exceptions\Noitpecxe;
+use app\core\exceptions\UnauthorizedException;
 
 abstract class Controller {
 
@@ -51,11 +54,10 @@ abstract class Controller {
                 $this->action = $action;
                 $this->{$this->action}();
             } else {
-                throw new \HttpException("Access denied", 401);
+                throw new UnauthorizedException("Access denied !");
             }
         } else {
-            $classController = get_class($this);
-            throw new \Exception("Action '$action' not defined in the class $classController");
+            throw new ActionNotDefinedException("Action ".$action." not defined !");
         }
     }
 
@@ -84,16 +86,16 @@ abstract class Controller {
 
     /**
      * Set the permission for the controller
-     * @param array $t_perm the array of permission for the controller
+     * @param array $permissions the array of permission for the controller
      * @throws \Exception if $t_perm not set
      */
     protected function setPermissions(array $permissions) : void
 	{
 		if ($permissions!=null) {
             $this->permissions = $permissions;
-        }
+         }
 	    else {
-		    throw new \Exception("Permission not set !");
+		    throw new \RuntimeException("Permission setting problem !",500);
         }
 	}
 

@@ -1,17 +1,11 @@
 <?php
 namespace app\controllers;
 use app\models\Entity\Member;
-use app\models\DAO\MemberDAO;
+
 class MemberController extends \app\core\Controller
 {
     private $member;
-
-    public function initializeModel()
-    {
-        $this->member->setLogin($this->request->getParameter('login'));
-        $this->member->setPassword($this->request->getParameter('password'));
-        $this->member->setMail($this->request->getParameter('mail'));
-    }
+    private $storage;
 
     public function __construct($entityManager)
     {

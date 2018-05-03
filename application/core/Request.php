@@ -21,7 +21,7 @@ class Request
         if ($this->existParameter($parameterName)) {
             return $this->parameters[$parameterName];
         } else {
-            throw new \Exception("Missing parameter '$parameterName'.");
+            throw new \InvalidArgumentException("Missing parameter '$parameterName'.");
         }
     }
 

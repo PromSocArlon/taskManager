@@ -5,5 +5,6 @@
 
 
         <a href="index.php?action=login">Login !</a>
-        <button><a href="?controller=home&action=register"> Pas encore inscrit ?</a></button>
+        <button onclick="window.location.href='/taskManager/?controller=home&action=register'"> Pas encore inscrit ? </button>
+
     </div>
