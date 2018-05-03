@@ -82,7 +82,7 @@ class TaskController extends \app\core\Controller
     public function index()
     {
         $tasks = [];
-        $taskObjects = $this->entityManager->getRepository("app\models\Entity\Task")->findAll();
+        $taskObjects = $this->entityManager->getRepository(get_class($this->model))->findAll();
         foreach ($taskObjects as $taskObject)
         {
             $tasks[] = $taskObject->entityToArray();
