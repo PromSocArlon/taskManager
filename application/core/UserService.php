@@ -4,8 +4,6 @@ namespace app\core;
 use app\models\DAO\MemberDAO;
 use app\models\Entity\Member;
 
-require_once 'functions.php';
-
 class UserService
 {
     /**
