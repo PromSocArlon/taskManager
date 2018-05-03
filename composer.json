@@ -1,21 +1,15 @@
 {
-  "name":"TaskManager",
-  "licence":"MIT",
-  "type":"project",
-  "description":"A tool to manage tasks",
-  "autoload":{
-    "psr-4":{"app\\":"application/"}
+  "name": "TaskManager",
+  "licence": "MIT",
+  "type": "project",
+  "description": "A tool to manage tasks",
+  "autoload": {
+    "psr-4": {
+      "app\\": "application/"
+    }
   },
-  "require":{
+  "require": {
     "php": "^7.1",
-    "ext-pdo": "*",
-    "doctrine/annotations": "~1.5",
-    "doctrine/cache": "~1.6",
-    "doctrine/collections": "^1.4",
-    "doctrine/common": "^2.7.1",
-    "doctrine/dbal": "^2.6",
-    "doctrine/instantiator": "~1.1",
-    "symfony/console": "~3.0|~4.0",
-    "doctrine/ORM":"*"
+    "doctrine/ORM": "^2.6"
   }
 }
