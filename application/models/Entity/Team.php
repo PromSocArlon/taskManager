@@ -2,6 +2,10 @@
 
 namespace app\models\Entity;
 
+/**
+ * @Entity
+ * @Table(name="tbl_team")
+ **/
 class Team extends Entity
 {
 

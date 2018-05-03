@@ -1,7 +1,9 @@
 <?php
+
 namespace app\models\DAO;
 
-class TaskTeamDAO extends \app\core\DAO
+
+class MemberTaskDAO
 {
     /**
      * @param array $object
@@ -9,7 +11,7 @@ class TaskTeamDAO extends \app\core\DAO
      */
     protected function objectToArray($object)
     {
-        $array['task_team'] = [];
+        $array['task'] = [];
 
         if ($object != null) {
             $TaskArray = $object->entityToArray();
@@ -17,10 +19,10 @@ class TaskTeamDAO extends \app\core\DAO
             foreach ($TaskArray as $key => $value) {
 
                 if ($key == 'day' and !empty($value)) {
-                    $array['task_team']['day'] = 1;
+                    $array['task']['day'] = 1;
                 } elseif (is_array($value)) {
                     foreach ($value as $subObject) {
-                        $array['task_team']['interSubTask'][] = [
+                        $array['task']['interSubTask'][] = [
                             'idTask' => $TaskArray['id'],
                             'idSubTask' => $subObject->entityToArray()['id']
                         ];

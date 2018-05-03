@@ -35,4 +35,25 @@ class TeamDAO extends \app\core\DAO
         }
         return $array;
     }
+
+    protected function arrayToArrayOfObject($array)
+    {
+        $result['team'] = [];
+
+        if ($array != null) {
+
+            foreach ($array as $subArray) {
+
+                $team = new Team();
+                if ($subArray['id'] != NULL) $team->setID($subArray['id']);
+                if ($subArray['name'] != NULL) $team->setName($subArray['name']);
+                if ($subArray['leader'] != NULL) $team->setLeader($subArray['leader']);
+                $result['task'][] = $team;
+
+            }
+
+        }
+
+        return $result;
+    }
 }

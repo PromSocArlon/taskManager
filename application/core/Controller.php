@@ -9,6 +9,8 @@ abstract class Controller {
      * @var EntityManager
      */
     protected $entityManager;
+    protected $model;
+    //protected $dao;
 
     private $action;
     /**
