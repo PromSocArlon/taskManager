@@ -1,28 +1,21 @@
 <?php
+
 namespace app\models\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity
- * @Table(name="tbl_member")
+ * @ORM\Entity
+ * @ORM\Table(name="tbl_member")
  **/
 class Member extends Entity
 {
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
-     */
-    public $id;
-    /** @Column(type="string") * */
+    /** @ORM\Column(type="string") * */
     private $login;
-    /** @Column(type="string") * */
+    /** @ORM\Column(type="string") * */
     private $password;
-    /** @Column(type="string") * */
+    /** @ORM\Column(type="string") * */
     private $mail;
-    /** @Column(type="integer") * */
-    private $teamLeader;
-    /** @Column(type="integer") * */
-    private $idTeam;
 
     /**
      * @param array $task
@@ -38,22 +31,6 @@ class Member extends Entity
     public function getTask()
     {
         return $this->task;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTeam()
-    {
-        return $this->idTeam;
-    }
-
-    /**
-     * @param mixed $team
-     */
-    public function setTeam($team)
-    {
-        $this->idTeam = $team;
     }
 
     public function setLogin($new_login)
@@ -84,16 +61,6 @@ class Member extends Entity
     public function getMail()
     {
         return $this->mail;
-    }
-
-    public function setTeamLeader($new_teamLeader)
-    {
-        $this->teamLeader = $new_teamLeader;
-    }
-
-    public function getTeamLeader()
-    {
-        return $this->teamLeader;
     }
 
     public function toArray()
