@@ -14,7 +14,6 @@ abstract class Controller {
      */
     protected $entityManager;
     protected $model;
-    //protected $dao;
 
     private $action;
     /**

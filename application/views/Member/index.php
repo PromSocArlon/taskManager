@@ -1,26 +1,30 @@
 
 <h1>TaskManager Member List</h1>
-
-<table class="table table-hover">
+<?php
+    if($members == NULL) echo 'Aucun membre enregistré!';
+else {
+    ?>
+    <table class="table table-hover">
     <thead>
     <tr>
         <?php
-        foreach ($members[0] as $key=>$value){
+        foreach ($members[0] as $key => $value) {
             echo '<th scope="col">' . $key . '</th>';
         }
         ?>
     </tr>
     </thead>
-<?php
-foreach ($members as $member) {
-    $profilePath = '?controller=member&action=profil&id=' . $member['id'];
-    $readPath = '?controller=member&action=read&id=' . $member['id'];
-    echo '<tr>';
-    foreach ($member as $property) {
-        echo '<td>' . $property . '</td>';
+    <?php
+    foreach ($members as $member) {
+        $profilePath = '?controller=member&action=profil&id=' . $member['id'];
+        $readPath = '?controller=member&action=read&id=' . $member['id'];
+        echo '<tr>';
+        foreach ($member as $property) {
+            echo '<td>' . $property . '</td>';
+        }
+        echo '<td><a href=' . $readPath . '>view</a></td>';
+        echo '<td><a href=' . $profilePath . '>edit</a></td>';
+        echo '</tr>';
     }
-    echo '<td><a href=' . $readPath . '>view</a></td>';
-    echo '<td><a href=' . $profilePath . '>edit</a></td>';
-    echo '</tr>';
+    echo '</table>';
 }
-echo '</table>';

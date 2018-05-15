@@ -5,7 +5,19 @@ use app\models\Entity\Member;
 class MemberController extends \app\core\Controller
 {
     private $member;
-    private $storage;
+
+    public function initializeModel()
+    {
+        if ($this->request->existParameter('login')){
+            $this->member->setLogin($this->request->getParameter('login'));
+        }
+        if ($this->request->existParameter('password')){
+            $this->member->setPassword($this->request->getParameter('password'));
+        }
+        if ($this->request->existParameter('mail')){
+            $this->member->setMail($this->request->getParameter('mail'));
+        }
+    }
 
     public function __construct($entityManager)
     {
@@ -22,21 +34,24 @@ class MemberController extends \app\core\Controller
             'edit' => ['public' => true, 'connect' => true]
         ];
         $this->setPermissions($perms);
+        $this->member = new member();
     }
 
     public function index()
     {
-        $members = $this->entityManager->getRepository('app\models\Entity\Member')->findAll();
-        foreach ($members as $member)
-        {
-            $membersData[] = $member->toArray();
+        $membersData = array();
+        $members = $this->entityManager->getRepository(get_class($this->member))->findAll();
+        if(count($members) != 0) {
+            foreach ($members as $member) {
+                $membersData[] = $member->toArray();
+            }
         }
         $this->generateView(['members' => $membersData]);
     }
 
     public function getMemberData($memberId)
     {
-        $this->member = $this->entityManager->getRepository('app\models\Entity\Member')->find($memberId);
+        $this->member = $this->entityManager->getRepository(get_class($this->member))->find($memberId);
         $memberData = $this->member->toArray();
         return ['member' => $memberData];
     }
@@ -65,7 +80,7 @@ class MemberController extends \app\core\Controller
     public function update()
     {
         $memberId = $this->request->getParameter('id');
-        $this->member = $this->entityManager->getRepository('app\models\Entity\Member')->find($memberId);
+        $this->member = $this->entityManager->getRepository(get_class($this->member))->find($memberId);
         $this->member = $this->initializeModel();
         $this->entityManager->flush();
         $this->generateView();
@@ -73,7 +88,6 @@ class MemberController extends \app\core\Controller
 
     public function save()
     {
-        $this->member = new member();
         $this->initializeModel();
         $this->entityManager->persist($this->member);
         $this->entityManager->flush();
@@ -83,7 +97,7 @@ class MemberController extends \app\core\Controller
 	public function delete()
     {
         $memberId = $this->request->getParameter('id');
-        $this->member = $this->entityManager->getRepository('app\models\Entity\Member')->find($memberId);
+        $this->member = $this->entityManager->getRepository(get_class($this->member))->find($memberId);
         $this->entityManager->remove($this->member);
         $this->entityManager->flush();
         $this->generateView();

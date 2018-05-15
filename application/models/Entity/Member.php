@@ -17,22 +17,6 @@ class Member extends Entity
     /** @ORM\Column(type="string") * */
     private $mail;
 
-    /**
-     * @param array $task
-     */
-    public function setTask($task)
-    {
-        $this->task = $task;
-    }
-
-    /**
-     * @return array
-     */
-    public function getTask()
-    {
-        return $this->task;
-    }
-
     public function setLogin($new_login)
     {
         $this->login = $new_login;
