@@ -1,7 +1,6 @@
 <?php
 namespace app\models\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 
 abstract class Entity {
 
