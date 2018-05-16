@@ -3,26 +3,20 @@
 namespace app\models\Entity;
 
 /**
- * @Entity
- * @Table(name="tbl_member")
+ * @ORM\Entity
+ * @ORM\Table(name="tbl_member")
  **/
 class Member extends Entity
 {
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
-     */
-    public $id;
-    /** @Column(type="string") * */
+    /** @ORM\Column(type="string") * */
     private $login;
-    /** @Column(type="string") * */
+    /** @ORM\Column(type="string") * */
     private $password;
-    /** @Column(type="string") * */
+    /** @ORM\Column(type="string") * */
     private $mail;
-    /** @Column(type="integer") * */
+    /** @ORM\Column(type="integer") * */
     private $teamLeader;
-    /** @Column(type="integer") * */
+    /** @ORM\Column(type="integer") * */
     private $team;
 
     /**
