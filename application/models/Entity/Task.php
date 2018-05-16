@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,10 +24,21 @@ class Task extends Entity
     private $description;
     /** @ORM\Column(type="string", length=20) * */
     private $status;
+    /**
+     * @ORM\ManyToMany(targetEntity=Member::class)
+     * @ORM\JoinTable(name="tbl_member_team")
+     **/
+    private $members;
+    /**
+     * @ORM\ManyToMany(targetEntity=Team::class)
+     * @ORM\JoinTable(name="tbl_task_team")
+     **/
+    private $team;
 
     public function __construct()
     {
-
+        $this->members = new ArrayCollection();
+        $this->team = new ArrayCollection();
     }
 
     /**
@@ -216,6 +228,44 @@ class Task extends Entity
                 $this->status = "Pending";
                 break;
         }
+    }
+
+    public function setMembers(array $member): void
+    {
+        $this->members = $member;
+    }
+
+    public function getMembers()
+    {
+        return $this->members;
+    }
+
+    public function addMember(Member $members): bool
+    {
+        return $this->members->add($members);
+    }
+    public function removeMember(Member $members): bool
+    {
+        return $this->members->removeElement($members);
+    }
+
+    public function setTeam(array $team): void
+    {
+        $this->members = $team;
+    }
+
+    public function getTeam()
+    {
+        return $this->team;
+    }
+
+    public function addTeam(Team $team): bool
+    {
+        return $this->team->add($team);
+    }
+    public function removeTeam(Team $team): bool
+    {
+        return $this->team->removeElement($team);
     }
 
     public function entityToArray()
