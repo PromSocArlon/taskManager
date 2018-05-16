@@ -26,12 +26,11 @@ class Task extends Entity
     private $status;
     /**
      * @ORM\ManyToMany(targetEntity=Member::class)
-     * @ORM\JoinTable(name="tbl_member_team")
+     * @ORM\JoinTable(name="tbl_member_task")
      **/
     private $members;
     /**
-     * @ORM\ManyToMany(targetEntity=Team::class)
-     * @ORM\JoinTable(name="tbl_task_team")
+     * @ORM\ManyToMany(targetEntity=Team::class, mappedBy=Team::class)
      **/
     private $team;
 
