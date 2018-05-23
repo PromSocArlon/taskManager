@@ -2,7 +2,6 @@
 
 namespace app\controllers;
 
-use app\models\DAO\TaskDAO;
 use app\models\Entity\Task;
 
 class TaskController extends \app\core\Controller
@@ -21,8 +20,8 @@ class TaskController extends \app\core\Controller
             'edit' => ['public' => true, 'connect' => true], //TODO:public doit être false mais pour l'instant true
         ];
         $this->setPermissions($perms);
+
         $this->model = new Task();
-        $this->dao = new TaskDAO();
     }
 
     public function create()
