@@ -5,7 +5,7 @@
 			<img src="application\views\Exception\500.jpg" alt="error500">
 		</div>
 		<div class="col-sm">
-			Bad request
+			Internal server error
 		</div>
 	</div>
     <a href="index.php?controller=home&action=index">Home</a>
