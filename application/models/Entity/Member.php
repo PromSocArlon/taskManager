@@ -16,6 +16,10 @@ class Member extends Entity
     private $password;
     /** @ORM\Column(type="string") * */
     private $mail;
+    /** @ORM\Column(type="integer") * */
+    private $teamLeader;
+    /** @ORM\Column(type="integer") * */
+    private $team;
 
     public function setLogin($new_login)
     {

@@ -1,15 +1,14 @@
 <?php
 namespace app\models\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 
 abstract class Entity {
 
     //TODO: set to protected ?
     /**
-     * @ORM\id
+     * @ORM\Id
      * @ORM\Column(type="smallint")
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
 	public $id;
 	
