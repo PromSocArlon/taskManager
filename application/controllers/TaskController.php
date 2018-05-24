@@ -1,4 +1,5 @@
 <?php
+
 namespace app\controllers;
 
 use app\models\DAO\TaskDAO;
@@ -6,12 +7,10 @@ use app\models\Entity\Task;
 
 class TaskController extends \app\core\Controller
 {
-    private $task;
-    private $storage;
-
     //$storage doit etre = 'file' ou 'mysql'
-    public function __construct(/*$storageType*/)
+    public function __construct($entityManager)
     {
+        parent::__construct($entityManager);
         $perms = [
             'index' => ['public' => true, 'connect' => true],
             'create' => ['public' => true, 'connect' => true],
@@ -22,6 +21,8 @@ class TaskController extends \app\core\Controller
             'edit' => ['public' => true, 'connect' => true], //TODO:public doit être false mais pour l'instant true
         ];
         $this->setPermissions($perms);
+        $this->model = new Task();
+        $this->dao = new TaskDAO();
     }
 
     public function create()
@@ -31,126 +32,77 @@ class TaskController extends \app\core\Controller
 
     public function edit()
     {
-        try
-        {
-            $this->task = new Task();
-            $this->task->setID($this->request->getParameter('id'));
-            $this->storage = new TaskDAO();
-            $this->task = $this->storage->read($this->task);
-            $this->generateView($this->task);
-        }
-        catch(\Exception $ex)
-        {
-            handleError($ex);
-        }
+		$this->read();
     }
 
     public function read()
     {
-        try
-        {
-            $this->task = new Task();
-            $this->task->setID($this->request->getParameter('id'));
-            $this->storage = new TaskDAO();
-            $this->task = $this->storage->read($this->task);
-            $this->generateView($this->task);
-        }
-        catch(\Exception $ex)
-        {
-            handleError($ex);
-        }
+        $taskId = $this->request->getParameter('id');
+        $taskObject = $this->entityManager->getRepository("app\models\Entity\Task")->find($taskId);
+        $taskArray = $taskObject->entityToArray();
+        $taskArray['id'] = $taskId;
+
+        $this->generateView($taskArray);
     }
 
     public function update()
     {
-        try
-        {
-            $this->initializeModel();
-            $this->storage = new TaskDAO();
-            $this->storage->update($this->task);
-            $this->generateView();
-        }
-        catch(\Exception $ex)
-        {
-            handleError($ex);
-        }
+		$taskId = $this->request->getParameter('id');
+        $taskObject = $this->entityManager->getRepository("app\models\Entity\Task")->find($taskId);	
+		
+		$taskObject->setID($this->request->getParameter('id'));
+        $taskObject->setName($this->request->getParameter('name'));
+        $taskObject->setPriority($this->request->getParameter('priority'));
+        $taskObject->setDescription($this->request->getParameter('description'));
+        $taskObject->setStatus($this->request->getParameter('status'));
+		
+		$this->entityManager->flush();
+        $this->generateView();
     }
 
     public function delete()
     {
-        try
-        {
-            $this->task = new Task();
-            $this->task->setID($this->request->getParameter('id'));
-            $this->storage = new TaskDAO();
-            $this->storage->delete($this->task);
-            $this->generateView();
-        }
-        catch(\Exception $ex)
-        {
-            handleError($ex);
-        }
+        $taskId = $this->request->getParameter('id');
+        $taskObject = $this->entityManager->getRepository("app\models\Entity\Task")->find($taskId);
+        $this->entityManager->remove($taskObject);
+        $this->entityManager->flush();
+        $this->generateView();
     }
 
     public function save()
     {
-        try
-        {
-            $this->initializeModel();
+        $this->initializeModel();
 
-            $this->storage = new TaskDAO();
+        $this->entityManager->persist($this->model);
+        $this->entityManager->flush();
 
-            // get last id add 1 and insert in object task
-            $this->task->setID($this->storage->getLastId('task') + 1);
-
-            print_r($this->task);
-
-            $this->storage->create($this->task);
-            $this->generateView();
-        }
-        catch(\Exception $ex)
-        {
-            print_r($ex);
-            // handleError($ex);
-        }
+        $this->generateView();
     }
 
     public function index()
     {
-        try
+        $tasks = [];
+        $taskObjects = $this->entityManager->getRepository(get_class($this->model))->findAll();
+        foreach ($taskObjects as $taskObject)
         {
-            $this->storage = new TaskDAO();
-            $tasks = $this->storage->read();
-
-            // if there is no tasks in the database
-            if ($tasks == false) {
-                $tasks = array();
-            }
-            $this->generateView($tasks);
+            $tasks[] = $taskObject->entityToArray();
         }
-        catch(\Exception $ex)
-        {
-            handleError($ex);
+        
+        // if there is no tasks in the database
+        if ($tasks == false) {
+            $tasks = array();
         }
+        $this->generateView($tasks);
     }
 
     public function initializeModel()
     {
-        try
-        {
-            $this->task = new Task();
-            $this->task->setID($this->request->getParameter('id'));
-            $this->task->setName($this->request->getParameter('name'));
-            $this->task->setPriority($this->request->getParameter('priority'));
-            $this->task->setDescription($this->request->getParameter('description'));
+        $this->model->setID($this->request->getParameter('id'));
+        $this->model->setName($this->request->getParameter('name'));
+        $this->model->setPriority($this->request->getParameter('priority'));
+        $this->model->setDescription($this->request->getParameter('description'));
+        $this->model->setStatus($this->request->getParameter('status'));
 
-            print_r($this->task);
-            //$this->task->addStatus(0, '0');
-            //$this->task->addSubTask(0);
-        }
-        catch(\Exception $ex)
-        {
-            throw $ex;
-        }
+        print_r($this->model);
     }
 }

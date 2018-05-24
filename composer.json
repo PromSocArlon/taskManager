@@ -1,12 +1,15 @@
 {
-  "name":"TaskManager",
-  "licence":"MIT",
-  "type":"project",
-  "description":"A tool to manage tasks",
-  "autoload":{
-    "psr-4":{"app\\":"application/"}
+  "name": "TaskManager",
+  "licence": "MIT",
+  "type": "project",
+  "description": "A tool to manage tasks",
+  "autoload": {
+    "psr-4": {
+      "app\\": "application/"
+    }
   },
-  "require":{
-
+  "require": {
+    "php": "^7.1",
+    "doctrine/ORM": "^2.6"
   }
 }

@@ -30,6 +30,15 @@
         <label for="taskDescription">Description:</label>
        <input type="text" class="form-control" value="<?php echo $data['description'] ?>" name="description" required>
     </div>
+    <div class="form-group">
+        <label for="taskStatus">Status:</label>
+        <select name="status" id="taskStatus" class=form-control">
+            <option value="0" <?php if ($data['status'] == 'Pending') { echo 'selected="selected"'; } ?>>Pending</option>
+            <option value="1" <?php if ($data['status'] == 'Planned') { echo 'selected="selected"'; } ?>>Planned</option>
+            <option value="2" <?php if ($data['status'] == 'In Progress') { echo 'selected="selected"'; } ?>>In Progress</option>
+            <option value="3" <?php if ($data['status'] == 'Completed') { echo 'selected="selected"'; } ?>>Completed</option>
+        </select>
+    </div>
 
     <button class="btn btn-primary" type="submit">Update</button>
 </form>

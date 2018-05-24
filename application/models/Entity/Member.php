@@ -1,14 +1,21 @@
 <?php
+
 namespace app\models\Entity;
 
-class Member extends Entity {
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="tbl_member")
+ **/
+class Member extends Entity
+{
+    /** @ORM\Column(type="string") * */
     private $login;
+    /** @ORM\Column(type="string") * */
     private $password;
+    /** @ORM\Column(type="string") * */
     private $mail;
-    private $teamLeader;
-    private $team;
-
 
     /**
      * @param array $task
@@ -16,7 +23,6 @@ class Member extends Entity {
     public function setTask($task)
     {
         $this->task = $task;
-
     }
 
     /**
@@ -27,55 +33,38 @@ class Member extends Entity {
         return $this->task;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTeam()
+    public function setLogin($new_login)
     {
-        return $this->team;
-    }
-
-    /**
-     * @param mixed $team
-     */
-    public function setTeam($team)
-    {
-        $this->team = $team;
-    }
-
-    public function setLogin($new_login) {
         $this->login = $new_login;
     }
-    public function getLogin() {
+
+    public function getLogin()
+    {
         return $this->login;
     }
 
-
-    public function setPassword($new_password) {
+    public function setPassword($new_password)
+    {
         $this->password = $new_password;
     }
-    public function getPassword() {
+
+    public function getPassword()
+    {
         return $this->password;
     }
 
-
-    public function setMail($new_mail) {
-        $this->mail= $new_mail;
+    public function setMail($new_mail)
+    {
+        $this->mail = $new_mail;
     }
-    public function getMail() {
+
+    public function getMail()
+    {
         return $this->mail;
     }
 
-
-    public function setTeamLeader($new_teamLeader) {
-        $this->teamLeader= $new_teamLeader;
-    }
-    public function getTeamLeader() {
-        return $this->teamLeader;
-    }
-
-    public function entityToArray() {
+    public function toArray()
+    {
         return get_object_vars($this);
     }
-
 }

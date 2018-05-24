@@ -1,11 +1,20 @@
 <?php
+
 namespace app\core;
 
+use Doctrine\ORM\EntityManager;
 use app\core\exceptions\ActionNotDefinedException;
 use app\core\exceptions\Noitpecxe;
 use app\core\exceptions\UnauthorizedException;
 
 abstract class Controller {
+
+    /**
+     * @var EntityManager
+     */
+    protected $entityManager;
+    protected $model;
+    //protected $dao;
 
     private $action;
     /**
@@ -21,6 +30,9 @@ abstract class Controller {
 
     public abstract function initializeModel();
 
+    public function __construct($entityManager) {
+        $this->entityManager = $entityManager;
+    }
     /**
      * Set the the request attribute to the request parameter value
      * @param request $request request that called the controller
@@ -94,7 +106,7 @@ abstract class Controller {
 	 */
     public function isAllowed($action)
     {
-        return \app\core\MemberService::isConnected() ?
+        return \app\core\UserService::isConnected() ?
             $this->permissions[$action]['connect'] :
             $this->permissions[$action]['public'];
     }
