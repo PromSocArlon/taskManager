@@ -4,15 +4,19 @@ namespace app\core;
 
 use Doctrine\ORM\EntityManager;
 use app\core\exceptions\ActionNotDefinedException;
-use app\core\exceptions\Noitpecxe;
 use app\core\exceptions\UnauthorizedException;
 
-abstract class Controller {
+abstract class Controller
+{
 
     /**
      * @var EntityManager
      */
     protected $entityManager;
+    /**
+     * @var \Twig_Environment
+     */
+    protected $templateEngine;
     protected $model;
 
     private $action;
@@ -20,23 +24,34 @@ abstract class Controller {
      * @var request $request
      */
     protected $request;
-	/**
-	 * @var [][] $permissions
-	 */
-	private $permissions;
+    /**
+     * @var [][] $permissions
+     */
+    private $permissions;
 
     public abstract function index();
 
     public abstract function initializeModel();
 
-    public function __construct($entityManager) {
-        $this->entityManager = $entityManager;
+    public function __construct()
+    {
+        $classController = get_class($this);
+        $controllerName = str_replace("Controller", "", $classController);
+        $temp = explode('\\', $controllerName);
+        $dirName = end($temp);
+        $this->templateEngine = ConfigLoader::getConfig(
+            'twig',
+            ['viewPath' => 'application' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $dirName . DIRECTORY_SEPARATOR]
+        );
+        $this->entityManager = ConfigLoader::getConfig('doctrine');
     }
+
     /**
      * Set the the request attribute to the request parameter value
      * @param request $request request that called the controller
      */
-    public function setRequest(request $request) : void {
+    public function setRequest(request $request): void
+    {
         if ($request) {
             $this->request = $request;
         }
@@ -47,16 +62,17 @@ abstract class Controller {
      * @param string $action the action to perform
      * @throws \Exception if action not defined
      */
-    public function executeAction(string $action) : void {
-        if (method_exists($this, $action) ) {
-            if($this->isAllowed($action)) {
+    public function executeAction(string $action): void
+    {
+        if (method_exists($this, $action)) {
+            if ($this->isAllowed($action)) {
                 $this->action = $action;
                 $this->{$this->action}();
             } else {
                 throw new UnauthorizedException("Access denied !");
             }
         } else {
-            throw new ActionNotDefinedException("Action ".$action." not defined !");
+            throw new ActionNotDefinedException("Action " . $action . " not defined !");
         }
     }
 
@@ -71,11 +87,9 @@ abstract class Controller {
         if ($action != null) {
             $actionView = $action;
         }
-        $classController = get_class($this);
-        $controller = str_replace("Controller", "", $classController);
-
-        $view = new view($actionView, $controller);
-        $view->generate($data);
+        $actionView .=  '.php';
+        
+        $this->templateEngine->render($actionView, $data);
     }
 
     protected function redirect($controller, $action = null)
@@ -88,21 +102,20 @@ abstract class Controller {
      * @param array $permissions the array of permission for the controller
      * @throws \Exception if $t_perm not set
      */
-    protected function setPermissions(array $permissions) : void
-	{
-		if ($permissions!=null) {
+    protected function setPermissions(array $permissions): void
+    {
+        if ($permissions != null) {
             $this->permissions = $permissions;
-         }
-	    else {
-		    throw new \RuntimeException("Permission setting problem !",500);
+        } else {
+            throw new \RuntimeException("Permission setting problem !", 500);
         }
-	}
+    }
 
-	/**
-	 * check the permission for the given $action
-	 * @param string $action the name of the action
-	 * @return bool the permission of the action
-	 */
+    /**
+     * check the permission for the given $action
+     * @param string $action the name of the action
+     * @return bool the permission of the action
+     */
     public function isAllowed($action)
     {
         return \app\core\MemberService::isConnected() ?

@@ -7,9 +7,10 @@ use app\models\Entity\Task;
 class TaskController extends \app\core\Controller
 {
     //$storage doit etre = 'file' ou 'mysql'
-    public function __construct($entityManager)
+    public function __construct()
     {
-        parent::__construct($entityManager);
+        parent::__construct();
+
         $perms = [
             'index' => ['public' => true, 'connect' => true],
             'create' => ['public' => true, 'connect' => true],

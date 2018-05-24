@@ -6,9 +6,9 @@ use app\models\entity\team;
 
 class TeamController extends \app\core\Controller
 {
-    public function __construct($entityManager)
+    public function __construct()
     {
-        parent::__construct($entityManager);
+        parent::__construct();
         $perms = [
             'index' => ['public' => true, 'connect' => true],
             'save' => ['public' => true, 'connect' => true],

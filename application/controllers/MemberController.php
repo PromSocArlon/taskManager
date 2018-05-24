@@ -19,9 +19,9 @@ class MemberController extends \app\core\Controller
         }
     }
 
-    public function __construct($entityManager)
+    public function __construct()
     {
-        parent::__construct($entityManager);
+        parent::__construct();
 
         $perms = [
             'index' => ['public' => true, 'connect' => true],

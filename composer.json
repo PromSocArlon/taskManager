@@ -10,6 +10,7 @@
   },
   "require": {
     "php": "^7.1",
-    "doctrine/ORM": "^2.6"
+    "doctrine/ORM": "^2.6",
+    "twig/twig": "^2.0"
   }
 }
