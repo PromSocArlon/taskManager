@@ -13,3 +13,8 @@
 - Install composer and copy the file composer.phar in the current directory
 - Launch the following command in the current directory : php composer.phar install
 - Launch the following command in the current directory : vendor\bin\doctrine orm:schema-tool:update --force
+- Launch the following command in the current directory : composer require "twig/twig:^2.0"
+
+### Notepad++ Twig Highlighter
+
+Languages > Define own Language > Import > Twig.xml (/install/Twig.xml)

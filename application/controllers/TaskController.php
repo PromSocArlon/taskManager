@@ -27,6 +27,7 @@ class TaskController extends \app\core\Controller
 
     public function create()
     {
+		// $this->generateView();
         $x = [0 =>'Task'];
         $this->templateEngine->render('create.twig', $x);
     }

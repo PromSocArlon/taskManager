@@ -7,6 +7,7 @@
  */
 ?>
 <h1>Task</h1>
+<!-- <h1>{{ x[0] }}</h1> -->
 <hr>
 <h3>Task <?php echo $data['id']?></h3>
 <br>
