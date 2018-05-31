@@ -1,0 +1,58 @@
+{{ include('_shared/header.php') }}
+
+{{ include('_shared/navbar.php') }}
+
+<br>
+<h1>Task</h1>
+<hr>
+
+<div class="row">
+    <div class="col-sm">
+        <h3>Index</h3>
+    </div>
+    <div class="col-sm-2">
+        <a href="?controller=task&action=create" class="btn btn-success">Create a new task</a>
+    </div>
+</div>
+
+<br><br>
+
+<div class="row">
+    <div class="col-sm">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">View</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if tasks is empty %}
+                    <tr>
+                        <th><p><i>No tasks created yet.</i></p></th>
+                    </tr>
+                {% endif %}
+
+                {% for item in tasks %}
+                    echo '<tr>';
+                        echo '<th>' . item['id'] . '</th>';
+                        echo '<th>' . item['name'] . '</th>';
+                        echo '<th>' . item['priority'] . '</th>';
+                        echo '<th>' . item['description'] . '</th>';
+                        echo '<th>' . item['status'] . '</th>';
+                        echo '<th>' . '<a href="?controller=task&action=edit&id=' . item['id'] . ' " class="btn btn-primary">Edit</a>' . '</th>';
+                        echo '<th>' . '<a href="?controller=task&action=read&id=' . item['id'] . ' " class="btn btn-secondary">View</a>' . '</th>';
+                    echo '</tr>';
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{ include('_shared/footer.php') }}

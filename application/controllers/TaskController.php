@@ -27,8 +27,8 @@ class TaskController extends \app\core\Controller
     public function create()
     {
 		// $this->generateView();
-        $x = [0 =>'Task'];
-        echo $this->templateEngine->render('Task/create.twig', $x);
+        //$x = [0 =>'Task'];
+        echo $this->templateEngine->render('Task/create.twig');
     }
 
     public function edit()
@@ -77,7 +77,7 @@ class TaskController extends \app\core\Controller
         $this->entityManager->persist($this->model);
         $this->entityManager->flush();
 
-        $this->generateView();
+        echo $this->templateEngine->render('Task/save.twig');
     }
 
     public function index()
@@ -93,7 +93,8 @@ class TaskController extends \app\core\Controller
         if ($tasks == false) {
             $tasks = array();
         }
-        $this->generateView($tasks);
+        //$this->generateView($tasks)
+        echo $this->templateEngine->render('Task/index.twig', $tasks);
     }
 
     public function initializeModel()
