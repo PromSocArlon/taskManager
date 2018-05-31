@@ -6,6 +6,7 @@ class ExceptionController extends \app\core\Controller
 
     public function __construct()
     {
+        parent::__construct();
         $perms = [
             'index' => ['public' => true, 'connect' => true],
             'initializeModel' => ['public' => true, 'connect' => true],
@@ -24,34 +25,52 @@ class ExceptionController extends \app\core\Controller
         $this->generateView();
     }
 
-    public function error400()
+    public function error400($message = null)
     {
+        if($message != null)
+            $this->generateView(["error" => $message], "error400");
+        else
         $this->generateView();
     }
 
-    public function error401()
+    public function error401($message = null)
     {
-        $this->generateView();
+        if($message != null)
+            $this->generateView(["error" => $message]);
+        else
+            $this->generateView();
     }
 
-    public function error403()
+    public function error403($message = null)
     {
-        $this->generateView();
+        if($message != null)
+            $this->generateView(["error" => $message]);
+        else
+            $this->generateView();
     }
 
-    public function error404()
+    public function error404($message = null)
     {
-        $this->generateView();
+        if($message != null)
+            $this->generateView(["error" => $message]);
+        else
+            $this->generateView();
     }
 
-    public function error408()
+    public function error408($message = null)
     {
-        $this->generateView();
+        if($message != null)
+            $this->generateView(["error" => $message]);
+        else
+            $this->generateView();
     }
 
-    public function error500()
+    public function error500($message = null)
     {
-        $this->generateView();
+        if($message != null)
+            $this->generateView(["error" => $message], "error500");
+        else
+            $this->generateView();
     }
 
     public function initializeModel()

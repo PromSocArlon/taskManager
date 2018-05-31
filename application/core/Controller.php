@@ -32,17 +32,27 @@ abstract class Controller
 
     public abstract function initializeModel();
 
+    /**
+     * Controller constructor.
+     * @throws \Exception
+     */
     public function __construct()
     {
         $classController = get_class($this);
         $controllerName = str_replace("Controller", "", $classController);
         $temp = explode('\\', $controllerName);
         $dirName = end($temp);
-        $this->templateEngine = ConfigLoader::getConfig(
-            'twig',
-            ['viewPath' => 'application' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $dirName . DIRECTORY_SEPARATOR]
-        );
-        $this->entityManager = ConfigLoader::getConfig('doctrine');
+        //try {
+            $this->templateEngine = ConfigLoader::getConfig(
+                'twig',
+                ['viewPath' => 'application' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $dirName . DIRECTORY_SEPARATOR]
+            );
+            $this->entityManager = ConfigLoader::getConfig('doctrine');
+        /*}
+        catch(\Exception $ex)
+        {
+            throw new \Exception($ex->getMessage());
+        }*/
     }
 
     /**
@@ -79,6 +89,7 @@ abstract class Controller
      * Generate the view with a given data set
      * @param array $data the data set to be added to the generation
      * @param string $action
+     * @throws \EXception
      */
     protected function generateView($data = array(), $action = null)
     {

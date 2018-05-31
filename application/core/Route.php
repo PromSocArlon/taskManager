@@ -14,13 +14,13 @@ class Route
      *  Analyse the URL and perform the action given by a specific controller
      * @throws Exception if request can't be read properly
      */
-    public function routeQuery($entityManager): void
+    public function routeQuery(): void
     {
         $this->request = new request(array_merge($_GET, $_POST));
         unset($_GET);
         unset($_POST);
 
-        $controller = $this->getNewController($entityManager);
+        $controller = $this->getNewController();
         $action = $this->getNewAction();
         $controller->executeAction($action);
 
@@ -32,7 +32,7 @@ class Route
      * @return Controller the wanted controller
      * @throws Exception if controller doesn't exist
      */
-    private function getNewController($entityManager): Controller
+    private function getNewController(): Controller
     {
         $controllerValue = "home";
         if ($this->request->existParameter("controller")) {
@@ -40,7 +40,7 @@ class Route
         }
         $classController = '\\app\\controllers\\' . $controllerValue . "Controller";
         try {
-            $controller = new $classController($entityManager);
+            $controller = new $classController();
             if (isset($this->request) && $controller instanceof Controller) {
                 $controller->setRequest($this->request);
             }
