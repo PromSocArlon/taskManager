@@ -1,50 +1,45 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Albin
- * Date: 19/03/2018
- * Time: 14:22
- */
+<!-- Fatal error: Uncaught Twig_Error_Loader: Looks like you try to load a template outside configured directories (../_shared/header.php) -->
 
-include 'application\views\_shared\header.php';
-?>
+{{ include('_shared/header.php') }}
 
+{{ include('_shared/navbar.php') }}
 
-<h1>{{ x[0] }}</h1>
-<!-- <h1>Task</h1> -->
-<hr>
-<h3>Create</h3>
+<div class="container">
+    <hr>
+    <h3>Create</h3>
 
-<br>
+    <br>
 
-<form method="POST" action="?controller=task&action=save">
-    <input type="text" hidden name="id" value="0">
-    <div class="form-group">
-        <label for="taskName">Name:</label>
-        <input type="text" class="form-control" placeholder="Name" name="name" required>
-    </div>
-    <div class="form-group">
-        <label for="taskPriority">Priority:</label>
-        <input type="text" class="form-control" placeholder="Priority" name="priority" required>
-    </div>
-    <div class="form-group">
-        <label for="taskDescription">Description:</label>
-        <input type="text" class="form-control" placeholder="description" name="description" required>
-    </div>
-    <div class="form-group">
-        <label for="taskStatus">Status:</label>
-        <select name="status" id="taskStatus" class=form-control">
-            <option value="0">Pending</option>
-            <option value="1">Planned</option>
-            <option value="2">In Progress</option>
-            <option value="3">Completed</option>
-        </select>
-    </div>
+    <form method="POST" action="?controller=task&action=save">
+        <input type="text" hidden name="id" value="0">
+        <div class="form-group">
+            <label for="taskName">Name:</label>
+            <input type="text" class="form-control" placeholder="Name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="taskPriority">Priority:</label>
+            <input type="text" class="form-control" placeholder="Priority" name="priority" required>
+        </div>
+        <div class="form-group">
+            <label for="taskDescription">Description:</label>
+            <input type="text" class="form-control" placeholder="description" name="description" required>
+        </div>
+        <div class="form-group">
+            <label for="taskStatus">Status:</label>
+            <select name="status" id="taskStatus" class=form-control">
+                <option value="0">Pending</option>
+                <option value="1">Planned</option>
+                <option value="2">In Progress</option>
+                <option value="3">Completed</option>
+            </select>
+        </div>
 
-    <button class="btn btn-primary" type="submit">Create</button>
-</form>
+        <button class="btn btn-primary" type="submit">Create</button>
+    </form>
+</div>
 
 <?php
 
 include 'application\views\_shared\footer.php';
 
+{{ include('_shared/footer.php') }}

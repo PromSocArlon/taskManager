@@ -41,7 +41,7 @@ abstract class Controller
         $dirName = end($temp);
         $this->templateEngine = ConfigLoader::getConfig(
             'twig',
-            ['viewPath' => 'application' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $dirName . DIRECTORY_SEPARATOR]
+            ['viewPath' => 'application' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR ]
         );
         $this->entityManager = ConfigLoader::getConfig('doctrine');
     }
