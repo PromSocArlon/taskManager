@@ -1,5 +1,4 @@
 <?php
-
 namespace app\core;
 
 use Doctrine\ORM\EntityManager;
@@ -88,7 +87,7 @@ abstract class Controller
             $actionView = $action;
         }
         $actionView .=  '.php';
-        
+
         $this->templateEngine->render($actionView, $data);
     }
 
@@ -106,19 +105,20 @@ abstract class Controller
     {
         if ($permissions != null) {
             $this->permissions = $permissions;
-        } else {
-            throw new \RuntimeException("Permission setting problem !", 500);
+         }
+	    else {
+		    throw new \RuntimeException("Permission setting problem !",500);
         }
-    }
+	}
 
-    /**
-     * check the permission for the given $action
-     * @param string $action the name of the action
-     * @return bool the permission of the action
-     */
+	/**
+	 * check the permission for the given $action
+	 * @param string $action the name of the action
+	 * @return bool the permission of the action
+	 */
     public function isAllowed($action)
     {
-        return \app\core\MemberService::isConnected() ?
+        return \app\core\UserService::isConnected() ?
             $this->permissions[$action]['connect'] :
             $this->permissions[$action]['public'];
     }

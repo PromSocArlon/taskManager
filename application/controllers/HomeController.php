@@ -25,36 +25,22 @@ class HomeController extends \app\core\Controller {
         $this->generateView();
     }
 
+	//Formulaire de login
     public function login()
     {
-        if (isset($_POST['loginID']) && isset($_POST['loginPassword'])) {
-            if (true) { //TODO: Gestion de l'identifiant.
-                $member = new Member();
-                $member->setId(0001);
-                $member->setLogin($this->request->getParameter('loginID'));
-                $member->setMail("Trump@windaube.usa");
-                $member->setPassword($this->request->getParameter('loginPassword'));
-
-                $_SESSION['user'] = serialize($member);
-                header('Location: index.php?controller=member&action=index');
-            } else {
-                $this->generateView();
-            }
-        } else {
-            $this->generateView();
-        }
+        $this->generateView();
     }
 
-
+	//traitement du formulaire de login
     public function logConnect()
     {
         $login = $this->request->getParameter('loginID');
         $pwd = $this->request->getParameter('loginPassword');
-        $dao = new MemberDAO();
-        //TODO : ajouter user in db pour check
-        $userId = MemberService::checkCredential($dao, $login, $pwd);
-        if (true) {
-            MemberService::setCurrentUser($userId);
+
+        $user = $this->entityManager->getRepository('app\models\Entity\Member')->findOneBy(array('login' => $login, 'password' => $pwd));
+
+        if ($user != null) {
+            UserService::setCurrentUser($user->getID());
             $this->generateView();
         } else {
             echo 'Mauvaise combinaison login/password' . PHP_EOL;
@@ -75,9 +61,8 @@ class HomeController extends \app\core\Controller {
 
     public function logout()
     {
-        if (MemberService::isConnected()) {
-            MemberService::disconnect();
-            //session_destroy();
+        if (UserService::isConnected()) {
+            UserService::disconnect();
         }
         header('Location: index.php/controller=home');
     }

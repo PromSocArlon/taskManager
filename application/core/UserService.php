@@ -22,15 +22,6 @@ class UserService
 		return isset($_SESSION['user']);
 	}
 	
-	public static function checkCredential(MemberDAO $dao, $login, $password)
-    {
-		$searchMember = new Member();
-		$searchMember->setLogin($login);
-		$searchMember->setPassword($password);
-		$data = $dao->read($searchMember);
-		return $data != false ? $data->getId() : false;
-    }
-	
 	public static function setCurrentUser($id)
 	{
 		$_SESSION['user'] = $id;
@@ -39,13 +30,5 @@ class UserService
 	public static function disconnect()
 	{
 		unset($_SESSION['user']);
-	}
-	
-	public static function getById(MemberDao $dao, $memberId)
-	{
-		$searchMember = new Member();
-		$searchMember->setId($memberId);
-		$data = $dao->read($searchMember);
-		return $data != false ? $data : null;
 	}
 }
