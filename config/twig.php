@@ -4,4 +4,7 @@ if(!isset($confContext) && isset($confContext['viewPath'])) {
 }
 
 $loader = new Twig_Loader_Filesystem($confContext['viewPath']);
-return new Twig_Environment($loader);
+$twig = new Twig_Environment($loader, ['debug' => true]);
+$twig->addExtension(new Twig_Extension_Debug());
+
+return $twig;

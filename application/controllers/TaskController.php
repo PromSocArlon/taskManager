@@ -82,19 +82,12 @@ class TaskController extends \app\core\Controller
 
     public function index()
     {
-        $tasks = [];
-        $taskObjects = $this->entityManager->getRepository(get_class($this->model))->findAll();
-        foreach ($taskObjects as $taskObject)
-        {
-            $tasks[] = $taskObject->entityToArray();
-        }
-        
-        // if there is no tasks in the database
-        if ($tasks == false) {
-            $tasks = array();
-        }
-        //$this->generateView($tasks)
-        echo $this->templateEngine->render('Task/index.twig', $tasks);
+        $tasks = $this->entityManager->getRepository(get_class($this->model))->findAll();
+        $this->generateView(
+            [
+                'tasks' => $tasks,
+            ],'index.twig');
+        //echo $this->templateEngine->render('Task/index.twig', $tasks);
     }
 
     public function initializeModel()

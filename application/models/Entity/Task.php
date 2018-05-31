@@ -11,10 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Task extends Entity
 {
 
-    const PENDING = 0;
-    const PLANNED = 1;
-    const IN_PROGRESS = 2;
-    const COMPLETED = 3;
+    const PENDING = "pending";
+    const PLANNED = "planned";
+    const IN_PROGRESS = "in progress";
+    const COMPLETED = "completed";
 
     /** @ORM\Column(type="string", length=100) * */
     private $name;
@@ -41,235 +41,99 @@ class Task extends Entity
     }
 
     /**
-     * @param String $name
+     * @return mixed
      */
-    public function setName(String $name)
-    {
-        $this->name = ucfirst(strtolower($name));
-    }
-
-    /**
-     * @return String
-     */
-    public function getName(): String
+    public function getName()
     {
         return $this->name;
     }
 
     /**
-     * @param String $priority
+     * @param mixed $name
      */
-    public function setPriority(String $priority)
+    public function setName($name): void
     {
-        $this->priority = $priority;
+        $this->name = $name;
     }
 
     /**
-     * @return String
+     * @return mixed
      */
-    public function getPriority(): String
+    public function getPriority()
     {
         return $this->priority;
     }
 
     /**
-     * @param String $description
+     * @param mixed $priority
      */
-    public function setDescription(String $description)
+    public function setPriority($priority): void
     {
-        $this->description = $description;
+        $this->priority = $priority;
     }
 
     /**
-     * @return String
+     * @return mixed
      */
-    public function getDescription(): String
+    public function getDescription()
     {
         return $this->description;
     }
 
     /**
-     * @param String $day
+     * @param mixed $description
      */
-    public function setDay(String $day)
+    public function setDescription($description): void
     {
-        $this->day = $day;
+        $this->description = $description;
     }
 
     /**
-     * @return String
+     * @return mixed
      */
-    public function getDay(): String
+    public function getStatus()
     {
-        return $this->day;
+        return $this->status;
     }
 
     /**
-     * @param $subtask
+     * @param mixed $status
      */
-    public function addSubTask($subtask)
+    public function setStatus($status): void
     {
-        $this->subtasks[] = $subtask;
-    }
-
-    /** supprime la subtask demandée
-     * et déplace de -1 l'index des élément suivant l'élément supprimé
-     **/
-    public function removeSubTask($var)
-    {
-        $tasks = $this->subtasks;
-        $index = $this->getSubTaskIndex($var);
-        $subtask = null;
-        if ($index != -1) {
-            $subtask = $tasks[$index];
-            unset($tasks[$index]);
-            $this->subtasks = array_values($tasks);
-        }
-        return $subtask;
-    }
-
-    /** Permet d'obtenir l'index d'une subtask soit par un integer donné
-     * soit par un string correspondant au nom **/
-    private function getSubTaskIndex($var)
-    {
-        $tasks = $this->subtasks;
-        $index = -1;
-        $bool = is_numeric($var);
-        //si pas numérique recherche sur l'attribut name
-        if (!$bool) {
-            $i = 0;
-            do {
-                $name = $tasks[$i]->getName();
-                if (strcmp($var, $name) == 0) {
-                    $index = $i;
-                }
-                $i++;
-            } while (($index == -1) && $i < count($tasks));
-        } //sinon vérification que l'integer donné correspond bien à un index des subtasks
-        elseif ($var >= 0 && $var < count($tasks)) {
-            $index = $var;
-        }
-        return $index;
-    }
-
-    /** Renvoie la subtasks identifié par soit un nom ou l'index du tableau de la subtask
-     * revoie null si aucun élément ne correspond à la demande ou index out of bound **/
-    public function getSubTask($var)
-    {
-        $index = $this->getSubTaskIndex($var);
-        if ($index != -1) {
-            return $this->subtasks [$index];
-        } else {
-            return null;
-        }
-    }
-
-    /** Renvoie une copie du tableau des subtasks **/
-    public function getAllSubtasks()
-    {
-        $array = $this->subtasks;
-        return $array;
+        $this->status = $status;
     }
 
     /**
-     * @param int $statusName
-     * @param string $description
+     * @return mixed
      */
-    public function addStatus(int $statusName, string $description): void
-    {
-        if ($description != "") {
-            $status[] = new Status($statusName, $description);
-        }
-    }
-
-    /**
-     * @param int $index
-     */
-    public function removeStatus(int $index): void
-    {
-        if ($index >= 0 && $index < count($this->status)) {
-            array_splice($this->status, $index, 1);
-        }
-    }
-
-    /**
-     * @param int $index
-     * @return Status
-     */
-    public function getStatus(int $index): Status
-    {
-        if ($index >= 0 && $index < count($this->status)) {
-            return $this->status[$index];
-        } else {
-            return null;
-        }
-    }
-
-    /*
-	public function setStatus(Status $st) : void {
-        $this->status = $st;
-    }*/
-
-    public function setStatus(int $st): void
-    {
-
-
-        $tabStatus = ["Pending", "Planned", "In Progress", "Completed"];
-
-        switch ($st) {
-            case Task::PENDING:
-            case Task::PLANNED:
-            case Task::IN_PROGRESS:
-            case Task::COMPLETED:
-                $this->status = $tabStatus[$st];
-                break;
-            default:
-                $this->status = "Pending";
-                break;
-        }
-    }
-
-    public function setMembers(array $member): void
-    {
-        $this->members = $member;
-    }
-
     public function getMembers()
     {
         return $this->members;
     }
 
-    public function addMember(Member $members): bool
+    /**
+     * @param mixed $members
+     */
+    public function setMembers($members): void
     {
-        return $this->members->add($members);
-    }
-    public function removeMember(Member $members): bool
-    {
-        return $this->members->removeElement($members);
-    }
-
-    public function setTeam(array $team): void
-    {
-        $this->members = $team;
+        $this->members = $members;
     }
 
+    /**
+     * @return mixed
+     */
     public function getTeam()
     {
         return $this->team;
     }
 
-    public function addTeam(Team $team): bool
+    /**
+     * @param mixed $team
+     */
+    public function setTeam($team): void
     {
-        return $this->team->add($team);
-    }
-    public function removeTeam(Team $team): bool
-    {
-        return $this->team->removeElement($team);
-    }
-
-    public function entityToArray()
-    {
-        return get_object_vars($this);
+        $this->team = $team;
     }
 
 }

@@ -32,6 +32,7 @@
                     <th scope="col">View</th>
                 </tr>
             </thead>
+
             <tbody>
                 {% if tasks is empty %}
                     <tr>
@@ -40,15 +41,19 @@
                 {% endif %}
 
                 {% for item in tasks %}
-                    echo '<tr>';
-                        echo '<th>' . item['id'] . '</th>';
-                        echo '<th>' . item['name'] . '</th>';
-                        echo '<th>' . item['priority'] . '</th>';
-                        echo '<th>' . item['description'] . '</th>';
-                        echo '<th>' . item['status'] . '</th>';
-                        echo '<th>' . '<a href="?controller=task&action=edit&id=' . item['id'] . ' " class="btn btn-primary">Edit</a>' . '</th>';
-                        echo '<th>' . '<a href="?controller=task&action=read&id=' . item['id'] . ' " class="btn btn-secondary">View</a>' . '</th>';
-                    echo '</tr>';
+                    <tr>
+                        <th>{{ item.id }}</th>
+                        <th>{{ item.name }}</th>
+                        <th>{{ item.priority }}</th>
+                        <th>{{ item.description }}</th>
+                        <th>{{ item.status }}</th>
+                        <th>
+                            <a href="?controller=task&action=edit&id={{ item.id }}" class="btn btn-primary">Edit</a>
+                        </th>
+                        <th>
+                            <a href="?controller=task&action=read&id={{ item.id }}" class="btn btn-secondary">View</a>
+                        </th>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>

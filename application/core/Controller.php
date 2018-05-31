@@ -33,12 +33,12 @@ abstract class Controller
 
     public abstract function initializeModel();
 
+    /**
+     * Controller constructor.
+     * @throws \Exception
+     */
     public function __construct()
     {
-        $classController = get_class($this);
-        $controllerName = str_replace("Controller", "", $classController);
-        $temp = explode('\\', $controllerName);
-        $dirName = end($temp);
         $this->templateEngine = ConfigLoader::getConfig(
             'twig',
             ['viewPath' => 'application' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR ]
@@ -83,12 +83,16 @@ abstract class Controller
      */
     protected function generateView($data = array(), $action = null)
     {
+        $classController = get_class($this);
+        $controllerName = str_replace("Controller", "", $classController);
+        $temp = explode('\\', $controllerName);
+        $dirName = end($temp) . DIRECTORY_SEPARATOR;
         $actionView = $this->action;
         if ($action != null) {
             $actionView = $action;
         }
-        $actionView .= '.php';
-        $this->templateEngine->render($actionView, $data);
+
+        echo $this->templateEngine->render($dirName . $actionView, $data);
     }
 
     protected function redirect($controller, $action = null)
