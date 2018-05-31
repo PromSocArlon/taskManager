@@ -25,33 +25,45 @@ class ExceptionController extends \app\core\Controller
         $this->generateView();
     }
 
-    public function error400($message = "pas de message spécifique")
+    public function error400()
     {
+		isset($_SESSION["errorMessage"]) ? ($message = $_SESSION["errorMessage"]) : "Pas erreur message";
+		unset($_SESSION["errorMessage"]);
 		$this->generateView(["error" => $message], "error400.php");
     }
 
-    public function error401($message = "pas de message spécifique")
+    public function error401()
     {
+		isset($_SESSION["errorMessage"]) ? ($message = $_SESSION["errorMessage"]) : "Pas erreur message";
+		unset($_SESSION["errorMessage"]);
 		$this->generateView(["error" => $message], "error401.php");
     }
 
-    public function error403($message = "pas de message spécifique")
+    public function error403()
     {
+		isset($_SESSION["errorMessage"]) ? ($message = $_SESSION["errorMessage"]) : "Pas erreur message";
+		unset($_SESSION["errorMessage"]);
 		$this->generateView(["error" => $message], "error403.php");
     }
 
-    public function error404($message = "pas de message spécifique")
+    public function error404()
     {
+		isset($_SESSION["errorMessage"]) ? ($message = $_SESSION["errorMessage"]) : "Pas erreur message";
+		unset($_SESSION["errorMessage"]);
 		$this->generateView(["error" => $message], "error404.php");
     }
 
-    public function error408($message = "pas de message spécifique")
+    public function error408()
     {
+		isset($_SESSION["errorMessage"]) ? ($message = $_SESSION["errorMessage"]) : "Pas erreur message";
+		unset($_SESSION["errorMessage"]);
         $this->generateView(["error" => $message], "error408.php");
     }
 
-    public function error500($message = "pas de message spécifique")
+    public function error500()
     {
+		isset($_SESSION["errorMessage"]) ? ($message = $_SESSION["errorMessage"]) : "Pas erreur message";
+		unset($_SESSION["errorMessage"]);
         $this->generateView(["error" => $message], "error500.php");
     }
 

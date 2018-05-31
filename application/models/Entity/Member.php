@@ -10,14 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  **/
 class Member extends Entity
 {
-    /** @ORM\Column(type="string") * */
+    /** @ORM\Column(type="string", unique=true, nullable=false) * */
     private $login;
     /** @ORM\Column(type="string") * */
     private $password;
     /** @ORM\Column(type="string") * */
     private $mail;
-    /** @ORM\Column(type="integer") * */
-    private $teamLeader;
     /** @ORM\Column(type="integer") * */
     private $team;
 
@@ -49,6 +47,16 @@ class Member extends Entity
     public function getMail()
     {
         return $this->mail;
+    }
+	
+	public function setTeam($new_team)
+    {
+        $this->team = $new_team;
+    }
+
+    public function getTeam()
+    {
+        return $this->team;
     }
 
     public function toArray()

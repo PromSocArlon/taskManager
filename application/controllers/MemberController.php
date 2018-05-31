@@ -17,6 +17,9 @@ class MemberController extends \app\core\Controller
         if ($this->request->existParameter('mail')){
             $this->member->setMail($this->request->getParameter('mail'));
         }
+		if($this->request->existParameter('team')) {
+			$this->member->setTeam(intval($this->request->getParameter('team')));
+		}
     }
 
     public function __construct()

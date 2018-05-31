@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Entity\Member;
+use app\core\UserService;
 
 class HomeController extends \app\core\Controller {
 
