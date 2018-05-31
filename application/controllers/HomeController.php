@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use app\core\MemberService;
-use app\models\DAO\MemberDAO;
 use app\models\Entity\Member;
 
 class HomeController extends \app\core\Controller {

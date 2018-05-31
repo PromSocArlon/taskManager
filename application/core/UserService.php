@@ -1,7 +1,6 @@
 <?php
 namespace app\core;
 
-use app\models\DAO\MemberDAO;
 use app\models\Entity\Member;
 
 class UserService
