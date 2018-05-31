@@ -17,42 +17,70 @@ class Member extends Entity
     /** @ORM\Column(type="string") * */
     private $mail;
     /** @ORM\Column(type="integer") * */
-    private $teamLeader;
-    /** @ORM\Column(type="integer") * */
     private $team;
 
-    public function setLogin($new_login)
-    {
-        $this->login = $new_login;
-    }
-
+    /**
+     * @return mixed
+     */
     public function getLogin()
     {
         return $this->login;
     }
 
-    public function setPassword($new_password)
+    /**
+     * @param mixed $login
+     */
+    public function setLogin($login): void
     {
-        $this->password = $new_password;
+        $this->login = $login;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPassword()
     {
         return $this->password;
     }
 
-    public function setMail($new_mail)
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password): void
     {
-        $this->mail = $new_mail;
+        $this->password = $password;
     }
 
+    /**
+     * @return mixed
+     */
     public function getMail()
     {
         return $this->mail;
     }
 
-    public function toArray()
+    /**
+     * @param mixed $mail
+     */
+    public function setMail($mail): void
     {
-        return get_object_vars($this);
+        $this->mail = $mail;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTeam()
+    {
+        return $this->team;
+    }
+
+    /**
+     * @param mixed $team
+     */
+    public function setTeam($team): void
+    {
+        $this->team = $team;
+    }
+
 }
