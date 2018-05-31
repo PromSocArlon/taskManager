@@ -97,9 +97,10 @@ abstract class Controller
         if ($action != null) {
             $actionView = $action;
         }
-        $actionView .=  '.php';
+		else
+			$actionView .=  '.php';
 
-        $this->templateEngine->render($actionView, $data);
+        echo $this->templateEngine->render($actionView, $data);
     }
 
     protected function redirect($controller, $action = null)

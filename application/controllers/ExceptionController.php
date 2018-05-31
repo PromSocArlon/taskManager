@@ -25,52 +25,34 @@ class ExceptionController extends \app\core\Controller
         $this->generateView();
     }
 
-    public function error400($message = null)
+    public function error400($message = "pas de message spécifique")
     {
-        if($message != null)
-            $this->generateView(["error" => $message], "error400");
-        else
-        $this->generateView();
+		$this->generateView(["error" => $message], "error400.php");
     }
 
-    public function error401($message = null)
+    public function error401($message = "pas de message spécifique")
     {
-        if($message != null)
-            $this->generateView(["error" => $message], "error401");
-        else
-            $this->generateView();
+		$this->generateView(["error" => $message], "error401.php");
     }
 
-    public function error403($message = null)
+    public function error403($message = "pas de message spécifique")
     {
-        if($message != null)
-            $this->generateView(["error" => $message], "error403");
-        else
-            $this->generateView();
+		$this->generateView(["error" => $message], "error403.php");
     }
 
-    public function error404($message = null)
+    public function error404($message = "pas de message spécifique")
     {
-        if($message != null)
-            $this->generateView(["error" => $message], "error404");
-        else
-            $this->generateView();
+		$this->generateView(["error" => $message], "error404.php");
     }
 
-    public function error408($message = null)
+    public function error408($message = "pas de message spécifique")
     {
-        if($message != null)
-            $this->generateView(["error" => $message], "error408");
-        else
-            $this->generateView();
+        $this->generateView(["error" => $message], "error408.php");
     }
 
-    public function error500($message = null)
+    public function error500($message = "pas de message spécifique")
     {
-        if($message != null)
-            $this->generateView(["error" => $message], "error500");
-        else
-            $this->generateView();
+        $this->generateView(["error" => $message], "error500.php");
     }
 
     public function initializeModel()

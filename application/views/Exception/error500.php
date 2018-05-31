@@ -1,5 +1,6 @@
 <div class ="container">
 	<p>Error 500!</p>
+	{{error}}
 	<div class ="row">
 		<div class="col-sm">
 			<img src="application\views\Exception\500.jpg" alt="error500">
