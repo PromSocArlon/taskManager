@@ -36,7 +36,7 @@ class ExceptionController extends \app\core\Controller
     public function error401($message = null)
     {
         if($message != null)
-            $this->generateView(["error" => $message]);
+            $this->generateView(["error" => $message], "error401");
         else
             $this->generateView();
     }
@@ -44,7 +44,7 @@ class ExceptionController extends \app\core\Controller
     public function error403($message = null)
     {
         if($message != null)
-            $this->generateView(["error" => $message]);
+            $this->generateView(["error" => $message], "error403");
         else
             $this->generateView();
     }
@@ -52,7 +52,7 @@ class ExceptionController extends \app\core\Controller
     public function error404($message = null)
     {
         if($message != null)
-            $this->generateView(["error" => $message]);
+            $this->generateView(["error" => $message], "error404");
         else
             $this->generateView();
     }
@@ -60,7 +60,7 @@ class ExceptionController extends \app\core\Controller
     public function error408($message = null)
     {
         if($message != null)
-            $this->generateView(["error" => $message]);
+            $this->generateView(["error" => $message], "error408");
         else
             $this->generateView();
     }
