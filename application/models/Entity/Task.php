@@ -10,12 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
  **/
 class Task extends Entity
 {
-
-    const PENDING = "pending";
-    const PLANNED = "planned";
-    const IN_PROGRESS = "in progress";
-    const COMPLETED = "completed";
-
     /** @ORM\Column(type="string", length=100) * */
     private $name;
     /** @ORM\Column(type="smallint") * */
@@ -97,11 +91,21 @@ class Task extends Entity
     }
 
     /**
-     * @param mixed $status
+     * @param $status
+     * @throws \Exception
      */
     public function setStatus($status): void
     {
-        $this->status = $status;
+        switch($status) {
+            case TaskStatus::PENDING:
+            case TaskStatus::IN_PROGRESS:
+            case TaskStatus::PLANNED:
+            case TaskStatus::COMPLETED:
+                $this->status = $status;
+                break;
+            default:
+                throw new \Exception("Invalid status :" . $status);
+        }
     }
 
     /**

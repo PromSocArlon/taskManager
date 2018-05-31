@@ -26,10 +26,18 @@
     <div class="form-group">
         <label for="taskStatus">Status:</label>
         <select name="status" id="taskStatus" class=form-control">
-            <option value="0">Pending</option>
-            <option value="1">Planned</option>
-            <option value="2">In Progress</option>
-            <option value="3">Completed</option>
+            <option value="{{ constant('app\\models\\Entity\\TaskStatus::PENDING') }}">
+                {{ constant('app\\models\\Entity\\TaskStatus::PENDING') }}
+            </option>
+            <option value="{{ constant('app\\models\\Entity\\TaskStatus::PLANNED') }}">
+                {{ constant('app\\models\\Entity\\TaskStatus::PLANNED') }}
+            </option>
+            <option value="{{ constant('app\\models\\Entity\\TaskStatus::IN_PROGRESS') }}">
+                {{ constant('app\\models\\Entity\\TaskStatus::IN_PROGRESS') }}
+            </option>
+            <option value="{{ constant('app\\models\\Entity\\TaskStatus::COMPLETED') }}">
+                {{ constant('app\\models\\Entity\\TaskStatus::COMPLETED') }}
+            </option>
         </select>
     </div>
 

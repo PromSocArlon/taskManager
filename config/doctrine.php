@@ -4,8 +4,7 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
 // MacOS config (for MAMP: sudo ln -s /Applications/MAMP/tmp/mysql /var/mysql)
-if (PHP_OS == "Darwin") $paths = array(__DIR__."/application/models/Entity");
-else $paths = array(__DIR__."\application\models\Entity");
+$paths = array(join(DIRECTORY_SEPARATOR, ["application", "models", "Entity"]));
 
 $isDevMode = true;
 $proxyDir = null;

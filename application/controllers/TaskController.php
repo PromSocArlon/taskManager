@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Entity\Task;
+use app\models\Entity\TaskStatus;
 
 class TaskController extends \app\core\Controller
 {
