@@ -87,8 +87,7 @@ abstract class Controller
         if ($action != null) {
             $actionView = $action;
         }
-        $actionView .=  '.php';
-        
+        $actionView .= '.php';
         $this->templateEngine->render($actionView, $data);
     }
 

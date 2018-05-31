@@ -6,7 +6,6 @@ use app\models\Entity\Task;
 
 class TaskController extends \app\core\Controller
 {
-    //$storage doit etre = 'file' ou 'mysql'
     public function __construct()
     {
         parent::__construct();
@@ -29,7 +28,7 @@ class TaskController extends \app\core\Controller
     {
 		// $this->generateView();
         $x = [0 =>'Task'];
-        $this->templateEngine->render('create.twig', $x);
+        echo $this->templateEngine->render('create.twig', $x);
     }
 
     public function edit()
