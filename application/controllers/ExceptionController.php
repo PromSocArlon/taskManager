@@ -6,6 +6,7 @@ class ExceptionController extends \app\core\Controller
 
     public function __construct()
     {
+        parent::__construct();
         $perms = [
             'index' => ['public' => true, 'connect' => true],
             'initializeModel' => ['public' => true, 'connect' => true],
@@ -19,6 +20,17 @@ class ExceptionController extends \app\core\Controller
         $this->setPermissions($perms);
     }
 
+    public function getErrorMessage()
+    {
+        $message = "Pas de message d'erreur";
+        if(isset($_SESSION["errorMessage"]))
+        {
+            $message = $_SESSION["errorMessage"];
+            unset($_SESSION["errorMessage"]);
+        }
+        return $message;
+    }
+
     public function index()
     {
         $this->generateView();
@@ -26,32 +38,38 @@ class ExceptionController extends \app\core\Controller
 
     public function error400()
     {
-        $this->generateView();
+        $message = $this->getErrorMessage();
+		$this->generateView(["error" => $message], "error400.php");
     }
 
     public function error401()
     {
-        $this->generateView();
+        $message = $this->getErrorMessage();
+		$this->generateView(["error" => $message], "error401.php");
     }
 
     public function error403()
     {
-        $this->generateView();
+        $message = $this->getErrorMessage();
+		$this->generateView(["error" => $message], "error403.php");
     }
 
     public function error404()
     {
-        $this->generateView();
+        $message = $this->getErrorMessage();
+		$this->generateView(["error" => $message], "error404.php");
     }
 
     public function error408()
     {
-        $this->generateView();
+        $message = $this->getErrorMessage();
+        $this->generateView(["error" => $message], "error408.php");
     }
 
     public function error500()
     {
-        $this->generateView();
+        $message = $this->getErrorMessage();
+        $this->generateView(["error" => $message], "error500.php");
     }
 
     public function initializeModel()

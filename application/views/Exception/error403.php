@@ -1,5 +1,6 @@
 <div class ="container">
 	<p>Error 403!</p>
+	{{error}}
 	<div class ="row">
 		<div class="col-sm">
 			<img src="application\views\Exception\403.png" alt="error403">

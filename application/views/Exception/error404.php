@@ -1,5 +1,6 @@
 <div class ="container">
 	<p>Error 404!</p>
+	{{error}}
 	<div class ="row">
 		<div class="col-sm">
 			<img src="application\views\Exception\404.png" alt="error404">

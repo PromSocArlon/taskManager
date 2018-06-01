@@ -3,7 +3,6 @@
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
-// MacOS config (for MAMP: sudo ln -s /Applications/MAMP/tmp/mysql /var/mysql)
 $paths = array(join(DIRECTORY_SEPARATOR, ["application", "models", "Entity"]));
 
 $isDevMode = true;
