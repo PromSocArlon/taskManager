@@ -20,6 +20,17 @@ class ExceptionController extends \app\core\Controller
         $this->setPermissions($perms);
     }
 
+    public function getErrorMessage()
+    {
+        $message = "Pas de message d'erreur";
+        if(isset($_SESSION["errorMessage"]))
+        {
+            $message = $_SESSION["errorMessage"];
+            unset($_SESSION["errorMessage"]);
+        }
+        return $message;
+    }
+
     public function index()
     {
         $this->generateView();
@@ -27,43 +38,37 @@ class ExceptionController extends \app\core\Controller
 
     public function error400()
     {
-		isset($_SESSION["errorMessage"]) ? ($message = $_SESSION["errorMessage"]) : "Pas erreur message";
-		unset($_SESSION["errorMessage"]);
+        $message = $this->getErrorMessage();
 		$this->generateView(["error" => $message], "error400.php");
     }
 
     public function error401()
     {
-		isset($_SESSION["errorMessage"]) ? ($message = $_SESSION["errorMessage"]) : "Pas erreur message";
-		unset($_SESSION["errorMessage"]);
+        $message = $this->getErrorMessage();
 		$this->generateView(["error" => $message], "error401.php");
     }
 
     public function error403()
     {
-		isset($_SESSION["errorMessage"]) ? ($message = $_SESSION["errorMessage"]) : "Pas erreur message";
-		unset($_SESSION["errorMessage"]);
+        $message = $this->getErrorMessage();
 		$this->generateView(["error" => $message], "error403.php");
     }
 
     public function error404()
     {
-		isset($_SESSION["errorMessage"]) ? ($message = $_SESSION["errorMessage"]) : "Pas erreur message";
-		unset($_SESSION["errorMessage"]);
+        $message = $this->getErrorMessage();
 		$this->generateView(["error" => $message], "error404.php");
     }
 
     public function error408()
     {
-		isset($_SESSION["errorMessage"]) ? ($message = $_SESSION["errorMessage"]) : "Pas erreur message";
-		unset($_SESSION["errorMessage"]);
+        $message = $this->getErrorMessage();
         $this->generateView(["error" => $message], "error408.php");
     }
 
     public function error500()
     {
-		isset($_SESSION["errorMessage"]) ? ($message = $_SESSION["errorMessage"]) : "Pas erreur message";
-		unset($_SESSION["errorMessage"]);
+        $message = $this->getErrorMessage();
         $this->generateView(["error" => $message], "error500.php");
     }
 

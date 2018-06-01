@@ -11,8 +11,8 @@ use app\controllers\ExceptionController;
 
 class ErrorHandler {
     public static function handleError(\Throwable $ex) : void {
-		$_SESSION["errorMessage"] = $ex->getMessage();
-        $errorController = new ExceptionController();
+        $errorMessage = $ex->getMessage();
+		$_SESSION["errorMessage"] = $errorMessage;
         switch (true) {
             case $ex instanceof \HttpRequestException :
                 header('Location: index.php?controller=exception&action=error400');
