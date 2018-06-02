@@ -81,7 +81,7 @@ abstract class Controller
      * @param array $data the data set to be added to the generation
      * @param string $action
      */
-    protected function generateView($data = array(), $action = null)
+    protected function generateView($action = null,$data = array())
     {
         $classController = get_class($this);
         $controllerName = str_replace("Controller", "", $classController);

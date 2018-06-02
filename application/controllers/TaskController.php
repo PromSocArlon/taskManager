@@ -40,11 +40,9 @@ class TaskController extends \app\core\Controller
     public function read()
     {
         $taskId = $this->request->getParameter('id');
-        $taskObject = $this->entityManager->getRepository("app\models\Entity\Task")->find($taskId);
-        $taskArray = $taskObject->entityToArray();
-        $taskArray['id'] = $taskId;
+        $task = $this->entityManager->getRepository(get_class($this->model))->find($taskId);
 
-        $this->generateView($taskArray);
+        $this->generateView('read.twig', ['task' => $task,]);
     }
 
     public function update()
@@ -78,17 +76,13 @@ class TaskController extends \app\core\Controller
         $this->entityManager->persist($this->model);
         $this->entityManager->flush();
 
-        echo $this->templateEngine->render('Task/save.twig');
+        $this->generateView('save.twig');
     }
 
     public function index()
     {
         $tasks = $this->entityManager->getRepository(get_class($this->model))->findAll();
-        $this->generateView(
-            [
-                'tasks' => $tasks,
-            ],'index.twig');
-        //echo $this->templateEngine->render('Task/index.twig', $tasks);
+        $this->generateView('index.twig', ['tasks' => $tasks,]);
     }
 
     public function initializeModel()
