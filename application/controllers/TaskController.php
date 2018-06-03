@@ -27,8 +27,6 @@ class TaskController extends \app\core\Controller
 
     public function create()
     {
-		// $this->generateView();
-        //$x = [0 =>'Task'];
         echo $this->templateEngine->render('Task/create.twig');
     }
 
@@ -92,7 +90,5 @@ class TaskController extends \app\core\Controller
         $this->model->setPriority($this->request->getParameter('priority'));
         $this->model->setDescription($this->request->getParameter('description'));
         $this->model->setStatus($this->request->getParameter('status'));
-
-        print_r($this->model);
     }
 }
