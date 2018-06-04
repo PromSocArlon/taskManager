@@ -93,7 +93,7 @@ abstract class Controller
             $actionView = $action;
         }
         else
-            $actionView .=  '.php';
+            $actionView .=  '.twig';
 
         echo $this->templateEngine->render($dirName . $actionView, $data);
     }
