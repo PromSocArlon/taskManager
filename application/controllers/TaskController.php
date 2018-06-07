@@ -32,7 +32,10 @@ class TaskController extends \app\core\Controller
 
     public function edit()
     {
-		$this->read();
+        $taskId = $this->request->getParameter('id');
+        $task = $this->entityManager->getRepository(get_class($this->model))->find($taskId);
+
+        $this->generateView('edit.twig', ['task' => $task,]);
     }
 
     public function read()
