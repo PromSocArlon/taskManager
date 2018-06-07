@@ -48,17 +48,17 @@ class TaskController extends \app\core\Controller
 
     public function update()
     {
-		$taskId = $this->request->getParameter('id');
-        $taskObject = $this->entityManager->getRepository("app\models\Entity\Task")->find($taskId);	
-		
-		$taskObject->setID($this->request->getParameter('id'));
+        $taskId = $this->request->getParameter('id');
+        $taskObject = $this->entityManager->getRepository(get_class($this->model))->find($taskId);
+
+        $taskObject->setID($this->request->getParameter('id'));
         $taskObject->setName($this->request->getParameter('name'));
         $taskObject->setPriority($this->request->getParameter('priority'));
         $taskObject->setDescription($this->request->getParameter('description'));
         $taskObject->setStatus($this->request->getParameter('status'));
-		
-		$this->entityManager->flush();
-        $this->generateView();
+
+        $this->entityManager->flush();
+        $this->generateView('update.twig');
     }
 
     public function delete()
