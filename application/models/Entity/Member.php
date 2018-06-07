@@ -77,20 +77,4 @@ class Member extends Entity
         $this->mail = $mail;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTeam()
-    {
-        return $this->team;
-    }
-
-    /**
-     * @param mixed $team
-     */
-    public function setTeam($team): void
-    {
-        $this->team = $team;
-    }
-
 }
