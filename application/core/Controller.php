@@ -37,13 +37,10 @@ abstract class Controller
      * Controller constructor.
      * @throws \Exception
      */
-    public function __construct()
+    public function __construct(DependencyInjectionContainer $dic)
     {
-        $this->templateEngine = ConfigLoader::getConfig(
-            'twig',
-            ['viewPath' => 'application' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR ]
-        );
-        $this->entityManager = ConfigLoader::getConfig('doctrine');
+        $this->templateEngine = $dic->getDependency('twig');
+        $this->entityManager = $dic->getDependency('doctrine');
     }
 
     /**

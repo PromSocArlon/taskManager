@@ -1,8 +1,12 @@
 <?php
+namespace app;
+
 session_start();
 require_once __DIR__ . '/bootstrap.php';
 
-$route = new \app\core\Route();
+use app\core\Route;
+
+$route = new Route($dic);
 //try {
     $route->routeQuery();
 //} catch (Error | Exception $ex) {

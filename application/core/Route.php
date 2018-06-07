@@ -9,6 +9,12 @@ use Exception;
 class Route
 {
     private $request;
+    private $dependencyInjectionContainer;
+
+    public function __construct(DependencyInjectionContainer $dic)
+    {
+        $this->dependencyInjectionContainer = $dic;
+    }
 
     /**
      *  Analyse the URL and perform the action given by a specific controller
@@ -40,7 +46,7 @@ class Route
         }
         $classController = '\\app\\controllers\\' . $controllerValue . "Controller";
         try {
-            $controller = new $classController();
+            $controller = new $classController($this->dependencyInjectionContainer);
             if (isset($this->request) && $controller instanceof Controller) {
                 $controller->setRequest($this->request);
             }

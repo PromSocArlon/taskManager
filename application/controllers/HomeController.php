@@ -2,15 +2,16 @@
 
 namespace app\controllers;
 
+use app\core\DependencyInjectionContainer;
 use app\core\MemberService;
 use app\models\DAO\MemberDAO;
 use app\models\Entity\Member;
 
 class HomeController extends \app\core\Controller {
 
-	public function __construct()
+	public function __construct(DependencyInjectionContainer $dic)
 	{
-	    parent::__construct();
+	    parent::__construct($dic);
 		$perms = [
 			'index' => ['public' => true, 'connect' => true],
 			'login' => ['public' => true, 'connect' => false],

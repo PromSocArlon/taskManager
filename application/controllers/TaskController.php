@@ -2,14 +2,15 @@
 
 namespace app\controllers;
 
+use app\core\DependencyInjectionContainer;
 use app\models\Entity\Task;
 use app\models\Entity\TaskStatus;
 
 class TaskController extends \app\core\Controller
 {
-    public function __construct()
+    public function __construct(DependencyInjectionContainer $dic)
     {
-        parent::__construct();
+        parent::__construct($dic);
 
         $perms = [
             'index' => ['public' => true, 'connect' => true],

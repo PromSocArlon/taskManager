@@ -2,13 +2,14 @@
 
 namespace app\controllers;
 
+use app\core\DependencyInjectionContainer;
 use app\models\entity\team;
 
 class TeamController extends \app\core\Controller
 {
-    public function __construct()
+    public function __construct(DependencyInjectionContainer $dic)
     {
-        parent::__construct();
+        parent::__construct($dic);
         $perms = [
             'index' => ['public' => true, 'connect' => true],
             'save' => ['public' => true, 'connect' => true],

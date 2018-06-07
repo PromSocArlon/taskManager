@@ -1,5 +1,6 @@
 <?php
 namespace app\controllers;
+use app\core\DependencyInjectionContainer;
 use app\models\Entity\Member;
 
 class MemberController extends \app\core\Controller
@@ -19,9 +20,9 @@ class MemberController extends \app\core\Controller
         }
     }
 
-    public function __construct()
+    public function __construct(DependencyInjectionContainer $dic)
     {
-        parent::__construct();
+        parent::__construct($dic);
 
         $perms = [
             'index' => ['public' => true, 'connect' => true],

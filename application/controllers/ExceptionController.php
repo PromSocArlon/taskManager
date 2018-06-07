@@ -1,11 +1,14 @@
 <?php
 namespace app\controllers;
 
+use app\core\DependencyInjectionContainer;
+
 class ExceptionController extends \app\core\Controller
 {
 
-    public function __construct()
+    public function __construct(DependencyInjectionContainer $dic)
     {
+        parent::__construct($dic);
         $perms = [
             'index' => ['public' => true, 'connect' => true],
             'initializeModel' => ['public' => true, 'connect' => true],
