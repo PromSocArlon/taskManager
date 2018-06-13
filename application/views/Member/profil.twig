@@ -1,0 +1,29 @@
+{{ include('_shared/header.php') }}
+
+{{ include('_shared/navbar.php') }}
+
+<br>
+<h1>Profil</h1>
+<hr>
+
+
+
+<div class="form-border">
+    <h1>My account</h1>
+    <form>
+        <p></p>
+        <p><b>Login:</b> {{ member.login }}</p>
+
+        <p><b>Email:</b> {{ member.mail }}</p>
+
+        <p><b>Team:</b> {{ member.team }}</p>
+
+        <p><b>Task:</b> {{ intertaskmember.idmember }}</p>
+
+        <p><b>Password:</b> {{ member.password }}</p>
+
+        <a href="?controller=member&action=edit&id=<?php echo $member['id'] ?>" class="btn btn-primary">Edit</a>
+        <a href="?controller=member&action=delete&id=<?php echo $member['id'] ?>" class="btn btn-danger">Delete</a>
+    </form>
+</div>
+

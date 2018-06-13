@@ -25,12 +25,12 @@ class MemberController extends \app\core\Controller
 
         $perms = [
             'index' => ['public' => true, 'connect' => true],
-			'initializeModel' => ['public' => true, 'connect' => true],
-			'save' => ['public' => true, 'connect' => true],
-			'update' => ['public' => true, 'connect' => true],
-			'read' => ['public' => true, 'connect' => true],
-			'delete' => ['public' => true, 'connect' => true],
-			'profil' => ['public' => true, 'connect' => true],
+            'initializeModel' => ['public' => true, 'connect' => true],
+            'save' => ['public' => true, 'connect' => true],
+            'update' => ['public' => true, 'connect' => true],
+            'read' => ['public' => true, 'connect' => true],
+            'delete' => ['public' => true, 'connect' => true],
+            'profil' => ['public' => true, 'connect' => true],
             'edit' => ['public' => true, 'connect' => true]
         ];
         $this->setPermissions($perms);
@@ -59,15 +59,22 @@ class MemberController extends \app\core\Controller
     public function read()
     {
         $memberId = $this->request->getParameter('id');
-        $member = $this->getMemberData($memberId);
-        $this->generateView($member);
+        /*$member = $this->getMemberData($memberId);
+        $this->generateView($member);*/
+
+        $member = $this->entityManager->getRepository(get_class($this->model))->find($memberId);
+        $this->generateView('read.twig', ['member' => $member,]);
     }
 
     public function profil()
     {
+
         $memberId = $this->request->getParameter('id');
-        $member = $this->getMemberData($memberId);
-        $this->generateView($member);
+        $member = $this->entityManager->getRepository(get_class($this->member))->find($memberId);
+        $this->generateView(
+            [
+                'member' => $member,
+            ],'profil.twig');
     }
 
     public function edit()
@@ -77,11 +84,12 @@ class MemberController extends \app\core\Controller
         $this->generateView($member);
     }
 
+
     public function update()
     {
         $memberId = $this->request->getParameter('id');
         $this->member = $this->entityManager->getRepository(get_class($this->member))->find($memberId);
-        $this->member = $this->initializeModel();
+        //$this->member = $this->initializeModel();
         $this->entityManager->flush();
         $this->generateView();
     }
@@ -91,10 +99,10 @@ class MemberController extends \app\core\Controller
         $this->initializeModel();
         $this->entityManager->persist($this->member);
         $this->entityManager->flush();
-        $this->generateView();
+        $this->generateView('save.twig');
     }
 
-	public function delete()
+    public function delete()
     {
         $memberId = $this->request->getParameter('id');
         $this->member = $this->entityManager->getRepository(get_class($this->member))->find($memberId);
