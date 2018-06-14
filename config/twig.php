@@ -1,5 +1,5 @@
 <?php
-if(!isset($confContext) && isset($confContext['viewPath'])) {
+if(!isset($confContext) || !isset($confContext['viewPath'])) {
     throw new \Exception('Missing viewPath in confContext');
 }
 

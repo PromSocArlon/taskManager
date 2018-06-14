@@ -25,8 +25,9 @@ class DependencyInjectionContainer
         $this->dependencies[$dependencyName] = $filePath;
     }
 
-    public function getDependency($dependencyName)
+    public function getDependency($dependencyName, $confContext = [])
     {
+
         if (!isset($this->dependencies[$dependencyName])) {
             throw new \Exception('Trying to access unregistered dependency: ' . $dependencyName);
         }

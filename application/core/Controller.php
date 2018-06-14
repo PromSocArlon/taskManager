@@ -39,7 +39,7 @@ abstract class Controller
      */
     public function __construct(DependencyInjectionContainer $dic)
     {
-        $this->templateEngine = $dic->getDependency('twig');
+        $this->templateEngine = $dic->getDependency('twig', ['viewPath' => 'application/views/']);
         $this->entityManager = $dic->getDependency('doctrine');
     }
 
