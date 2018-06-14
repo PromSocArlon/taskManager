@@ -24,7 +24,7 @@ class Task extends Entity
      **/
     private $members;
     /**
-     * @ORM\ManyToMany(targetEntity=Team::class, mappedBy=Team::class)
+     * @ORM\ManyToMany(targetEntity=Team::class)
      **/
     private $team;
 

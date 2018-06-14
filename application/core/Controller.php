@@ -79,7 +79,7 @@ abstract class Controller
      * @param string $action
      * @throws \EXception
      */
-    protected function generateView($data = array(), $action = null)
+    protected function generateView($action = null,$data = array())
     {
         $classController = get_class($this);
         $controllerName = str_replace("Controller", "", $classController);

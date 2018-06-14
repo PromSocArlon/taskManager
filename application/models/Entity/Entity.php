@@ -21,8 +21,4 @@ abstract class Entity {
     {
         $this->id = $id;
     }
-
-    //TODO: usable ?
-    //abstract function entityToArray();
-
 }

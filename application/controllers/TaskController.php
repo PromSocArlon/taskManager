@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use app\core\DependencyInjectionContainer;
 use app\models\Entity\Task;
-use app\models\Entity\TaskStatus;
+
 
 class TaskController extends \app\core\Controller
 {
@@ -28,48 +28,49 @@ class TaskController extends \app\core\Controller
 
     public function create()
     {
-		// $this->generateView();
-        //$x = [0 =>'Task'];
         echo $this->templateEngine->render('Task/create.twig');
     }
 
     public function edit()
     {
-		$this->read();
+        $taskId = $this->request->getParameter('id');
+        $task = $this->entityManager->getRepository(get_class($this->model))->find($taskId);
+
+        $this->generateView('edit.twig', ['task' => $task,]);
     }
 
     public function read()
     {
         $taskId = $this->request->getParameter('id');
-        $taskObject = $this->entityManager->getRepository("app\models\Entity\Task")->find($taskId);
-        $taskArray = $taskObject->entityToArray();
-        $taskArray['id'] = $taskId;
+        $task = $this->entityManager->getRepository(get_class($this->model))->find($taskId);
 
-        $this->generateView($taskArray);
+        $this->generateView('read.twig', ['task' => $task,]);
     }
 
     public function update()
     {
-		$taskId = $this->request->getParameter('id');
-        $taskObject = $this->entityManager->getRepository("app\models\Entity\Task")->find($taskId);	
-		
-		$taskObject->setID($this->request->getParameter('id'));
+        $taskId = $this->request->getParameter('id');
+        $taskObject = $this->entityManager->getRepository(get_class($this->model))->find($taskId);
+
+        $taskObject->setID($this->request->getParameter('id'));
         $taskObject->setName($this->request->getParameter('name'));
         $taskObject->setPriority($this->request->getParameter('priority'));
         $taskObject->setDescription($this->request->getParameter('description'));
         $taskObject->setStatus($this->request->getParameter('status'));
-		
-		$this->entityManager->flush();
-        $this->generateView();
+
+        $this->entityManager->flush();
+        $this->generateView('update.twig');
     }
 
     public function delete()
     {
         $taskId = $this->request->getParameter('id');
-        $taskObject = $this->entityManager->getRepository("app\models\Entity\Task")->find($taskId);
+        $taskObject = $this->entityManager->getRepository(get_class($this->model))->find($taskId);
+
         $this->entityManager->remove($taskObject);
         $this->entityManager->flush();
-        $this->generateView();
+
+        $this->generateView('delete.twig');
     }
 
     public function save()
@@ -79,17 +80,13 @@ class TaskController extends \app\core\Controller
         $this->entityManager->persist($this->model);
         $this->entityManager->flush();
 
-        echo $this->templateEngine->render('Task/save.twig');
+        $this->generateView('save.twig');
     }
 
     public function index()
     {
         $tasks = $this->entityManager->getRepository(get_class($this->model))->findAll();
-        $this->generateView(
-            [
-                'tasks' => $tasks,
-            ],'index.twig');
-        //echo $this->templateEngine->render('Task/index.twig', $tasks);
+        $this->generateView('index.twig', ['tasks' => $tasks,]);
     }
 
     public function initializeModel()
@@ -99,7 +96,5 @@ class TaskController extends \app\core\Controller
         $this->model->setPriority($this->request->getParameter('priority'));
         $this->model->setDescription($this->request->getParameter('description'));
         $this->model->setStatus($this->request->getParameter('status'));
-
-        print_r($this->model);
     }
 }
