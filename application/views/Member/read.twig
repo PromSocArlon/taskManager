@@ -1,0 +1,24 @@
++{{ include('_shared/header.php') }}
++
++{{ include('_shared/navbar.php') }}
++
++<h1>Member</h1>
++
++
++<hr>
++<h3>Member {{ member.id }}</h3>
++<br>
++
++<p><b>Name:</b> {{ member.name }}</p>
++<p><b>Email:</b> {{ member.email }}</p>
++<p><b>Team:</b> {{ member.team }}</p>
++<p><b>Task:</b> {{ member.task }}</p>
++
++
++<br>
++
++<a href="?controller=member&action=edit&id={{ member.id }}" class="btn btn-primary">Edit</a>
++<a href="?controller=member&action=delete&id={{ member.id }}" class="btn btn-danger">Delete</a>
++
++{{ include('_shared/footer.php') }}
++
