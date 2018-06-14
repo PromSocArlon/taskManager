@@ -11,10 +11,9 @@ use app\controllers\ExceptionController;
 
 class ErrorHandler {
     public static function handleError(\Throwable $ex) : void {
-        $errorController = new ExceptionController();
+        $errorMessage = $ex->getMessage();
+		$_SESSION["errorMessage"] = $errorMessage;
         switch (true) {
-            case $ex instanceof ActionNotDefinedException :
-            case $ex instanceof ControllerNotDefinedException :
             case $ex instanceof \HttpRequestException :
                 header('Location: index.php?controller=exception&action=error400');
                 break;
@@ -24,6 +23,8 @@ class ErrorHandler {
             case $ex instanceof ForbiddenException :
                 header('Location: index.php?controller=exception&action=error403');
                 break;
+            case $ex instanceof ActionNotDefinedException :
+            case $ex instanceof ControllerNotDefinedException :
             case $ex instanceof \HttpException:
                 header('Location: index.php?controller=exception&action=error404');
                 break;
@@ -37,7 +38,7 @@ class ErrorHandler {
                 header('Location: index.php?controller=exception&action=error500');
                 break;
             default:
-                $errorController->error500();
+                 header('Location: index.php?controller=exception&action=error500');
                 break;
         }
     }

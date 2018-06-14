@@ -1,0 +1,15 @@
+<div class ="container">
+    {% set errorName = "Error" ~ errorNumber %}
+    {% set imagePath = "ressources\\exceptions\\" ~errorNumber ~".jpg"%}
+    <p>Error {{ errorNumber }}!</p>
+    {{errorMessage}}
+    <div class ="row">
+        <div class="col-sm">
+            <img src={{ imagePath }} alt={{ errorName }}>
+        </div>
+        <div class="col-sm">
+            {{ errorDescription }}
+        </div>
+    </div>
+    <a href="index.php?controller=home&action=index">Home</a>
+</div>

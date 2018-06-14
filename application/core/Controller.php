@@ -77,6 +77,7 @@ abstract class Controller
      * Generate the view with a given data set
      * @param array $data the data set to be added to the generation
      * @param string $action
+     * @throws \EXception
      */
     protected function generateView($data = array(), $action = null)
     {
@@ -88,6 +89,8 @@ abstract class Controller
         if ($action != null) {
             $actionView = $action;
         }
+        else
+            $actionView .=  '.twig';
 
         echo $this->templateEngine->render($dirName . $actionView, $data);
     }
@@ -106,19 +109,20 @@ abstract class Controller
     {
         if ($permissions != null) {
             $this->permissions = $permissions;
-        } else {
-            throw new \RuntimeException("Permission setting problem !", 500);
+         }
+	    else {
+		    throw new \RuntimeException("Permission setting problem !",500);
         }
-    }
+	}
 
-    /**
-     * check the permission for the given $action
-     * @param string $action the name of the action
-     * @return bool the permission of the action
-     */
+	/**
+	 * check the permission for the given $action
+	 * @param string $action the name of the action
+	 * @return bool the permission of the action
+	 */
     public function isAllowed($action)
     {
-        return \app\core\MemberService::isConnected() ?
+        return \app\core\UserService::isConnected() ?
             $this->permissions[$action]['connect'] :
             $this->permissions[$action]['public'];
     }

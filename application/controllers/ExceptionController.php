@@ -22,6 +22,17 @@ class ExceptionController extends \app\core\Controller
         $this->setPermissions($perms);
     }
 
+    public function getErrorMessage()
+    {
+        $message = "Pas de message d'erreur";
+        if(isset($_SESSION["errorMessage"]))
+        {
+            $message = $_SESSION["errorMessage"];
+            unset($_SESSION["errorMessage"]);
+        }
+        return $message;
+    }
+
     public function index()
     {
         $this->generateView();
@@ -29,32 +40,56 @@ class ExceptionController extends \app\core\Controller
 
     public function error400()
     {
-        $this->generateView();
+        $message = $this->getErrorMessage();
+        $params = ["errorMessage" => $message,
+            "errorNumber" => 400,
+            "errorDescription" => "Bad request!"];
+        $this->generateView($params, "error.twig");
     }
 
     public function error401()
     {
-        $this->generateView();
+        $message = $this->getErrorMessage();
+        $params = ["errorMessage" => $message,
+            "errorNumber" => 401,
+            "errorDescription" => "Unauthorized access!"];
+        $this->generateView($params, "error.twig");
     }
 
     public function error403()
     {
-        $this->generateView();
+        $message = $this->getErrorMessage();
+        $params = ["errorMessage" => $message,
+            "errorNumber" => 403,
+            "errorDescription" => "Forbidden access!"];
+        $this->generateView($params, "error.twig");
     }
 
     public function error404()
     {
-        $this->generateView();
+        $message = $this->getErrorMessage();
+        $params = ["errorMessage" => $message,
+            "errorNumber" => 404,
+            "errorDescription" => "Not found!"];
+		$this->generateView($params, "error.twig");
     }
 
     public function error408()
     {
-        $this->generateView();
+        $message = $this->getErrorMessage();
+        $params = ["errorMessage" => $message,
+            "errorNumber" => 408,
+            "errorDescription" => "Request time out try again!"];
+        $this->generateView($params, "error.twig");
     }
 
     public function error500()
     {
-        $this->generateView();
+        $message = $this->getErrorMessage();
+        $params = ["errorMessage" => $message,
+            "errorNumber" => 500,
+            "errorDescription" => "Internal server error"];
+        $this->generateView($params, "error.twig");
     }
 
     public function initializeModel()
