@@ -1,0 +1,26 @@
+{{ include('_shared/header.php') }}
+
+{{ include('_shared/navbar.php') }}
+
+<h1>TaskManager Member List</h1>
+{% if members is empty %}
+    Aucun membre enregistré!
+{% endif %}
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Login</th>
+        <th>Mail</th>
+        <th>Team</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in members %}
+        <tr>
+            <td scope="col"><a href="?controller=member&action=profil&id={{ item.id }}">{{ item.login }}</a></td>
+            <td scope="col">{{ item.mail }}</td>
+            <td scope="col">{{ item.team }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -18,8 +18,12 @@
 
         <p><b>Team:</b> {{ member.team }}</p>
 
-        <p><b>Task:</b> {{ intertaskmember.idmember }}</p>
-
+        <p>
+            <b>Task:</b>
+            {% for task in member.tasks %}
+                {{ task.name }}<br>
+            {% endfor %}
+        </p>
         <p><b>Password:</b> {{ member.password }}</p>
 
         <a href="?controller=member&action=edit&id=<?php echo $member['id'] ?>" class="btn btn-primary">Edit</a>

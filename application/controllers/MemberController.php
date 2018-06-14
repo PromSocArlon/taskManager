@@ -43,14 +43,9 @@ class MemberController extends \app\core\Controller
 
     public function index()
     {
-        $membersData = array();
         $members = $this->entityManager->getRepository(get_class($this->member))->findAll();
-        if(count($members) != 0) {
-            foreach ($members as $member) {
-                $membersData[] = $member->toArray();
-            }
-        }
-        $this->generateView(['members' => $membersData]);
+
+        $this->generateView('index.twig', ['members' => $members]);
     }
 
     public function getMemberData($memberId)
@@ -70,15 +65,20 @@ class MemberController extends \app\core\Controller
         $this->generateView('read.twig', ['member' => $member,]);
     }
 
+    /**
+     * @throws \EXception
+     */
     public function profil()
     {
-
         $memberId = $this->request->getParameter('id');
         $member = $this->entityManager->getRepository(get_class($this->member))->find($memberId);
+
         $this->generateView(
+            'profil.twig',
             [
                 'member' => $member,
-            ],'profil.twig');
+            ]
+        );
     }
 
     public function edit()

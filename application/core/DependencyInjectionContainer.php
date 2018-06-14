@@ -27,7 +27,6 @@ class DependencyInjectionContainer
 
     public function getDependency($dependencyName, $confContext = [])
     {
-
         if (!isset($this->dependencies[$dependencyName])) {
             throw new \Exception('Trying to access unregistered dependency: ' . $dependencyName);
         }

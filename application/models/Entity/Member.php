@@ -18,6 +18,27 @@ class Member extends Entity
     private $mail;
     /** @ORM\Column(type="integer") * */
     private $team;
+    /**
+     * @ORM\ManyToMany(targetEntity=Task::class)
+     * @ORM\JoinTable(name="tbl_member_task")
+     **/
+    private $tasks;
+
+    /**
+     * @return mixed
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
+    }
+
+    /**
+     * @param mixed $tasks
+     */
+    public function setTasks($tasks): void
+    {
+        $this->tasks = $tasks;
+    }
 
     /**
      * @return mixed
