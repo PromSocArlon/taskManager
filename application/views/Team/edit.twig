@@ -1,0 +1,64 @@
+{{ include('_shared/header.php') }}
+
+{{ include('_shared/navbar.php') }}
+
+<div class="row">
+    <div id="mainTeamInfo" class="col form-group container card bg-light mb-3">
+        <div class="card-header text-center"><h4>Team Update Form</h4></div>
+        <form action='?controller=Team&action=update' method='post'>
+            <div class="card-body" style="text-align: center;">
+                <div class="form-group">
+                    <label for="teamName">Team ID : </label>
+                    <input type="text" name="id" class="form-control" readonly
+                           value="{{ team.getID() }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="teamName">Team name : </label>
+                    <input type="text" name="name" class="form-control" value=" {{ team.getName() }}" required/>
+                </div>
+                <div class="form-group">
+                    <label for="TeamLeaderSelection">Leader :</label>
+                    <select name="leader" size="1">
+                        {% for member in members %}
+                            {% if team.getLeader() == null %}
+                                <option value=" {{ member.getID() }} ">{{ member.getLogin() }} </option>
+                            {% else %}
+                                <option value="{{ member.getID() }}" {% if  member.getId()== member.getLogin().geId() %} selected  {% endif %}>{{ member.getLogin() }} </option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group container h-50 card bg-light mb-3">
+                    <div class="card-header text-center">
+                        Team Members :
+                        <div class=" btn-group">
+
+                            <select name="members[]" multiple size="{{ members|length }}">
+                                {% for member in members %}
+                                    <option value="{{ member.getID() }}" {% if member in  team.getMembers() %} selected {% endif %}>{{ member.getLogin()}} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group container h-50 card bg-light mb-3">
+                    <div class="card-header text-center">
+                        Team Tasks :
+                        <div class=" btn-group">
+
+                            <select name="tasks[]" multiple size="{{ tasks|length }}">
+                                {% for task in tasks %}
+                                <option value="{{ task.getID() }}"{% if  task in team.getTasks() %} selected {% endif %}>{{  task.getName() }} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" value="Update Team" name="updateTeam" class="btn btn-sm btn-secondary"/>
+                <input type="button" name="Cancel Team update" value="Cancel Update"
+                       onClick="location.href='index.php'" class="btn btn-sm btn-secondary"/>
+            </div>
+        </form>
+    </div>
+</div>
+{{ include('_shared/footer.php') }}
