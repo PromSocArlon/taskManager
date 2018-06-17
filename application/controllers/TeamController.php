@@ -26,7 +26,7 @@ class TeamController extends \app\core\Controller
     public function index()
     {
         $teams = $this->entityManager->getRepository('app\models\entity\team')->findAll();
-        $this->generateView(['teams' => $teams]);
+        $this->generateView(null,['teams' => $teams]);
     }
 
     public function initializeModel()
@@ -45,6 +45,7 @@ class TeamController extends \app\core\Controller
                 $members[] = $result;
             }
             $this->model->setMembers($members);
+
         }
         if ($this->request->existParameter('tasks')) {
             $tasks = [];
@@ -58,9 +59,10 @@ class TeamController extends \app\core\Controller
 
     public function create()
     {
-        $tasks = $this->entityManager->getRepository('app\models\entity\task')->findAll();
-        $members = $this->entityManager->getRepository('app\models\entity\member')->findAll();
-        $this->generateView([
+         $tasks = $this->entityManager->getRepository('app\models\entity\task')->findAll();
+         $members = $this->entityManager->getRepository('app\models\entity\member')->findAll();
+
+        $this->generateView(null,[
             'tasks' => $tasks,
             'members' => $members
         ]);
@@ -73,7 +75,7 @@ class TeamController extends \app\core\Controller
         $members = $this->entityManager->getRepository('app\models\entity\member')->findAll();
 
         if (!(is_null($result))) {
-            $this->generateView([
+            $this->generateView(null,[
                 'team' => $result,
                 'tasks' => $tasks,
                 'members' => $members
@@ -104,7 +106,7 @@ class TeamController extends \app\core\Controller
         if (!is_null($result)) {
             $this->entityManager->remove($result);
             $this->entityManager->flush($result);
-            $this->generateView(['team' => $result]);
+            $this->generateView(null,['team' => $result]);
         } else {
             throw  new \Exception("Team doesn't exist.");
         }
@@ -134,7 +136,7 @@ class TeamController extends \app\core\Controller
         $tasks = $this->entityManager->getRepository('app\models\entity\task')->findAll();
         $members = $this->entityManager->getRepository('app\models\entity\member')->findAll();
         if (!is_null($result)) {
-            $this->generateView([
+            $this->generateView(null,[
                 'team' => $result,
                 'tasks' => $tasks,
                 'members' => $members
