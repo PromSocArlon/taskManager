@@ -3,8 +3,10 @@
 require_once __DIR__ . '/bootstrap.php';
 
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
+
 try {
-    $doctrineConf = \app\core\ConfigLoader::getConfig('doctrine');
+    $dic->register('doctrine');
+    $doctrineConf = $dic->getDependency('doctrine');
 } catch (\Exception $e) {
     throw new \Exception($e->getMessage());
 }
