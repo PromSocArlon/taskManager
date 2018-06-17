@@ -19,19 +19,18 @@ class Task extends Entity
     /** @ORM\Column(type="string", length=20) * */
     private $status;
     /**
-     * @ORM\ManyToMany(targetEntity=Member::class)
-     * @ORM\JoinTable(name="tbl_member_task")
+     * @ORM\ManyToMany(targetEntity=Member::class,mappedBy="tasks")
      **/
-    private $members;
+    protected $members;
     /**
-     * @ORM\ManyToMany(targetEntity=Team::class)
+     * @ORM\ManyToMany(targetEntity=Team::class,mappedBy="tasks")
      **/
-    private $team;
+    protected $teams;
 
     public function __construct()
     {
         $this->members = new ArrayCollection();
-        $this->team = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     /**
@@ -127,17 +126,17 @@ class Task extends Entity
     /**
      * @return mixed
      */
-    public function getTeam()
+    public function getTeams()
     {
-        return $this->team;
+        return $this->teams;
     }
 
     /**
      * @param mixed $team
      */
-    public function setTeam($team): void
+    public function setTeam($teams): void
     {
-        $this->team = $team;
+        $this->team = $teams;
     }
 
 }

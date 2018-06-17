@@ -2,6 +2,7 @@
 
 namespace app\models\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,13 +17,21 @@ class Member extends Entity
     private $password;
     /** @ORM\Column(type="string") * */
     private $mail;
-    /** @ORM\Column(type="integer") * */
-    private $team;
     /**
-     * @ORM\ManyToMany(targetEntity=Task::class)
+     * @ORM\ManyToMany(targetEntity=Team::class,mappedBy="members")
+     */
+    protected $teams;
+    /**
+     * @ORM\ManyToMany(targetEntity=Task::class, inversedBy="members", cascade={"persist"})
      * @ORM\JoinTable(name="tbl_member_task")
      **/
-    private $tasks;
+    protected $tasks;
+
+    public function __construct()
+    {
+        $this->tasks = new ArrayCollection();
+        $this->teams = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -80,14 +89,14 @@ class Member extends Entity
         return $this->mail;
     }
 	
-	public function setTeam($new_team)
+	public function setTeams($new_teams)
     {
-        $this->team = $new_team;
+        $this->teams = $new_teams;
     }
 
-    public function getTeam()
+    public function getTeams()
     {
-        return $this->team;
+        return $this->teams;
     }
 
     /**
