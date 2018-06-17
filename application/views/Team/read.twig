@@ -1,0 +1,79 @@
+{{ include('_shared/header.php') }}
+
+{{ include('_shared/navbar.php') }}
+
+
+<h1>Team</h1>
+<br>
+
+<h3>Team {{ team.getID() }}</h3>
+<br>
+<p><b>Name:</b> {{ team.getName() }}  </p>
+<br>
+<p><b>Leader:</b> {% if team.getLeader() != null %} {{ team.getLeader().getLogin() }}{% endif %} </p>
+<br>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if team.getMembers().count() == 0 %}
+            <tr>
+                <th><p><i>No members in this team.</i></p></th>
+            </tr>
+        {% else %}
+            {% for member in team.getMembers() %}
+                <tr>
+                    <th>{{ member.getID() }}</th>
+                    <th>{{ member.getLogin() }}</th>
+                    <th> {% if member.getMail() == null %} }}" " {% else %}{{  member.getMail()}}{% endif %}</th>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Description</th>
+            <th scope="col">Status</th>
+            <th scope="col">Sub Task</th>
+            <th scope="col">Day</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if team.getTasks().count() == 0 %}
+        <tr>
+            <th><p><i>No tasks in this team.</i></p></th>
+        </tr>
+        {% else %}
+            {% for task in team.getTasks() %}
+                <tr>
+                    <th>{{ task.getID() }}</th>
+                    <th>{{ task.getName()}}</th>
+                    <th>{{ task.getPriority()}}</th>
+                    <th>{{ task.getDescription()}}</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            {%  endfor %}
+        {% endif %}
+    </tbody>
+</table>
+
+<a href="?controller=team&action=edit&id={{ team.getID() }}"
+   class="btn btn-primary ">Edit</a>
+<a href="?controller=team&action=delete&id={{ team.getID() }}"
+   class="btn btn-danger ">Delete</a>
+
+{{ include('_shared/footer.php') }}
