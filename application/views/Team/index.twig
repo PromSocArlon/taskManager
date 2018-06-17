@@ -1,0 +1,49 @@
+{{ include('_shared/header.php') }}
+
+{{ include('_shared/navbar.php') }}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="page-header">
+            <h1>Teams</h1>
+        </div>
+        <div class="bs-component">
+            <table class="table table-hover">
+                <caption>List of teams</caption>
+                <thead class="thead">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Leader</th>
+                        <th scope="col">Members</th>
+                        <th scope="col">Tasks</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if teams is empty %}
+                        <tr>
+                            <th><p><i>No team created yet.</i></p></th>
+                        </tr>
+                    {% endif %}
+
+                    {% for team in teams%}
+                        <tr>
+                        <th><a href='?controller=Team&action=read&id={{ team.getId() }}'>  {{ team.getId() }}</a></th>
+                        <th> {{ team.getName() }}  </th>
+                        <th> {% if team.getLeader() is not null %}  {{ team.getLeader().getLogin() }} {% endif %}  </th>
+                        <th><span class='badge badge-primary badge-pill'> {{ team.getMembers().count() }}</span></th>
+                        <th><span class='badge badge-primary badge-pill'>{{team.getTasks().count()}}   </span></th>
+                        <th><a class='btn btn-outline-danger btn-sm' role='button' href='?controller=Team&action=delete&id={{ team.getId()}}'>Delete</a></th>
+                        </tr>
+                    {%  endfor %}
+
+                    <option value="{{member.getID()  }}">{{  member.getLogin() }} </option>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{{ include('_shared/footer.php') }}
