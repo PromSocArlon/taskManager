@@ -1,0 +1,22 @@
+{{ include('_shared/header.php') }}
+
+{{ include('_shared/navbar.php') }}
+
+<h1>Task</h1>
+
+
+<hr>
+<h3>SubTask {{ subTask.id }}</h3>
+<br>
+
+<p><b>Name:</b> {{ subTask.name }}</p>
+<p><b>Description:</b> {{ subTask.description }}</p>
+
+
+<br>
+
+<a href="?controller=task&action=edit&id={{ subTask.id }}" class="btn btn-primary">Edit</a>
+<a href="?controller=task&action=delete&id={{ subTask.id }}" class="btn btn-danger">Delete</a>
+
+{{ include('_shared/footer.php') }}
+

@@ -1,0 +1,29 @@
+{{ include('_shared/header.php') }}
+
+{{ include('_shared/navbar.php') }}
+
+<h1>SubTask</h1>
+<hr>
+<h3>Edit</h3>
+
+<br>
+
+<form method="POST" action="?controller=subTask&action=update">
+
+    <div class="form-group">
+        <label for="taskId">Number:</label>
+        <input type="text" class="form-control" value={{ subTask.id }} name="id" readonly>
+    </div>
+    <div class="form-group">
+        <label for="taskName">Name:</label>
+        <input type="text" class="form-control" value={{ subTask.name }} name="name" required>
+    </div>
+    <div class="form-group">
+        <label for="SubTaskDescription">Description:</label>
+        <input type="text" class="form-control" value={{ subTask.description }} name="description" required>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Update</button>
+</form>
+
+{{ include('_shared/footer.php') }}

@@ -1,0 +1,25 @@
+<!-- Fatal error: Uncaught Twig_Error_Loader: Looks like you try to load a template outside configured directories (../_shared/header.php) -->
+
+{{ include('_shared/header.php') }}
+
+{{ include('_shared/navbar.php') }}
+
+<br>
+<h1>SubTask</h1>
+<hr>
+<h3>Create</h3>
+
+<form method="POST" action="?controller=subTask&action=save">
+    <input type="text" hidden name="id" value="0">
+    <div class="form-group">
+        <label for="subTaskName">Name:</label>
+        <input type="text" class="form-control" placeholder="Name" name="name" required>
+    </div>
+    <div class="form-group">
+        <label for="subTaskDescription">Description:</label>
+        <input type="text" class="form-control" placeholder="description" name="description" required>
+    </div>
+    <button class="btn btn-primary" type="submit">Create</button>
+</form>
+
+{{ include('_shared/footer.php') }}
