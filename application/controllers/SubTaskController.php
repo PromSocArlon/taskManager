@@ -43,6 +43,9 @@ class SubTaskController extends \app\core\Controller
         $this->model->setID($this->request->getParameter('id'));
         $this->model->setName($this->request->getParameter('name'));
         $this->model->setDescription($this->request->getParameter('description'));
+        if($this->request->existParameter('task')) {
+            $this->model->setTask($this->request->getParameter('task'));
+        }
     }
 
     public function create()

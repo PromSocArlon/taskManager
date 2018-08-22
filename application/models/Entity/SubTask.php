@@ -17,6 +17,7 @@ class SubTask extends Entity
     /** @ORM\Column(type="text") * */
     private $description;
     /*** @ORM\OneToMany(targetEntity=Task::class)
+     * @ORM\JoinTable(name="tbl_task_subTask")
      **/
     private $task;
 
@@ -72,4 +73,6 @@ class SubTask extends Entity
     {
         $this->task = $task;
     }
+
+
 }

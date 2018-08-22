@@ -27,11 +27,17 @@ class Task extends Entity
      * @ORM\ManyToMany(targetEntity=Team::class)
      **/
     private $team;
+    /**
+     * @ORM\OneToMany(targetEntity=subTask::class)
+     * @ORM\JoinTable(name="tbl_task_subTask")
+     **/
+    private $subTask;
 
     public function __construct()
     {
         $this->members = new ArrayCollection();
         $this->team = new ArrayCollection();
+        $this->subTask = new ArrayCollection();
     }
 
     /**
@@ -138,6 +144,32 @@ class Task extends Entity
     public function setTeam($team): void
     {
         $this->team = $team;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubTask()
+    {
+        return $this->$subTask;
+    }
+
+    /**
+     * @param mixed $subTask
+     */
+    public function setSubTask($subTask): void
+    {
+        $this->subTask = $subTask;
+    }
+
+    public function addSubTask(SubTask $subTask): bool
+    {
+        return $this->subTasks->add($subTask);
+    }
+
+    public function removeTask(SubTask $subTask): bool
+    {
+        return $this->subTask->removeElement($subTask);
     }
 
 }
