@@ -182,7 +182,7 @@ ALTER TABLE
 `tbl_task_team`
   ADD CONSTRAINT `tbl_task_team_tbl_task_id_fk` FOREIGN KEY (`fk_task_id`) REFERENCES `tbl_task` (`id`)
   ON DELETE CASCADE
-  ON UPDATE CASCADE,
+  ON UPDATE CASCADE
   ADD CONSTRAINT `tbl_task_team_tbl_team_id_fk` FOREIGN KEY (`fk_team_id`) REFERENCES `tbl_team` (`id`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;

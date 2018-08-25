@@ -10,6 +10,11 @@ namespace app\models\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="tbl_subTask")
+ **/
+
 class SubTask extends Entity
 {
     /** @ORM\Column(type="string", length=100) * */
@@ -19,7 +24,7 @@ class SubTask extends Entity
     /*** @ORM\OneToMany(targetEntity=Task::class)
      * @ORM\JoinTable(name="tbl_task_subTask")
      **/
-    private $task;
+   private $task;
 
     public function __construct()
     {
