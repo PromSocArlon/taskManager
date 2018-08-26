@@ -35,6 +35,7 @@ class SubTaskController extends \app\core\Controller
     {
         $subTasks = $this->entityManager->getRepository(get_class($this->model))->findAll();
         $this->generateView('index.twig', ['subTasks' => $subTasks,]);
+
     }
 
 
@@ -43,9 +44,8 @@ class SubTaskController extends \app\core\Controller
         $this->model->setID($this->request->getParameter('id'));
         $this->model->setName($this->request->getParameter('name'));
         $this->model->setDescription($this->request->getParameter('description'));
-        if($this->request->existParameter('task')) {
-            $this->model->setTask($this->request->getParameter('task'));
-        }
+        $this->model->setTask($this->request->getParameter('task'));
+
     }
 
     public function create()

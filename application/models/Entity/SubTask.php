@@ -21,14 +21,14 @@ class SubTask extends Entity
     private $name;
     /** @ORM\Column(type="text") * */
     private $description;
-    /*** @ORM\OneToMany(targetEntity=Task::class)
-     * @ORM\JoinTable(name="tbl_task_subTask")
+    /*** @ORM\ManyToOne(targetEntity=Task::class, inversedBy="subTasks")
+     * @ORM\JoinTable(name="task_id")
      **/
    private $task;
 
     public function __construct()
     {
-        $this->task = new Task();
+
     }
 
     /**
@@ -78,6 +78,4 @@ class SubTask extends Entity
     {
         $this->task = $task;
     }
-
-
 }

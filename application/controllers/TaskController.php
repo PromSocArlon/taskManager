@@ -28,6 +28,7 @@ class TaskController extends \app\core\Controller
 
     public function create()
     {
+        $subTasks = $this->entityManager->getRepository('app\models\entity\subTask')->findAll();
         echo $this->templateEngine->render('Task/create.twig');
     }
 

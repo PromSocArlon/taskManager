@@ -62,12 +62,12 @@ abstract class Controller
     public function executeAction(string $action): void
     {
         if (method_exists($this, $action)) {
-            if ($this->isAllowed($action)) {
+            //if ($this->isAllowed($action)) {
                 $this->action = $action;
                 $this->{$this->action}();
-            } else {
+            /*} else {
                 throw new UnauthorizedException("Access denied !");
-            }
+            }*/
         } else {
             throw new ActionNotDefinedException("Action " . $action . " not defined !");
         }
