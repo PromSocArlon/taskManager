@@ -10,9 +10,6 @@
     <div class="col-sm">
         <h3>Index</h3>
     </div>
-    <div class="col-sm-2">
-        <a href="?controller=subTask&action=create" class="btn btn-success">Create a new subTask</a>
-    </div>
 </div>
 
 <br><br>
@@ -44,10 +41,10 @@
                         <th>{{ item.name }}</th>
                         <th>{{ item.description }}</th>
                         <th>
-                            <a href="?controller=task&action=edit&id={{ item.id }}" class="btn btn-primary">Edit</a>
+                            <a href="?controller=subTask&action=edit&id={{ item.id }}" class="btn btn-primary">Edit</a>
                         </th>
                         <th>
-                            <a href="?controller=task&action=read&id={{ item.id }}" class="btn btn-secondary">View</a>
+                            <a href="?controller=subTask&action=read&id={{ item.id }}" class="btn btn-secondary">View</a>
                         </th>
                     </tr>
                 {% endfor %}

@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: My Little Pony
+ * User: Voahirana
  * Date: 21-08-18
  * Time: 19:14
  */
@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="tbl_subTask")
+ * @ORM\Table(name="tbl_subtask")
  **/
 
 class SubTask extends Entity
@@ -21,7 +21,9 @@ class SubTask extends Entity
     private $name;
     /** @ORM\Column(type="text") * */
     private $description;
-    /*** @ORM\ManyToOne(targetEntity=Task::class, inversedBy="subTasks")
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Task::class, inversedBy="subTasks")
      * @ORM\JoinTable(name="task_id")
      **/
    private $task;

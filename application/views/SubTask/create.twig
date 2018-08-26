@@ -11,6 +11,7 @@
 
 <form method="POST" action="?controller=subTask&action=save">
     <input type="text" hidden name="id" value="0">
+    <input type="text" hidden name="task-id" value="{{ taskId }}">
     <div class="form-group">
         <label for="subTaskName">Name:</label>
         <input type="text" class="form-control" placeholder="Name" name="name" required>

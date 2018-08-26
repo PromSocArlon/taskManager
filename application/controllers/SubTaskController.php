@@ -44,13 +44,18 @@ class SubTaskController extends \app\core\Controller
         $this->model->setID($this->request->getParameter('id'));
         $this->model->setName($this->request->getParameter('name'));
         $this->model->setDescription($this->request->getParameter('description'));
-        $this->model->setTask($this->request->getParameter('task'));
+
+        $taskId = $this->request->getParameter('task-id');
+        $task = $this->entityManager->getRepository('app\models\Entity\Task')->find($taskId);
+        $this->model->setTask($task);
 
     }
 
     public function create()
     {
-        echo $this->templateEngine->render('SubTask/create.twig');
+        echo $this->templateEngine->render('SubTask/create.twig',array(
+            "taskId" => $this->request->getParameter('task')
+        ));
     }
 
     public function update()
@@ -58,7 +63,7 @@ class SubTaskController extends \app\core\Controller
         $subTaskId = $this->request->getParameter('id');
         $subTaskObject = $this->entityManager->getRepository(get_class($this->model))->find($subTaskId);
 
-        $subTaskObject->setID($this->request->getParameter('id'));
+        //$subTaskObject->setID($this->request->getParameter('id'));
         $subTaskObject->setName($this->request->getParameter('name'));
         $subTaskObject->setDescription($this->request->getParameter('description'));
 
@@ -100,7 +105,7 @@ class SubTaskController extends \app\core\Controller
         $subTaskId = $this->request->getParameter('id');
         $subTask = $this->entityManager->getRepository(get_class($this->model))->find($subTaskId);
 
-        $this->generateView('edit.twig', ['$subTask' => $subTask,]);
+        $this->generateView('edit.twig', ['subTask' => $subTask]);
     }
 
 }
